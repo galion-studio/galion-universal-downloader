@@ -28,43 +28,14 @@ const navItems = [
   { id: 'settings' as Tab, label: 'Settings', icon: Settings },
 ]
 
-// Galion Logo Component
+// Galion Logo Component - Using the shield logo
 function GalionLogo({ className }: { className?: string }) {
   return (
-    <svg 
-      viewBox="0 0 40 40" 
-      className={cn("text-galion-500", className)}
-      fill="none"
-    >
-      <defs>
-        <linearGradient id="galionGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#818cf8"/>
-          <stop offset="100%" stopColor="#6366f1"/>
-        </linearGradient>
-      </defs>
-      <circle cx="20" cy="20" r="18" fill="url(#galionGrad)"/>
-      <path 
-        d="M12 22L17 27L28 14" 
-        stroke="white" 
-        strokeWidth="3" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"
-      />
-      <path 
-        d="M10 14L14 10" 
-        stroke="white" 
-        strokeWidth="1.5" 
-        strokeLinecap="round" 
-        opacity="0.6"
-      />
-      <path 
-        d="M26 10L30 14" 
-        stroke="white" 
-        strokeWidth="1.5" 
-        strokeLinecap="round" 
-        opacity="0.6"
-      />
-    </svg>
+    <img 
+      src="/favicon.svg" 
+      alt="Galion Logo"
+      className={cn("object-contain", className)}
+    />
   )
 }
 

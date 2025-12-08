@@ -76,7 +76,17 @@ async function initializeSystems() {
 
 // Middleware
 app.use(express.json({ limit: '50mb' }));
-app.use(express.static(path.join(__dirname, 'public')));
+
+// CORS for frontend on different port
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 // WebSocket connection handling
 wss.on('connection', (ws) => {
@@ -1059,9 +1069,19 @@ async function calculateFolderSize(folderPath) {
   return size;
 }
 
-// Serve frontend
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// API root endpoint
+app.get('/', (req, res) => {
+  res.json({
+    name: 'Galion Universal Downloader API',
+    version: '2.0.0',
+    documentation: 'https://galion-studio.github.io/galion-universal-downloader/',
+    endpoints: {
+      status: 'GET /api/status',
+      platforms: 'GET /api/platforms',
+      download: 'POST /api/download',
+      history: 'GET /api/history'
+    }
+  });
 });
 
 // ==============================
@@ -1075,18 +1095,18 @@ async function start() {
     console.log(`
 ╔══════════════════════════════════════════════════════════════════════╗
 ║                                                                      ║
-║   🚀 RUNPOD UNIVERSAL DOWNLOADER v2.0                               ║
-║   ═══════════════════════════════════                               ║
+║   🚀 GALION UNIVERSAL DOWNLOADER - API SERVER v2.0                  ║
+║   ════════════════════════════════════════════════                  ║
 ║                                                                      ║
-║   Server running at: http://localhost:${PORT}                          ║
+║   API Server: http://localhost:${PORT}                                 ║
+║   Frontend:   cd galion-v2 && npm run dev (port 5173)               ║
 ║                                                                      ║
-║   ✓ Download from ANY platform                                      ║
-║   ✓ CivitAI, GitHub, YouTube, Telegram, and more                   ║
-║   ✓ Models, Images, Videos, Profiles, Galleries                    ║
-║   ✓ No rate limits (your own infrastructure)                       ║
-║   ✓ Serverless deployment ready                                    ║
+║   ✓ RESTful API for downloads                                       ║
+║   ✓ WebSocket support for real-time progress                        ║
+║   ✓ CORS enabled for frontend integration                           ║
+║   ✓ CivitAI, GitHub, YouTube, Telegram, HuggingFace                ║
 ║                                                                      ║
-║   📖 Open this URL in your browser to start downloading!           ║
+║   📖 API Docs: GET /                                                ║
 ║                                                                      ║
 ╚══════════════════════════════════════════════════════════════════════╝
     `);
