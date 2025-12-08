@@ -48,7 +48,7 @@ cd universal-downloader
 3. Add the upstream remote:
 
 ```bash
-git remote add upstream https://github.com/galion-app/universal-downloader.git
+git remote add upstream https://github.com/galion-studio/galion-universal-downloader.git
 ```
 
 ---
