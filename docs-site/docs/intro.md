@@ -1,83 +1,125 @@
 ---
 sidebar_position: 1
-slug: /
 ---
 
-# Galion Universal Downloader
+# 🏴‍☠️ Welcome to Galion
 
-> **Your Only Limit Is Your Imagination**
+<div align="center">
 
-Welcome to the official documentation for **Galion Universal Downloader** - the ultimate open-source tool for downloading content from any platform on the planet.
+  **"Your Only Limit Is Your Imagination"**
 
-## 🚀 What is Galion?
+  *The Universal Downloader That Puts You In Control*
 
-Galion Universal Downloader is a powerful, free, and open-source tool that lets you download content from virtually any platform - all with a beautiful, calm interface.
+</div>
 
-Whether you need:
-- 🎨 **AI Models** from CivitAI
-- 🐙 **Repositories** from GitHub
-- 🎬 **Videos** from YouTube
-- 📱 **Files** from Telegram
-- 🤗 **Models** from HuggingFace
-- 🌐 **Any file** from any URL
+---
 
-Galion handles it all with a single click.
+## What is Galion?
 
-## 🎯 Philosophy
+**Galion Universal Downloader** is a free, open-source, multi-platform content downloader. It's designed to empower users with the ability to download content from various platforms with ease.
 
-> One tool. Every platform. Zero complexity.
+Think of it as **the download manager the internet deserves** - beautiful, powerful, and privacy-respecting.
 
-We believe downloading files should be simple. No accounts, no subscriptions, no nonsense. Just paste a URL and download.
+---
 
-## ✨ Key Features
+## 🚀 Key Features
 
-- **Multi-Platform Support** - 6+ platforms and growing
-- **Smart Detection** - Automatically detects the platform from URL
-- **Beautiful UI** - Dark/Light themes, smooth animations
-- **100% Local** - Your data never leaves your machine
-- **AI-Powered** - Optional cognitive features for smart organization
-- **Open Source** - MIT License, free forever
+| Feature | Description |
+|---------|-------------|
+| 🎯 **Auto-Detection** | Paste any URL, we identify the platform automatically |
+| 📥 **Multi-Platform** | CivitAI, GitHub, YouTube, Telegram, HuggingFace, and more |
+| 🎨 **Beautiful UI** | Modern interface with dark/light modes and stunning animations |
+| 🔒 **100% Local** | All data stays on your machine - we never track you |
+| ⚡ **Fast** | Optimized for speed with parallel processing |
+| 🧠 **AI-Powered** | Semantic search and knowledge graph capabilities |
 
-## 🌐 Part of the Galion Ecosystem
+---
 
-Galion Universal Downloader is part of the larger [Galion Ecosystem](./ecosystem/overview):
+## 📥 Supported Platforms
 
-- **[galion.app](https://galion.app)** - Talk to Galion AI
-- **[galion.studio](https://galion.studio)** - Developer Portal
-- **[HuggingFace](https://huggingface.co/galion-studio)** - AI Models
+| Platform | What You Can Download |
+|----------|----------------------|
+| 🎨 **CivitAI** | AI models, LoRAs, embeddings, checkpoints |
+| 🐙 **GitHub** | Repositories, releases, raw files |
+| ▶️ **YouTube** | Videos, audio, playlists |
+| ✈️ **Telegram** | Media, documents, channel content |
+| 🤗 **HuggingFace** | ML models, datasets, spaces |
+| 🌐 **Any URL** | Direct download links |
 
-## 🚀 Quick Start
+---
+
+## 🏴‍☠️ Our Philosophy
+
+We believe in:
+
+- **📖 Information Freedom** - Content should be accessible
+- **🔓 Open Source** - Our code is free, forever
+- **🛡️ Privacy First** - No tracking, no telemetry
+- **🤝 Community** - Built by users, for users
+- **⚔️ Digital Rights** - Your data, your control
+
+---
+
+## Quick Start
+
+### 5 Seconds to Download
+
+1. **Visit** the [live demo](https://galion-studio.github.io/galion-universal-downloader/)
+2. **Paste** any supported URL
+3. **Click** Download
+4. **Done!** ✅
+
+### Self-Hosting (Recommended)
 
 ```bash
-# Clone the repository
+# Clone
 git clone https://github.com/galion-studio/galion-universal-downloader.git
+cd galion-universal-downloader
 
-# Navigate to the project
-cd galion-universal-downloader/galion-v2
-
-# Install dependencies
+# Install & Run
+cd galion-v2
 npm install
-
-# Start the app
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) and start downloading!
+---
 
-## 📖 Documentation
+## 📖 Documentation Sections
 
-- [Getting Started](./getting-started/installation) - Install and run Galion
-- [Platforms](./platforms/overview) - Supported platforms guide
-- [API Reference](./api/overview) - Developer documentation
-- [Ecosystem](./ecosystem/overview) - Learn about the Galion Ecosystem
-- [About](./about/company) - Who we are
-
-## 💬 Community
-
-- [GitHub Discussions](https://github.com/galion-studio/galion-universal-downloader/discussions) - Ask questions, share ideas
-- [GitHub Issues](https://github.com/galion-studio/galion-universal-downloader/issues) - Report bugs
-- [Contributing](./about/contributing) - Help improve Galion
+- **[Getting Started](./getting-started/installation)** - Installation and setup
+- **[Platforms](./platforms/overview)** - Detailed platform guides
+- **[API Reference](./api/overview)** - For developers
+- **[Ecosystem](./ecosystem/overview)** - The larger Galion ecosystem
+- **[About](./about/company)** - Our philosophy and mission
 
 ---
 
-**Ready to get started?** Head to the [Installation Guide](./getting-started/installation)!
+## ⚖️ Legal Notice
+
+Galion is a **neutral tool**. Like a web browser:
+
+- ✅ We provide download capabilities
+- ❌ We don't host content
+- ❌ We don't track users
+- 👤 Users are responsible for their downloads
+
+**Download responsibly. Respect copyright in your jurisdiction.**
+
+---
+
+## 🤝 Get Involved
+
+- ⭐ [Star on GitHub](https://github.com/galion-studio/galion-universal-downloader)
+- 🍴 [Fork & Contribute](https://github.com/galion-studio/galion-universal-downloader/fork)
+- 🐛 [Report Bugs](https://github.com/galion-studio/galion-universal-downloader/issues)
+- 💡 [Request Features](https://github.com/galion-studio/galion-universal-downloader/issues)
+
+---
+
+<div align="center">
+
+  **🏴‍☠️ Open Source Forever 🏴‍☠️**
+
+  *Made with ❤️ by the Galion Community*
+
+</div>
