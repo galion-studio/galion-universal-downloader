@@ -11,8 +11,11 @@ import {
   Loader2,
   CheckCircle2,
   AlertCircle,
-  FolderOpen
+  FolderOpen,
+  Zap,
+  MessageCircle
 } from 'lucide-react'
+import { TAGLINES, SOCIAL_LINKS } from '@/lib/galion-ecosystem'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -21,7 +24,7 @@ import { Progress } from '@/components/ui/progress'
 import { useToast } from '@/hooks/use-toast'
 import { cn } from '@/lib/utils'
 
-type Platform = 'civitai' | 'github' | 'youtube' | 'telegram' | 'generic' | null
+type Platform = 'civitai' | 'github' | 'youtube' | 'telegram' | 'huggingface' | 'generic' | null
 
 interface DownloadItem {
   id: string
@@ -38,6 +41,7 @@ const platformConfig = {
   github: { icon: Github, label: 'GitHub', color: 'text-white' },
   youtube: { icon: Youtube, label: 'YouTube', color: 'text-red-400' },
   telegram: { icon: Send, label: 'Telegram', color: 'text-blue-400' },
+  huggingface: { icon: Zap, label: 'HuggingFace', color: 'text-yellow-400' },
   generic: { icon: Globe, label: 'Generic', color: 'text-gray-400' },
 }
 
@@ -47,6 +51,7 @@ function detectPlatform(url: string): Platform {
   if (url.includes('github.com')) return 'github'
   if (url.includes('youtube.com') || url.includes('youtu.be')) return 'youtube'
   if (url.includes('t.me') || url.includes('telegram')) return 'telegram'
+  if (url.includes('huggingface.co') || url.includes('hf.co')) return 'huggingface'
   if (url.startsWith('http')) return 'generic'
   return null
 }
@@ -123,15 +128,48 @@ export function DownloadSection() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center py-8"
+        className="text-center py-12"
       >
-        <h1 className="text-4xl font-bold mb-4">
+        <motion.p 
+          className="text-sm text-galion-400 mb-4 tracking-widest uppercase"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          {TAGLINES.main}
+        </motion.p>
+        <h1 className="text-5xl font-bold mb-6">
           <span className="gradient-text">Universal Downloader</span>
         </h1>
-        <p className="text-muted-foreground max-w-xl mx-auto">
-          Download from any platform with a single click. CivitAI, GitHub, YouTube, 
-          Telegram, and more — all in one place.
+        <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
+          {TAGLINES.download}
+          <br />
+          <span className="text-sm mt-2 block opacity-75">
+            CivitAI • GitHub • YouTube • Telegram • HuggingFace • Any URL
+          </span>
         </p>
+        
+        {/* Ecosystem Links */}
+        <div className="flex justify-center gap-4 mt-8">
+          <a 
+            href={SOCIAL_LINKS.galionApp}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-galion-500/30 hover:border-galion-500 hover:bg-galion-500/10 transition-colors text-sm"
+          >
+            <MessageCircle className="h-4 w-4 text-galion-400" />
+            Talk to Galion AI
+          </a>
+          <a 
+            href={SOCIAL_LINKS.huggingFace}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-yellow-500/30 hover:border-yellow-500 hover:bg-yellow-500/10 transition-colors text-sm"
+          >
+            <Zap className="h-4 w-4 text-yellow-400" />
+            HuggingFace
+          </a>
+        </div>
       </motion.div>
 
       {/* URL Input Card */}
@@ -275,7 +313,7 @@ export function DownloadSection() {
           <div className="text-sm text-muted-foreground">Total Downloaded</div>
         </Card>
         <Card className="text-center p-6">
-          <div className="text-3xl font-bold text-galion-500">5</div>
+          <div className="text-3xl font-bold text-galion-500">6</div>
           <div className="text-sm text-muted-foreground">Platforms</div>
         </Card>
       </div>
