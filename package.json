@@ -1,0 +1,81 @@
+{
+  "name": "runpod-universal-downloader",
+  "version": "2.0.0",
+  "description": "🚀 Master Universal Content Downloader - Download EVERYTHING from ANY platform. Part of the Galion.studio Ecosystem (Galion Initiative - 40% Open Source)",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "server": "node server.js",
+    "cli": "node index.js",
+    "dev": "node --watch server.js",
+    "start:serverless": "PORT=${PORT:-3000} NODE_ENV=production DOWNLOADS_DIR=/tmp/downloads node server.js",
+    "docker": "docker build -t runpod-downloader . && docker run -p 3000:3000 runpod-downloader",
+    "docker:serverless": "docker build -t runpod-downloader . && docker run -e NODE_ENV=production -e DOWNLOADS_DIR=/tmp/downloads -p 3000:3000 runpod-downloader"
+  },
+  "bin": {
+    "runpod-dl": "./index.js"
+  },
+  "keywords": [
+    "universal-downloader",
+    "galion-studio",
+    "galion-initiative",
+    "open-source",
+    "serverless",
+    "runpod",
+    "civitai",
+    "github",
+    "youtube",
+    "telegram",
+    "instagram",
+    "twitter",
+    "downloader",
+    "ai-models",
+    "lora",
+    "safetensors",
+    "transcription",
+    "pdf-generator",
+    "research-templates"
+  ],
+  "author": "Galion.studio",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/galion-studio/runpod-universal-downloader.git"
+  },
+  "homepage": "https://galion.studio",
+  "bugs": {
+    "url": "https://github.com/galion-studio/runpod-universal-downloader/issues"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://galion.studio"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "archiver": "^6.0.2",
+    "axios": "^1.6.2",
+    "chalk": "^5.3.0",
+    "cheerio": "^1.0.0-rc.12",
+    "commander": "^11.1.0",
+    "express": "^4.22.1",
+    "fs-extra": "^11.2.0",
+    "node-telegram-bot-api": "^0.64.0",
+    "ora": "^7.0.1",
+    "puppeteer": "^21.6.1",
+    "sharp": "^0.33.1",
+    "uuid": "^9.0.1",
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "serverless": {
+    "provider": "runpod",
+    "memorySize": 2048,
+    "timeout": 300,
+    "gpu": true
+  }
+}
