@@ -5,7 +5,17 @@
 <h1 align="center">Galion Universal Downloader</h1>
 
 <p align="center">
-  <strong>Download Everything. From Everywhere. Effortlessly.</strong>
+  <strong>Your Only Limit Is Your Imagination</strong>
+  <br />
+  <em>Download Everything. From Everywhere. Effortlessly.</em>
+</p>
+
+<p align="center">
+  <a href="https://galion-studio.github.io/galion-universal-downloader/">🚀 <strong>Live Demo</strong></a>
+  &nbsp;•&nbsp;
+  <a href="https://galion.app">💬 Talk to Galion AI</a>
+  &nbsp;•&nbsp;
+  <a href="https://huggingface.co/galion-studio">🤗 HuggingFace</a>
 </p>
 
 <p align="center">
