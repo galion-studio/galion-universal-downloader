@@ -1,257 +1,260 @@
-# Contributing to Galion Universal Downloader
+# 🏴‍☠️ Contributing to Galion Universal Downloader
 
-First off, thank you for considering contributing to Galion! 🎉
+<div align="center">
 
-It's people like you that make Galion such a great tool. We welcome contributions from everyone, whether you're a seasoned developer or just getting started.
+  **"Your Only Limit Is Your Imagination"**
 
-## 📋 Table of Contents
+  *Thank you for your interest in making Galion better!*
 
-- [Code of Conduct](#code-of-conduct)
-- [Getting Started](#getting-started)
-- [How Can I Contribute?](#how-can-i-contribute)
-- [Development Setup](#development-setup)
-- [Pull Request Process](#pull-request-process)
-- [Style Guidelines](#style-guidelines)
-- [Community](#community)
+</div>
 
 ---
 
-## 📜 Code of Conduct
+## 🎯 Our Mission
 
-This project and everyone participating in it is governed by our commitment to creating a welcoming and inclusive environment. By participating, you are expected to:
+We're building the **ultimate universal downloader** - free, open source, and unstoppable. Like The Pirate Bay before us, we believe in information freedom and user empowerment.
 
-- **Be respectful** - Treat everyone with respect and consideration
-- **Be constructive** - Focus on what is best for the community
-- **Be patient** - Remember that everyone has different experience levels
-- **Be kind** - A little kindness goes a long way
+**This project belongs to the community. Your contributions make it stronger.**
 
 ---
 
-## 🚀 Getting Started
+## 🤝 How to Contribute
 
-### Prerequisites
-
-- Node.js 18 or higher
-- npm or yarn
-- Git
-
-### Fork and Clone
-
-1. Fork the repository on GitHub
-2. Clone your fork locally:
+### 1. Fork & Clone
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/universal-downloader.git
-cd universal-downloader
+# Fork via GitHub UI, then:
+git clone https://github.com/YOUR-USERNAME/galion-universal-downloader.git
+cd galion-universal-downloader
 ```
 
-3. Add the upstream remote:
+### 2. Set Up Development Environment
 
 ```bash
-git remote add upstream https://github.com/galion-studio/galion-universal-downloader.git
+# Frontend (React + Vite)
+cd galion-v2
+npm install
+npm run dev
+
+# Backend (Node.js) - in root directory
+npm install
+npm start
 ```
+
+### 3. Create a Feature Branch
+
+```bash
+git checkout -b feature/your-amazing-feature
+# or
+git checkout -b fix/bug-you-found
+```
+
+### 4. Make Your Changes
+
+- Write clean, readable code
+- Follow existing code style
+- Add comments for complex logic
+- Test your changes
+
+### 5. Commit & Push
+
+```bash
+git add .
+git commit -m "feat: add amazing new feature"
+git push origin feature/your-amazing-feature
+```
+
+### 6. Open a Pull Request
+
+Go to GitHub and open a PR against `main`. Describe what you did and why.
 
 ---
 
-## 💡 How Can I Contribute?
+## 📋 What We Need Help With
 
-### 🐛 Reporting Bugs
+### 🔥 High Priority
+- [ ] Download queue system
+- [ ] Pause/resume functionality
+- [ ] More platform integrations
+- [ ] Mobile-responsive UI improvements
+- [ ] Performance optimizations
 
-Found a bug? We'd love to know about it!
+### 🎨 UI/UX
+- [ ] New animation ideas
+- [ ] Theme variations
+- [ ] Accessibility improvements
+- [ ] Mobile design
 
-1. **Search existing issues** - Check if someone else already reported it
-2. **Create a new issue** - If not, create a detailed bug report with:
-   - Clear title and description
-   - Steps to reproduce
-   - Expected vs actual behavior
-   - Screenshots if applicable
-   - Your environment (OS, Node version, browser)
-
-### ✨ Suggesting Features
-
-Have an idea? We want to hear it!
-
-1. **Search existing issues** - Maybe someone already suggested it
-2. **Create a feature request** with:
-   - Clear description of the feature
-   - Why it would be useful
-   - Possible implementation ideas (optional)
-
-### 💻 Code Contributions
-
-Ready to write some code? Here's how:
-
-1. **Find an issue** - Look for issues labeled `good first issue` or `help wanted`
-2. **Comment** - Let us know you're working on it
-3. **Fork & Branch** - Create a feature branch
-4. **Code** - Write your amazing code
-5. **Test** - Make sure it works
-6. **PR** - Submit a pull request
+### 🔧 Backend
+- [ ] New platform handlers
+- [ ] API improvements
+- [ ] Error handling
+- [ ] Rate limiting & retry logic
 
 ### 📖 Documentation
+- [ ] Tutorials and guides
+- [ ] Translations
+- [ ] Code comments
+- [ ] API documentation
 
-Documentation is just as important as code!
+### 🧪 Testing
+- [ ] Unit tests
+- [ ] Integration tests
+- [ ] E2E tests
+- [ ] Bug reports
 
-- Fix typos
-- Clarify confusing sections
-- Add examples
-- Translate to other languages
+---
 
-### 🌍 Adding New Platforms
+## 🎨 Code Style
 
-Want to add support for a new platform? Here's the pattern:
-
+### TypeScript/JavaScript
 ```typescript
-// src/platforms/NewPlatform.js
+// Use meaningful names
+const downloadProgress = 0;
 
-export class NewPlatformHandler {
-  static canHandle(url: string): boolean {
-    return url.includes('newplatform.com')
-  }
+// Document complex functions
+/**
+ * Downloads content from a specific platform
+ * @param url - The URL to download from
+ * @param options - Download options
+ * @returns Promise resolving to download result
+ */
+async function downloadFromPlatform(url: string, options: DownloadOptions): Promise<DownloadResult> {
+  // ...
+}
 
-  static async download(url: string, options: DownloadOptions): Promise<DownloadResult> {
-    // Your download logic here
-  }
+// Prefer const over let
+const config = getConfig();
+
+// Use async/await over callbacks
+const result = await fetchData();
+```
+
+### React Components
+```tsx
+// Use functional components with hooks
+export function MyComponent({ prop }: Props) {
+  const [state, setState] = useState<Type>(initialValue);
+  
+  return (
+    <div className="semantic-class-name">
+      {/* Content */}
+    </div>
+  );
 }
 ```
 
----
+### CSS/Tailwind
+```tsx
+// Prefer Tailwind utility classes
+<div className="flex items-center gap-4 p-6 rounded-lg bg-card">
 
-## 🛠️ Development Setup
-
-### Install Dependencies
-
-```bash
-# Root project
-npm install
-
-# Frontend (galion-v2)
-cd galion-v2
-npm install
-```
-
-### Start Development Server
-
-```bash
-# Frontend
-cd galion-v2
-npm run dev
-```
-
-### Build for Production
-
-```bash
-cd galion-v2
-npm run build
+// Use semantic class names for complex styles in index.css
+<div className="card-3d shimmer hover:scale-105">
 ```
 
 ---
 
-## 📝 Pull Request Process
+## 📝 Commit Messages
 
-### Before Submitting
+We follow [Conventional Commits](https://www.conventionalcommits.org/):
 
-1. **Update your fork** with the latest upstream changes:
-
-```bash
-git fetch upstream
-git rebase upstream/main
 ```
-
-2. **Test your changes** - Make sure everything works
-3. **Lint your code** - Follow our style guidelines
-4. **Write meaningful commits** - Clear, concise commit messages
-
-### PR Template
-
-When you submit a PR, please include:
-
-```markdown
-## Description
-Brief description of your changes
-
-## Type of Change
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Documentation update
-- [ ] Other (please describe)
-
-## Testing
-How did you test these changes?
-
-## Screenshots (if applicable)
-Add screenshots here
-
-## Checklist
-- [ ] My code follows the project's style guidelines
-- [ ] I have tested my changes
-- [ ] I have updated the documentation if needed
+feat: add new download feature
+fix: resolve progress bar issue
+docs: update README
+style: improve button animations
+refactor: simplify platform detection
+test: add unit tests for downloader
+chore: update dependencies
 ```
-
-### Review Process
-
-1. A maintainer will review your PR
-2. They may request changes - that's normal!
-3. Once approved, your PR will be merged
-4. Celebrate! 🎉
 
 ---
 
-## 🎨 Style Guidelines
+## 🐛 Reporting Bugs
 
-### Code Style
-
-- **TypeScript** - Use TypeScript for type safety
-- **Formatting** - We use Prettier for consistent formatting
-- **Naming** - Use clear, descriptive names
-- **Comments** - Write comments for complex logic
-
-### Commit Messages
-
-Follow conventional commits:
-
-```
-feat: add new feature
-fix: fix a bug
-docs: update documentation
-style: formatting changes
-refactor: code refactoring
-test: add tests
-chore: maintenance tasks
-```
-
-### File Organization
-
-- **Components** - One component per file
-- **Hooks** - Custom hooks in `src/hooks/`
-- **Utils** - Helper functions in `src/lib/`
-- **Types** - TypeScript types in appropriate files
+1. Check if the bug is already reported in [Issues](https://github.com/galion-studio/galion-universal-downloader/issues)
+2. If not, create a new issue with:
+   - **Title**: Clear, concise description
+   - **Steps to Reproduce**: How to trigger the bug
+   - **Expected Behavior**: What should happen
+   - **Actual Behavior**: What actually happens
+   - **Screenshots**: If applicable
+   - **Environment**: OS, browser, Node version
 
 ---
 
-## 🌐 Community
+## 💡 Feature Requests
 
-### Get Help
+We love new ideas! When suggesting features:
 
-- **GitHub Issues** - For bugs and features
-- **Discussions** - For questions and ideas
-
-### Stay Updated
-
-- ⭐ Star the repository
-- 👀 Watch for updates
-- 🍴 Fork to experiment
+1. **Search existing issues** first
+2. **Describe the problem** you're trying to solve
+3. **Propose a solution** if you have one
+4. **Consider alternatives** you've thought about
 
 ---
 
-## 🙏 Thank You!
+## 🏴‍☠️ The Pirate Code
 
-Every contribution, no matter how small, helps make Galion better. Whether you're fixing a typo, reporting a bug, or building a new feature – you're making a difference.
+As contributors to this project, we agree to:
 
-**Happy coding!** 💻✨
+1. **Write code that empowers users**
+2. **Keep the project open source forever**
+3. **Welcome contributions from everyone**
+4. **Respect each other and the community**
+5. **Fight for information freedom**
+6. **Never add tracking, telemetry, or backdoors**
+7. **Maintain user privacy above all**
 
 ---
 
-<p align="center">
-  <strong>Made with ❤️ by the Galion community</strong>
-</p>
+## ⚖️ Legal Notes
+
+By contributing, you agree that:
+
+- Your contributions are your own original work
+- You grant the project an MIT license to your contributions
+- You understand this is a tool for legitimate content downloading
+- You won't add malicious code, backdoors, or tracking firmware
+
+---
+
+## 🎖️ Recognition
+
+Contributors are recognized in:
+- The README contributors section
+- Release notes
+- Our eternal gratitude 🙏
+
+---
+
+## 📞 Getting Help
+
+- 💬 **GitHub Issues** - For bugs and features
+- 📖 **Documentation** - Check the docs first
+- 🌐 **galion.app** - Talk to Galion AI
+
+---
+
+## 🏴‍☠️ Final Words
+
+> "In a world of closed doors and paywalls, 
+> we build bridges and open windows.
+> Every line of code is an act of liberation.
+> Every contribution makes the tool stronger.
+> Together, we are unstoppable."
+>
+> — The Galion Manifesto
+
+**Thank you for being part of this journey. Your Only Limit Is Your Imagination. 🏴‍☠️**
+
+---
+
+<div align="center">
+
+  Made with ❤️ by contributors worldwide
+
+  [Back to README](README.md) | [View Issues](https://github.com/galion-studio/galion-universal-downloader/issues)
+
+</div>

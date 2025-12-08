@@ -1,226 +1,233 @@
-<p align="center">
-  <img src="galion-v2/public/galion-logo.svg" width="120" height="120" alt="Galion Logo">
-</p>
+# 🏴‍☠️ Galion Universal Downloader
 
-<h1 align="center">Galion Universal Downloader</h1>
+<div align="center">
 
-<p align="center">
-  <strong>Your Only Limit Is Your Imagination</strong>
-  <br />
-  <em>Download Everything. From Everywhere. Effortlessly.</em>
-</p>
+  <img src="galion-v2/public/favicon.svg" alt="Galion Logo" width="120" />
 
-<p align="center">
-  <a href="https://galion-studio.github.io/galion-universal-downloader/">🚀 <strong>Live Demo</strong></a>
-  &nbsp;•&nbsp;
-  <a href="https://galion.app">💬 Talk to Galion AI</a>
-  &nbsp;•&nbsp;
-  <a href="https://huggingface.co/galion-studio">🤗 HuggingFace</a>
-</p>
+  ### **"Your Only Limit Is Your Imagination"**
 
-<p align="center">
-  <a href="#features">Features</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#usage">Usage</a> •
-  <a href="#supported-platforms">Platforms</a> •
-  <a href="#contributing">Contributing</a> •
-  <a href="#license">License</a>
-</p>
+  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+  [![Open Source](https://img.shields.io/badge/Open%20Source-Forever-green.svg)](https://github.com/galion-studio/galion-universal-downloader)
+  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+  [![Information Freedom](https://img.shields.io/badge/🏴‍☠️-Information%20Freedom-black.svg)](#our-philosophy)
 
-<p align="center">
-  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License">
-  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome">
-  <img src="https://img.shields.io/badge/node-%3E%3D18-green.svg" alt="Node 18+">
-  <img src="https://img.shields.io/badge/made%20with-love-red.svg" alt="Made with Love">
-</p>
+  **Download anything. From anywhere. Effortlessly.**
+
+  [🚀 Live Demo](https://galion-studio.github.io/galion-universal-downloader/) | [📖 Documentation](docs/) | [🤝 Contribute](CONTRIBUTING.md)
+
+</div>
 
 ---
 
-## ✨ What is Galion?
+## 🏴‍☠️ Our Philosophy
 
-**Galion Universal Downloader** is the ultimate open-source tool for downloading content from any platform. Whether it's AI models from CivitAI, repositories from GitHub, videos from YouTube, or files from Telegram – Galion handles it all with a beautiful, calm interface.
+> **"We believe information wants to be free."**
 
-> 🎯 **Philosophy**: One tool. Every platform. Zero complexity.
+Just like The Pirate Bay fought for information freedom, Galion Universal Downloader stands as a **tool of digital liberation**. We believe that:
+
+- 📖 **Knowledge should be accessible to everyone**
+- 🌍 **Information transcends borders and paywalls**
+- 🔓 **Digital freedom is a fundamental right**
+- 🤝 **Open source is the foundation of trust**
+- ⚖️ **Users have the right to download content they have access to**
+
+### We Will Fight For This
+
+This project is **MIT Licensed** and will **always remain open source**. No corporation, government, or entity can take this away from the community. The code lives in the public domain, distributed across countless forks and mirrors.
+
+**If they close one door, a thousand more will open.**
 
 ---
 
-## 🚀 Features
+## 🚀 What is Galion?
 
-- 🌐 **Multi-Platform Support** - CivitAI, GitHub, YouTube, Telegram, and any generic URL
-- 🔍 **Smart Platform Detection** - Just paste a URL, we detect the rest
-- 📊 **Download Progress** - Real-time progress tracking with beautiful UI
-- 🧠 **Cognitive Intelligence** - AI-powered insights and semantic search
-- 🌙 **Dark & Light Themes** - Easy on your eyes, day or night
-- 📱 **Responsive Design** - Works beautifully on any screen size
-- 🔒 **100% Local** - Your API keys never leave your machine
-- ⚡ **Fast & Lightweight** - Minimal dependencies, maximum performance
+Galion Universal Downloader is a **powerful, multi-platform content downloader** that puts you in control of your digital content. Download from:
+
+| Platform | Status | Description |
+|----------|--------|-------------|
+| 🎨 **CivitAI** | ✅ Ready | AI models, LoRAs, embeddings |
+| 🐙 **GitHub** | ✅ Ready | Repositories, releases, raw files |
+| ▶️ **YouTube** | ✅ Ready | Videos, audio, playlists |
+| ✈️ **Telegram** | ✅ Ready | Media, documents, channels |
+| 🤗 **HuggingFace** | ✅ Ready | ML models, datasets |
+| 🌐 **Generic URL** | ✅ Ready | Any direct download link |
 
 ---
 
-## 📦 Installation
+## ✨ Features
+
+### Core Features
+- 🎯 **Auto-Platform Detection** - Paste any URL, we detect the source
+- 📥 **Multi-Platform Support** - 6+ platforms and growing
+- 🎨 **Beautiful UI** - Dark/light modes with stunning animations
+- 🧠 **AI-Powered** - Semantic search and knowledge graph
+- 🔒 **100% Local** - Your data stays on your machine
+- ⚡ **Lightning Fast** - Optimized for speed
+
+### Coming Soon
+- ⏸️ Pause/Resume downloads
+- 📊 Download queue with priorities
+- ⏰ Scheduled downloads
+- 📋 Clipboard monitoring
+- 🔗 Link grabber (extract all URLs from page)
+- 📦 Batch downloads
+
+---
+
+## 🛠️ Quick Start
 
 ### Prerequisites
-
-- Node.js 18 or higher
+- Node.js 18+ 
 - npm or yarn
 
-### Quick Start
+### Installation
 
 ```bash
 # Clone the repository
 git clone https://github.com/galion-studio/galion-universal-downloader.git
+
+# Navigate to project
 cd galion-universal-downloader
 
-# Install dependencies
+# Install frontend dependencies
+cd galion-v2
 npm install
 
-# Start the development server
+# Start development server
 npm run dev
+
+# Open http://localhost:5173 in your browser
 ```
 
-That's it! Open [http://localhost:5173](http://localhost:5173) and start downloading! 🎉
-
----
-
-## 🎮 Usage
-
-### Basic Usage
-
-1. **Paste a URL** - Just copy any supported URL and paste it
-2. **Click Download** - Galion auto-detects the platform and handles everything
-3. **Done!** - Your file is downloaded to the `downloads` folder
-
-### Supported URL Examples
-
-```
-# CivitAI Models
-https://civitai.com/models/12345
-
-# GitHub Repositories
-https://github.com/user/repo
-
-# YouTube Videos
-https://youtube.com/watch?v=abc123
-
-# Telegram Files
-https://t.me/channel/123
-
-# Any Direct URL
-https://example.com/file.zip
-```
-
----
-
-## 🌍 Supported Platforms
-
-| Platform | Status | Features |
-|----------|--------|----------|
-| 🎨 **CivitAI** | ✅ Full Support | Models, LoRAs, Checkpoints, Embeddings |
-| 🐙 **GitHub** | ✅ Full Support | Repos, Releases, Raw Files |
-| 🎬 **YouTube** | ✅ Full Support | Videos, Audio extraction |
-| 📱 **Telegram** | ✅ Full Support | Channel files, Media |
-| 🌐 **Generic** | ✅ Full Support | Any direct download URL |
-
----
-
-## 🧠 Cognitive Features
-
-Galion includes optional AI-powered features:
-
-- **Semantic Search** - Find downloads by meaning, not just keywords
-- **Knowledge Graph** - Visualize connections between your downloads
-- **Smart Suggestions** - AI recommends based on your patterns
-- **Auto-Categorization** - Organize files automatically
-
-> 💡 These features are optional and require API keys (stored locally)
-
----
-
-## ⚙️ Configuration
-
-### API Keys (Optional)
-
-For enhanced features, add your API keys in Settings:
-
-| Service | Purpose | Required |
-|---------|---------|----------|
-| CivitAI | Faster model downloads | Optional |
-| GitHub | Higher rate limits | Optional |
-| OpenAI | Cognitive features | Optional |
-
-All keys are stored **locally** in your browser - never sent anywhere!
-
----
-
-## 🛠️ Development
-
-### Tech Stack
-
-- ⚛️ **React 18** - Modern UI framework
-- 📘 **TypeScript** - Type-safe development
-- 🎨 **Tailwind CSS** - Utility-first styling
-- ⚡ **Vite** - Lightning-fast build tool
-- 🎭 **Radix UI** - Accessible components
-- 🎬 **Framer Motion** - Smooth animations
-
-### Project Structure
-
-```
-galion-v2/
-├── src/
-│   ├── components/
-│   │   ├── ui/          # Reusable UI components
-│   │   ├── download/    # Download section
-│   │   ├── history/     # History section
-│   │   ├── settings/    # Settings section
-│   │   └── cognitive/   # AI features section
-│   ├── hooks/           # Custom React hooks
-│   ├── lib/             # Utilities
-│   └── main.tsx         # Entry point
-├── public/              # Static assets
-└── index.html           # HTML template
-```
-
-### Scripts
+### For Backend (Optional)
 
 ```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run preview  # Preview production build
+# In the root directory
+npm install
+
+# Start backend server
+npm start
+
+# API available at http://localhost:3000
+```
+
+---
+
+## 🏗️ Architecture
+
+```
+galion-universal-downloader/
+├── galion-v2/                 # React frontend (Vite + TypeScript)
+│   ├── src/
+│   │   ├── components/        # UI components
+│   │   ├── lib/              # Utilities & ecosystem config
+│   │   └── hooks/            # Custom React hooks
+│   └── public/               # Static assets & logo
+├── src/                      # Node.js backend
+│   ├── platforms/            # Platform-specific downloaders
+│   └── core/                 # Core services
+├── docs/                     # Documentation
+└── docs-site/                # Docusaurus documentation site
 ```
 
 ---
 
 ## 🤝 Contributing
 
-We love contributions! Galion is a community-driven project.
-
-### How to Contribute
+We welcome contributions from everyone! This is a community project.
 
 1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing`)
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
 3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
 5. **Open** a Pull Request
-
-### Contribution Ideas
-
-- 🌍 Add support for new platforms
-- 🌐 Translations to other languages
-- 📖 Improve documentation
-- 🐛 Fix bugs
-- ✨ Suggest new features
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
 ---
 
-## 📜 License
+## 📜 Legal Notice & Disclaimer
 
-**MIT License** - Free for personal and commercial use!
+### Open Source Forever
+
+This software is released under the **MIT License**. This means:
+
+- ✅ You can **use** it for any purpose
+- ✅ You can **modify** it freely
+- ✅ You can **distribute** copies
+- ✅ You can **sell** copies (but why would you? It's free!)
+- ✅ You can **fork** and create derivatives
+
+### User Responsibility
+
+Galion Universal Downloader is a **neutral tool**. Like a web browser, it facilitates access to content on the internet. 
+
+**Important:**
+- 👤 **Users are responsible** for how they use this tool
+- ⚖️ **Respect copyright** in your jurisdiction
+- 📝 **Only download content** you have legal rights to access
+- 🚫 We **do not host** any content
+- 🔧 We provide a **tool**, not content
+
+### Why This Matters
+
+We believe in **information freedom**, but we also believe in **responsible use**. This tool is designed to help you:
+- Archive content you've purchased or have rights to
+- Download free and open content
+- Back up your own uploads
+- Access content you're subscribed to
+
+**The tool doesn't distinguish rights - that's your responsibility as a user.**
+
+---
+
+## 🌐 The Galion Ecosystem
+
+Galion Universal Downloader is part of a larger ecosystem:
+
+- 🌐 [galion.app](https://galion.app) - Talk to Galion AI
+- 🏢 [galion.studio](https://galion.studio) - Developer Portal  
+- 🤗 [HuggingFace](https://huggingface.co/galion-studio) - ML Models
+- 📖 [Documentation](https://galion-studio.github.io/galion-universal-downloader/)
+
+---
+
+## 🏴‍☠️ The Manifesto
 
 ```
-Copyright (c) 2024 Galion
+In a world where information is power,
+And access is increasingly controlled,
+We build tools that empower users.
+
+We don't ask permission.
+We don't wait for approval.
+We create, we share, we liberate.
+
+Your Only Limit Is Your Imagination.
+
+- The Galion Crew 🏴‍☠️
+```
+
+---
+
+## ⭐ Support the Project
+
+If Galion helps you, consider:
+
+- ⭐ **Star** this repository
+- 🍴 **Fork** and contribute
+- 📣 **Share** with others
+- 🐛 **Report** bugs and suggestions
+- 💬 **Join** the discussion
+
+---
+
+## 📄 License
+
+```
+MIT License
+
+Copyright (c) 2024-2025 Galion Studio
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -243,29 +250,12 @@ SOFTWARE.
 
 ---
 
-## 💖 Credits
+<div align="center">
 
-Built with love by the [Galion](https://galion.app) team and amazing contributors.
+  **Made with ❤️ and 🏴‍☠️ by the Galion Community**
 
-Special thanks to:
-- The open-source community
-- All our contributors
-- You, for using Galion!
+  *"Your Only Limit Is Your Imagination"*
 
----
+  [⬆ Back to Top](#-galion-universal-downloader)
 
-<p align="center">
-  <strong>⭐ Star us on GitHub if you find this useful!</strong>
-</p>
-
-<p align="center">
-  <a href="https://github.com/galion-studio/galion-universal-downloader">
-    <img src="https://img.shields.io/github/stars/galion-studio/galion-universal-downloader?style=social" alt="GitHub Stars">
-  </a>
-</p>
-
----
-
-<p align="center">
-  Made with ❤️ by the Galion community
-</p>
+</div>
