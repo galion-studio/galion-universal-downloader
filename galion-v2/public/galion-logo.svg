@@ -1,1 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none"><defs><linearGradient id="galionGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#818cf8"/><stop offset="100%" stop-color="#6366f1"/></linearGradient></defs><circle cx="50" cy="50" r="45" fill="url(#galionGrad)"/><path d="M30 55L45 70L70 35" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M25 40L35 30" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.7"/><path d="M65 25L75 35" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.7"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="flameGrad" x1="50%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="50%" stop-color="#fb923c"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+    <linearGradient id="innerFlame" x1="50%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#fef3c7"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="48" fill="none" stroke="#1f2937" stroke-width="2"/>
+  <path d="M50 85 C30 70 25 55 30 40 C32 35 38 30 42 35 C40 25 45 15 50 10 C55 15 60 25 58 35 C62 30 68 35 70 40 C75 55 70 70 50 85" fill="url(#flameGrad)"/>
+  <path d="M50 80 C38 68 35 58 38 48 C40 44 44 42 46 45 C45 38 48 30 50 26 C52 30 55 38 54 45 C56 42 60 44 62 48 C65 58 62 68 50 80" fill="url(#innerFlame)"/>
+</svg>
