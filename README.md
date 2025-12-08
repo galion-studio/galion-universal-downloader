@@ -58,8 +58,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/galion-app/universal-downloader.git
-cd universal-downloader
+git clone https://github.com/galion-studio/galion-universal-downloader.git
+cd galion-universal-downloader
 
 # Install dependencies
 npm install
@@ -249,8 +249,8 @@ Special thanks to:
 </p>
 
 <p align="center">
-  <a href="https://github.com/galion-app/universal-downloader">
-    <img src="https://img.shields.io/github/stars/galion-app/universal-downloader?style=social" alt="GitHub Stars">
+  <a href="https://github.com/galion-studio/galion-universal-downloader">
+    <img src="https://img.shields.io/github/stars/galion-studio/galion-universal-downloader?style=social" alt="GitHub Stars">
   </a>
 </p>
 
