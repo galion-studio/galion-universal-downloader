@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Galion.studio Ecosystem | RunPod Universal Downloader</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .about-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-tertiary));
+            border-radius: var(--radius-xl);
+            margin-bottom: 40px;
+            border: 1px solid var(--border-color);
+        }
+
+        .hero-section h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        .hero-section .tagline {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .section h2 {
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .section ul {
+            color: var(--text-secondary);
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(167, 139, 250, 0.1));
+            border: 1px solid var(--accent-primary);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .highlight-box h3 {
+            color: var(--accent-secondary);
+            margin-bottom: 12px;
+        }
+
+        .serverless-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--success);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .ecosystem-diagram {
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin: 24px 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            white-space: pre;
+            color: var(--text-secondary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        .data-policy {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid var(--success);
+        }
+
+        .data-policy h2 {
+            color: var(--success);
+        }
+
+        .warning-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid var(--warning);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .warning-box strong {
+            color: var(--warning);
+        }
+
+        .safe-box {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid var(--success);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .safe-box strong {
+            color: var(--success);
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .platform-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .platform-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .platform-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+        }
+
+        .platform-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .platform-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .initiative-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-tertiary));
+            border: 2px solid var(--accent-primary);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin: 24px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .initiative-card::before {
+            content: '40%';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 5rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            opacity: 0.1;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, var(--accent-primary), #c084fc);
+            border-radius: var(--radius-lg);
+            margin-top: 40px;
+        }
+
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 24px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .cta-btn {
+            padding: 14px 32px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .cta-btn-primary {
+            background: white;
+            color: var(--accent-primary);
+        }
+
+        .cta-btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: color 0.2s;
+        }
+
+        .nav-back:hover {
+            color: var(--accent-primary);
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .platform-grid {
+                grid-template-columns: 1fr;
+            }
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container about-container">
+        <a href="/" class="nav-back">← Back to Downloader</a>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="logo-icon" style="font-size: 4rem; margin-bottom: 20px;">🚀</div>
+            <h1>Galion.studio</h1>
+            <p class="tagline">The Showcase Platform for Open Source AI Tools</p>
+            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+                Galion.studio is the central ecosystem showcasing all our projects, including the 
+                <strong style="color: var(--accent-primary);">Galion Initiative</strong> - our commitment 
+                to open-sourcing 40% of everything we build.
+            </p>
+            <div style="margin-top: 20px;">
+                <span class="serverless-badge">⚡ Serverless Ready</span>
+            </div>
+        </section>
+
+        <!-- Ecosystem Structure -->
+        <section class="section">
+            <h2>🌐 The Ecosystem Structure</h2>
+            <p>
+                <strong>Galion.studio</strong> is the main showcase platform that houses everything we do.
+                Within this ecosystem, the <strong>Galion Initiative</strong> represents our open-source 
+                commitment - it's one project among many, not the other way around.
+            </p>
+
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="platform-icon">🏢</div>
+                    <div class="platform-name">galion.studio</div>
+                    <div class="platform-desc">Showcase & Corporate Platform</div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon">🎙️</div>
+                    <div class="platform-name">galion.app</div>
+                    <div class="platform-desc">Voice AI Platform</div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon">👨‍💻</div>
+                    <div class="platform-name">developer.galion.app</div>
+                    <div class="platform-desc">Developer Portal & APIs</div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>🎯 What galion.studio Showcases</h3>
+                <ul>
+                    <li>📦 <strong>Project Showcase</strong> - All our open-source and commercial projects</li>
+                    <li>🛠️ <strong>Technology Demo</strong> - Live demos of our AI capabilities</li>
+                    <li>🛒 <strong>API Marketplace</strong> - Cheapest AI APIs in the world</li>
+                    <li>📚 <strong>Documentation Hub</strong> - Integration guides and tutorials</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Galion Initiative -->
+        <section class="initiative-card">
+            <h2 style="color: var(--accent-primary); margin-bottom: 20px;">🌟 The Galion Initiative</h2>
+            <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 20px;">
+                The Galion Initiative is our <strong>commitment within the Galion.studio ecosystem</strong> 
+                to open-source 40% of everything we build. It's a project, not the parent company.
+            </p>
+            
+            <div class="stats-grid" style="margin-bottom: 0;">
+                <div class="stat-card">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">Open Source</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">60%</div>
+                    <div class="stat-label">Commercial</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8+</div>
+                    <div class="stat-label">Open Tools</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">⚡</div>
+                    <div class="stat-label">Serverless</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Serverless Architecture -->
+        <section class="section">
+            <h2>⚡ Serverless-Ready Architecture</h2>
+            <p>
+                All tools in the Galion.studio ecosystem are designed for serverless deployment.
+                This means they can run anywhere: RunPod, AWS Lambda, Google Cloud, or your own infrastructure.
+            </p>
+
+            <div class="highlight-box">
+                <h3>Deployment Targets</h3>
+                <ul>
+                    <li>🚀 <strong>RunPod</strong> - GPU-accelerated serverless</li>
+                    <li>☁️ <strong>AWS Lambda</strong> - Serverless functions</li>
+                    <li>🌐 <strong>Google Cloud Functions</strong> - Event-driven compute</li>
+                    <li>▲ <strong>Vercel/Netlify</strong> - Edge functions</li>
+                    <li>🐳 <strong>Docker/Kubernetes</strong> - Container orchestration</li>
+                </ul>
+            </div>
+
+            <p>
+                <strong>Key Features:</strong> Stateless design, cold start optimization, 
+                environment variable configuration, /tmp storage for serverless, GPU-acceleration support.
+            </p>
+        </section>
+
+        <!-- This Project -->
+        <section class="section">
+            <h2>📥 RunPod Universal Downloader</h2>
+            <p>
+                This tool is part of the <strong>Galion Initiative (40% Open Source)</strong> within 
+                the Galion.studio ecosystem. It's a universal downloader that works with any platform.
+            </p>
+
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="platform-icon">🎨</div>
+                    <div class="platform-name">CivitAI</div>
+                    <div class="platform-desc">Models, LoRAs, Images</div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon">🐙</div>
+                    <div class="platform-name">GitHub</div>
+                    <div class="platform-desc">Repos, Releases</div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon">🎬</div>
+                    <div class="platform-name">YouTube</div>
+                    <div class="platform-desc">Videos, Transcripts</div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon">📨</div>
+                    <div class="platform-name">Telegram</div>
+                    <div class="platform-desc">Media, Files</div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon">📄</div>
+                    <div class="platform-name">PDF Tools</div>
+                    <div class="platform-desc">Generate, Edit</div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon">💬</div>
+                    <div class="platform-name">Transcription</div>
+                    <div class="platform-desc">SRT/VTT Gen</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section class="section">
+            <h2>💎 API Pricing - Cheapest in the World</h2>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">$0.001</div>
+                    <div class="stat-label">Per Deep Search</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$0.002</div>
+                    <div class="stat-label">Per Image Gen</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$0.005</div>
+                    <div class="stat-label">Per Voice Minute</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">FREE</div>
+                    <div class="stat-label">Open Source Tools</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Policy -->
+        <section class="section data-policy">
+            <h2>🔒 Data Privacy Policy</h2>
+            <p>
+                We believe in transparency. Here's exactly how we handle your data:
+            </p>
+
+            <div class="safe-box">
+                <strong>✅ Signed-In Users (Free & Paid):</strong>
+                <p style="margin: 8px 0 0 0;">
+                    <strong>We do NOT sell any of your data.</strong> Period. Whether you're on our 
+                    free tier or a premium subscriber, your data stays private.
+                </p>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Anonymous & Guest Sessions:</strong>
+                <p style="margin: 8px 0 0 0;">
+                    For anonymous/guest users, we may collect and monetize anonymous usage data 
+                    including voice samples, images processed, and interaction patterns to support 
+                    our free services.
+                </p>
+            </div>
+
+            <p>
+                <strong>Want full privacy?</strong> Create a free account - it takes 10 seconds.
+            </p>
+        </section>
+
+        <!-- Voice Technology -->
+        <section class="section">
+            <h2>🎙️ Voice-to-Voice Technology</h2>
+            <p>
+                At <a href="https://galion.app" target="_blank" style="color: var(--accent-primary);">galion.app</a>, 
+                we're building the best voice-to-voice interface. We're training our own models, 
+                not just using existing ones.
+            </p>
+
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="platform-icon">🔊</div>
+                    <div class="platform-name">Fastest Whisper</div>
+                    <div class="platform-desc">Lightning-fast STT</div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon">🧠</div>
+                    <div class="platform-name">Gemma Models</div>
+                    <div class="platform-desc">Advanced LLM</div>
+                </div>
+                <div class="platform-card">
+                    <div class="platform-icon">💬</div>
+                    <div class="platform-name">Chatterbox</div>
+                    <div class="platform-desc">Natural TTS</div>
+                </div>
+            </div>
+
+            <p>
+                <strong>Coming Soon:</strong> Our own proprietary voice-to-voice models, 
+                trained specifically for natural, human-like conversations.
+            </p>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Ready to Get Started?</h2>
+            <p>Join developers and creators using our open-source tools every day.</p>
+            <div class="cta-buttons">
+                <a href="/" class="cta-btn cta-btn-primary">Start Downloading</a>
+                <a href="https://galion.studio" target="_blank" class="cta-btn cta-btn-secondary">Visit galion.studio</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer" style="margin-top: 40px;">
+            <div class="footer-content">
+                <p>🌟 Part of the <a href="https://galion.studio" target="_blank">Galion.studio</a> Ecosystem 🌟</p>
+                <p class="footer-sub">Showcasing the future of AI</p>
+                <p class="version">
+                    <a href="https://galion.app" target="_blank">galion.app</a> • 
+                    <a href="https://github.com/galion-studio" target="_blank">GitHub</a> •
+                    <a href="/">Downloader</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
