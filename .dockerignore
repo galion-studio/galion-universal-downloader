@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+galion-v2/node_modules/
+
+# Build outputs (we build fresh in Docker)
+galion-v2/dist/
+public/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (not needed in runtime)
+docs/
+docs-site/
+
+# Downloads (user data)
+downloads/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Test files
+__tests__/
+*.test.js
+*.spec.js
+coverage/
+
+# Misc
+*.md
+!README.md
+LICENSE
+CONTRIBUTING.md

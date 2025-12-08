@@ -1,3 +1,24 @@
+---
+title: Galion Universal Downloader
+emoji: 🏴‍☠️
+colorFrom: purple
+colorTo: blue
+sdk: docker
+app_port: 7860
+pinned: true
+license: mit
+short_description: Download anything from anywhere - CivitAI, GitHub, YouTube, HuggingFace & more
+tags:
+  - downloader
+  - universal
+  - civitai
+  - github
+  - youtube
+  - huggingface
+  - telegram
+  - ai-models
+---
+
 # 🏴‍☠️ Galion Universal Downloader
 
 <div align="center">

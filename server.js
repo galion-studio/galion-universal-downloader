@@ -77,6 +77,12 @@ async function initializeSystems() {
 // Middleware
 app.use(express.json({ limit: '50mb' }));
 
+// Serve static frontend files in production
+const publicDir = path.join(__dirname, 'public');
+if (fs.existsSync(publicDir)) {
+  app.use(express.static(publicDir));
+}
+
 // CORS for frontend on different port
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -1069,8 +1075,8 @@ async function calculateFolderSize(folderPath) {
   return size;
 }
 
-// API root endpoint
-app.get('/', (req, res) => {
+// API info endpoint
+app.get('/api', (req, res) => {
   res.json({
     name: 'Galion Universal Downloader API',
     version: '2.0.0',
@@ -1082,6 +1088,20 @@ app.get('/', (req, res) => {
       history: 'GET /api/history'
     }
   });
+});
+
+// SPA fallback - serve index.html for all non-API routes
+app.get('*', (req, res) => {
+  const indexPath = path.join(__dirname, 'public', 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.json({
+      name: 'Galion Universal Downloader API',
+      version: '2.0.0',
+      message: 'Frontend not built. Run: cd galion-v2 && npm run build'
+    });
+  }
 });
 
 // ==============================
