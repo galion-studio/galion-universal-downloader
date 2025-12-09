@@ -271,94 +271,214 @@ export class CivitaiPlatform {
   }
 
   /**
-   * Download article with all content
+   * Download article with all content AND images (including NSFW)
+   * Uses direct HTTP request + regex to extract images from page source
    */
   async downloadArticle(articleId, options = {}) {
     const { downloadDir, onProgress } = options;
 
     try {
-      // Use browser for full article content
-      if (!this.browser) {
-        this.browser = await puppeteer.launch({
-          headless: 'new',
-          args: ['--no-sandbox', '--disable-setuid-sandbox']
-        });
-      }
-
-      const page = await this.browser.newPage();
-      await page.setViewport({ width: 1920, height: 1080 });
+      if (onProgress) onProgress({ status: 'Fetching article page...', progress: 5 });
       
       const url = `https://civitai.com/articles/${articleId}`;
+      
+      // Fetch the raw HTML page with headers
+      const headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.5',
+        'Referer': 'https://civitai.com/',
+        'DNT': '1'
+      };
+      
+      // Add API key as cookie if available
       if (this.apiKey) {
-        await page.setCookie({
-          name: '__Secure-civitai-token',
-          value: this.apiKey,
-          domain: '.civitai.com',
-          path: '/',
-          secure: true
-        });
+        headers['Cookie'] = `__Secure-civitai-token=${this.apiKey}; token=${this.apiKey}`;
       }
 
-      await page.goto(url, { waitUntil: 'networkidle2', timeout: this.timeout });
+      const pageResponse = await axios.get(url, { headers, timeout: 30000 });
+      const html = pageResponse.data;
+
+      if (onProgress) onProgress({ status: 'Parsing article content...', progress: 15 });
+
+      // Extract title
+      const titleMatch = html.match(/<h1[^>]*>([^<]+)<\/h1>/i) || html.match(/<title>([^<]+)<\/title>/i);
+      const title = titleMatch ? titleMatch[1].replace(/ \| Civitai$/i, '').trim() : `Article ${articleId}`;
+
+      // Extract all CivitAI image URLs using multiple patterns
+      const allImages = new Set();
       
-      // Extract article content
-      const articleData = await page.evaluate(() => {
-        const data = {
-          title: document.querySelector('h1')?.textContent?.trim() || '',
-          author: document.querySelector('[class*="author"], [class*="user"] a')?.textContent?.trim() || '',
-          content: '',
-          contentHtml: '',
-          images: [],
-          publishDate: document.querySelector('time')?.getAttribute('datetime') || ''
-        };
+      // Pattern 1: image.civitai.com URLs in HTML
+      const imgPattern1 = /https?:\/\/image\.civitai\.com\/[^"'\s<>]+/gi;
+      let match;
+      while ((match = imgPattern1.exec(html)) !== null) {
+        let imgUrl = match[0];
+        // Skip small thumbnails, avatars, logos
+        if (imgUrl.includes('avatar') || imgUrl.includes('logo') || imgUrl.includes('favicon')) continue;
+        if (imgUrl.includes('/width=32') || imgUrl.includes('/width=48') || imgUrl.includes('/width=64')) continue;
+        // Get high resolution
+        imgUrl = imgUrl.replace(/\/width=\d+/, '/width=1920').replace(/\\/g, '');
+        allImages.add(imgUrl);
+      }
 
-        // Get content
-        const contentEl = document.querySelector('article, [class*="article"], main [class*="content"]');
-        if (contentEl) {
-          data.contentHtml = contentEl.innerHTML;
-          data.content = contentEl.textContent.trim();
-        }
+      // Pattern 2: Image UUIDs in the page data (tRPC data, JSON, etc.)
+      const uuidPattern = /([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\.(?:jpeg|jpg|png|webp|gif))/gi;
+      while ((match = uuidPattern.exec(html)) !== null) {
+        const uuid = match[1];
+        const imgUrl = `https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/${uuid}/width=1920/${uuid}`;
+        allImages.add(imgUrl);
+      }
 
-        // Get all images
-        document.querySelectorAll('img').forEach(img => {
-          const src = img.src || img.getAttribute('data-src');
-          if (src && !src.includes('avatar') && !src.includes('logo')) {
-            const highRes = src.replace(/\/width=\d+/, '');
-            data.images.push({
-              src: highRes,
-              alt: img.alt || ''
-            });
+      // Pattern 3: Extract from JSON data blocks (often contains high-res URLs)
+      const jsonBlocks = html.match(/"url"\s*:\s*"([^"]+image\.civitai\.com[^"]+)"/gi);
+      if (jsonBlocks) {
+        for (const block of jsonBlocks) {
+          const urlMatch = block.match(/"url"\s*:\s*"([^"]+)"/i);
+          if (urlMatch) {
+            let imgUrl = urlMatch[1].replace(/\\/g, '');
+            if (!imgUrl.includes('avatar') && !imgUrl.includes('logo')) {
+              imgUrl = imgUrl.replace(/\/width=\d+/, '/width=1920');
+              allImages.add(imgUrl);
+            }
           }
-        });
+        }
+      }
 
-        return data;
-      });
+      // Pattern 4: Extract from srcset attributes
+      const srcsetPattern = /srcset="([^"]*image\.civitai\.com[^"]*)"/gi;
+      while ((match = srcsetPattern.exec(html)) !== null) {
+        const srcset = match[1];
+        const urls = srcset.split(',').map(s => s.trim().split(' ')[0]);
+        for (const srcUrl of urls) {
+          if (srcUrl.includes('image.civitai.com') && !srcUrl.includes('avatar')) {
+            const highRes = srcUrl.replace(/\/width=\d+/, '/width=1920');
+            allImages.add(highRes);
+          }
+        }
+      }
 
-      await page.close();
+      // Convert to array and deduplicate by UUID
+      const seenUuids = new Set();
+      const uniqueImages = [];
+      for (const imgUrl of allImages) {
+        const uuidMatch = imgUrl.match(/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})/i);
+        const uuid = uuidMatch ? uuidMatch[1] : imgUrl;
+        if (!seenUuids.has(uuid)) {
+          seenUuids.add(uuid);
+          uniqueImages.push({ src: imgUrl, alt: '', width: 0, height: 0 });
+        }
+      }
+
+      console.log(`Found ${uniqueImages.length} unique images from page source`);
+
+      const articleData = {
+        title,
+        author: '',
+        content: '',
+        images: uniqueImages,
+        publishDate: ''
+      };
+
+      const allImagesList = uniqueImages;
 
       // Create output directory
+      const safeTitle = articleData.title.substring(0, 50).replace(/[<>:"/\\|?*]/g, '-').trim() || `article_${articleId}`;
       const articleDir = path.join(
         downloadDir || path.join(process.cwd(), 'downloads'),
-        `civitai_article_${articleId}_${articleData.title.substring(0, 50).replace(/[<>:"/\\|?*]/g, '-')}`
+        `civitai_article_${articleId}_${safeTitle}`
       );
       await fs.ensureDir(articleDir);
+      await fs.ensureDir(path.join(articleDir, 'images'));
 
-      // Save article content
+      if (onProgress) onProgress({ status: `Found ${allImagesList.length} images. Downloading...`, progress: 30 });
+
+      // Download all images
+      const downloadedImages = [];
+      for (let i = 0; i < allImagesList.length; i++) {
+        const img = allImagesList[i];
+        try {
+          if (onProgress) {
+            const progress = 30 + Math.floor((i / allImagesList.length) * 60);
+            onProgress({ 
+              status: `Downloading image ${i + 1}/${allImagesList.length}...`, 
+              progress 
+            });
+          }
+
+          // Get filename from URL
+          let filename = `image_${i + 1}.jpg`;
+          const urlPath = img.src.split('/').pop().split('?')[0];
+          if (urlPath && urlPath.includes('.')) {
+            filename = urlPath;
+          } else {
+            // Extract hash from CivitAI URL if possible
+            const hashMatch = img.src.match(/\/([a-f0-9-]+)\//);
+            if (hashMatch) {
+              filename = `image_${i + 1}_${hashMatch[1].substring(0, 8)}.jpg`;
+            }
+          }
+
+          const imagePath = path.join(articleDir, 'images', filename);
+          
+          // Download with headers
+          const response = await axios.get(img.src, {
+            responseType: 'arraybuffer',
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+              'Referer': 'https://civitai.com/',
+              'Accept': 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8'
+            },
+            timeout: 30000
+          });
+
+          await fs.writeFile(imagePath, response.data);
+          
+          downloadedImages.push({
+            ...img,
+            localPath: imagePath,
+            filename
+          });
+
+        } catch (imgError) {
+          console.log(`Failed to download image ${i + 1}: ${imgError.message}`);
+          downloadedImages.push({
+            ...img,
+            error: imgError.message
+          });
+        }
+      }
+
+      if (onProgress) onProgress({ status: 'Saving article content...', progress: 95 });
+
+      // Save article content as markdown
       await fs.writeFile(
         path.join(articleDir, 'article.md'),
-        `# ${articleData.title}\n\n**Author:** ${articleData.author}\n**Date:** ${articleData.publishDate}\n\n${articleData.content}`
+        `# ${articleData.title}\n\n**Author:** ${articleData.author}\n**Date:** ${articleData.publishDate}\n**URL:** https://civitai.com/articles/${articleId}\n**Images:** ${downloadedImages.filter(i => !i.error).length} downloaded\n\n---\n\n${articleData.content}`
       );
 
-      await fs.writeJson(path.join(articleDir, 'metadata.json'), articleData, { spaces: 2 });
+      // Save full metadata including downloaded images info
+      await fs.writeJson(path.join(articleDir, 'metadata.json'), {
+        id: articleId,
+        ...articleData,
+        downloadedImages,
+        downloadedAt: new Date().toISOString()
+      }, { spaces: 2 });
+
+      if (onProgress) onProgress({ status: 'Complete!', progress: 100 });
 
       return {
         success: true,
         type: 'article',
-        ...articleData,
+        title: articleData.title,
+        author: articleData.author,
+        images: downloadedImages,
+        totalImages: downloadedImages.length,
+        successfulDownloads: downloadedImages.filter(i => !i.error).length,
         outputDir: articleDir
       };
 
     } catch (error) {
+      console.error('Article download error:', error);
       return { success: false, error: error.message };
     }
   }

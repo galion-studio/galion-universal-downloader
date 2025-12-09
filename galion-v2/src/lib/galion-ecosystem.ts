@@ -1,8 +1,9 @@
 /**
- * Galion Ecosystem Configuration
+ * 🏴‍☠️ Galion Ecosystem Configuration
  * 
- * "Your Only Limit Is Your Imagination"
+ * "Information Wants To Be Free"
  * 
+ * The People's Universal Downloader
  * Connect to galion.app, HuggingFace, and other Galion ecosystem services
  */
 
@@ -285,12 +286,14 @@ export function parseHuggingFaceUrl(url: string): HuggingFaceModel | null {
   return null
 }
 
-// Taglines for the app
+// Taglines for the app - Pirate/Freedom theme
 export const TAGLINES = {
-  main: 'Your Only Limit Is Your Imagination',
-  download: 'Download Everything. From Everywhere. Effortlessly.',
-  cognitive: 'AI-Powered Insights for Your Content',
-  ecosystem: 'Part of the Galion Ecosystem',
+  main: '🏴‍☠️ Information Wants To Be Free',
+  download: 'Navigate the Digital Seas • Archive Everything • Free Your Data',
+  cognitive: 'Your AI Navigator - Charting the Information Ocean',
+  ecosystem: 'Join the Fleet • Open Source Forever',
+  manifesto: 'We are the archivists of the digital age. We download, we preserve, we share.',
+  motto: 'In a world of walled gardens, be a pirate.',
 }
 
 // Social Links

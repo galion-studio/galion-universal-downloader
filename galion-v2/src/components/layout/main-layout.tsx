@@ -7,7 +7,8 @@ import {
   Moon, 
   Sun,
   Github,
-  Heart
+  Anchor,
+  Skull
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/components/theme-provider'
@@ -22,10 +23,10 @@ interface MainLayoutProps {
 }
 
 const navItems = [
-  { id: 'download' as Tab, label: 'Download', icon: Download },
-  { id: 'history' as Tab, label: 'History', icon: History },
-  { id: 'cognitive' as Tab, label: 'Cognitive', icon: Brain },
-  { id: 'settings' as Tab, label: 'Settings', icon: Settings },
+  { id: 'download' as Tab, label: 'Plunder', icon: Download },
+  { id: 'history' as Tab, label: 'Log', icon: History },
+  { id: 'cognitive' as Tab, label: 'Navigator', icon: Brain },
+  { id: 'settings' as Tab, label: 'Helm', icon: Settings },
 ]
 
 // Galion Logo Component - Using the shield logo
@@ -51,10 +52,13 @@ export function MainLayout({ children, activeTab, onTabChange }: MainLayoutProps
         <div className="container max-w-5xl mx-auto flex h-16 items-center justify-between px-6">
           {/* Logo & Brand */}
           <div className="flex items-center gap-3">
-            <GalionLogo className="h-9 w-9" />
+            <div className="relative">
+              <GalionLogo className="h-9 w-9" />
+              <span className="absolute -top-1 -right-1 text-xs">🏴‍☠️</span>
+            </div>
             <div className="flex flex-col">
               <span className="text-lg font-semibold tracking-tight">Galion</span>
-              <span className="text-[10px] text-muted-foreground -mt-1">Universal Downloader</span>
+              <span className="text-[10px] text-muted-foreground -mt-1">The People's Downloader</span>
             </div>
           </div>
           
@@ -98,23 +102,24 @@ export function MainLayout({ children, activeTab, onTabChange }: MainLayoutProps
         {children}
       </main>
 
-      {/* Footer - Simple & Calm */}
-      <footer className="border-t mt-auto">
+      {/* Footer - Pirate Style */}
+      <footer className="border-t mt-auto bg-gradient-to-r from-background via-background to-background">
         <div className="container max-w-5xl mx-auto px-6 py-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
-              <GalionLogo className="h-5 w-5" />
-              <span>Galion Universal Downloader</span>
+              <span className="text-lg">🏴‍☠️</span>
+              <span className="font-medium">Galion</span>
               <span className="text-xs bg-galion-500/10 text-galion-500 px-2 py-0.5 rounded-full">
                 v2.0
               </span>
+              <span className="text-xs opacity-60">• "Information Wants To Be Free"</span>
             </div>
             <div className="flex items-center gap-6">
-              <span className="flex items-center gap-1.5">
-                Made with <Heart className="h-3.5 w-3.5 text-red-400 fill-red-400" /> Open Source
+              <span className="flex items-center gap-1.5 text-xs">
+                <Anchor className="h-3.5 w-3.5" /> 100% Open Source • No DRM • No Tracking
               </span>
               <a 
-                href="https://github.com/galion-app/universal-downloader" 
+                href="https://github.com/galion-studio/galion-universal-downloader" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 hover:text-foreground transition-colors"
