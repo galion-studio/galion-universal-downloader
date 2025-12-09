@@ -97,7 +97,18 @@ export class YoutubePlatform {
         '-o', path.join(videoDir, '%(title)s.%(ext)s'),
         '--write-info-json',
         '--write-thumbnail',
-        '--write-description'
+        '--write-description',
+        // Long video support - retry on failures
+        '--retries', '10',
+        '--fragment-retries', '10',
+        '--retry-sleep', '5',
+        // Handle slow connections
+        '--socket-timeout', '30',
+        // Continue partial downloads
+        '--continue',
+        // Buffer handling for long videos
+        '--buffer-size', '16K',
+        '--http-chunk-size', '10M'
       ];
 
       if (audioOnly) {
@@ -119,18 +130,29 @@ export class YoutubePlatform {
 
       let videoInfo = {};
       let progress = 0;
+      let errorMessages = [];
+      let lastOutput = '';
 
       const ytdlp = spawn(this.ytdlpPath, args);
 
       ytdlp.stdout.on('data', (data) => {
         const output = data.toString();
+        lastOutput = output;
         
         // Parse progress
         const progressMatch = output.match(/(\d+\.?\d*)%/);
         if (progressMatch) {
           progress = parseFloat(progressMatch[1]);
           if (onProgress) {
-            onProgress({ progress, status: 'Downloading...' });
+            // Parse speed and ETA for long videos
+            const speedMatch = output.match(/(\d+\.?\d*\s*[KMG]i?B\/s)/i);
+            const etaMatch = output.match(/ETA\s+(\d+:\d+(?::\d+)?)/);
+            onProgress({ 
+              progress, 
+              status: 'Downloading...',
+              speed: speedMatch ? speedMatch[1] : null,
+              eta: etaMatch ? etaMatch[1] : null
+            });
           }
         }
 
@@ -142,7 +164,12 @@ export class YoutubePlatform {
       });
 
       ytdlp.stderr.on('data', (data) => {
-        console.error('yt-dlp error:', data.toString());
+        const errorOutput = data.toString().trim();
+        console.error('yt-dlp error:', errorOutput);
+        // Collect error messages for better error reporting
+        if (errorOutput && !errorOutput.startsWith('WARNING:')) {
+          errorMessages.push(errorOutput);
+        }
       });
 
       ytdlp.on('close', async (code) => {
@@ -162,7 +189,33 @@ export class YoutubePlatform {
             outputDir: videoDir
           });
         } else {
-          reject(new Error(`yt-dlp exited with code ${code}`));
+          // Build detailed error message
+          let errorMessage = `YouTube download failed (exit code ${code})`;
+          
+          if (errorMessages.length > 0) {
+            // Get the most relevant error message
+            const relevantErrors = errorMessages.filter(e => 
+              e.includes('ERROR:') || e.includes('error') || e.includes('fail')
+            );
+            if (relevantErrors.length > 0) {
+              errorMessage = relevantErrors[relevantErrors.length - 1].replace('ERROR: ', '');
+            } else {
+              errorMessage = errorMessages[errorMessages.length - 1];
+            }
+          }
+          
+          // Check for common issues
+          if (errorMessage.includes('Video unavailable') || errorMessage.includes('Private video')) {
+            errorMessage = 'This video is unavailable or private';
+          } else if (errorMessage.includes('age-restricted') || errorMessage.includes('Sign in')) {
+            errorMessage = 'This video is age-restricted. Try using cookies or signing in to yt-dlp';
+          } else if (errorMessage.includes('copyright') || errorMessage.includes('blocked')) {
+            errorMessage = 'This video is blocked due to copyright or regional restrictions';
+          } else if (errorMessage.includes('live') || errorMessage.includes('premiere')) {
+            errorMessage = 'Cannot download livestreams or premieres that are still in progress';
+          }
+          
+          reject(new Error(errorMessage));
         }
       });
 
