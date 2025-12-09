@@ -68,6 +68,9 @@ export class GithubPlatform {
    * Parse URL and determine content type
    */
   async parseUrl(url) {
+    // Clean the URL
+    const cleanUrl = url.replace(/\/$/, '');
+    
     const patterns = {
       // Raw file
       raw: /raw\.githubusercontent\.com\/([^\/]+)\/([^\/]+)\/([^\/]+)\/(.+)/,
@@ -81,10 +84,10 @@ export class GithubPlatform {
       blob: /github\.com\/([^\/]+)\/([^\/]+)\/blob\/([^\/]+)\/(.+)/,
       // Tree (directory)
       tree: /github\.com\/([^\/]+)\/([^\/]+)\/tree\/([^\/]+)(?:\/(.+))?/,
-      // User profile
-      user: /github\.com\/([^\/]+)\/?$/,
-      // Repository
-      repo: /github\.com\/([^\/]+)\/([^\/]+)\/?$/
+      // Repository (must have exactly 2 path segments - BEFORE user check)
+      repo: /github\.com\/([^\/]+)\/([^\/]+)$/,
+      // User profile (exactly 1 path segment)
+      user: /github\.com\/([^\/]+)$/
     };
 
     for (const [type, pattern] of Object.entries(patterns)) {

@@ -1,35 +1,233 @@
 /**
  * TranscriptionService - Automatic Video/Audio Transcription
- * Generates SRT subtitles for all video formats
- * Inspired by Scriberr (https://scriberr.app)
+ * Uses faster-whisper with tiny.en model as default (English mini model)
+ * Automatic model download from HuggingFace/GitHub
+ * 
+ * Supported backends:
+ * - faster-whisper (recommended - 4x faster than OpenAI)
+ * - whisper.cpp (C++ native)
+ * - OpenAI Whisper (original)
  */
 
 import fs from 'fs-extra';
 import path from 'path';
 import { exec, spawn } from 'child_process';
 import { promisify } from 'util';
+import https from 'https';
+import http from 'http';
 
 const execAsync = promisify(exec);
 
-// Supported formats for transcription
-const SUPPORTED_VIDEO_FORMATS = [
-  '.mp4', '.mkv', '.avi', '.mov', '.wmv', '.flv', '.webm',
-  '.m4v', '.mpeg', '.mpg', '.3gp', '.3g2', '.ts', '.mts', '.m2ts'
+// Default model for quick English transcription
+const DEFAULT_MODEL = 'tiny.en';
+
+// Model download URLs from HuggingFace
+const MODEL_URLS = {
+  'tiny.en': 'https://huggingface.co/Systran/faster-whisper-tiny.en/resolve/main/',
+  'tiny': 'https://huggingface.co/Systran/faster-whisper-tiny/resolve/main/',
+  'base.en': 'https://huggingface.co/Systran/faster-whisper-base.en/resolve/main/',
+  'base': 'https://huggingface.co/Systran/faster-whisper-base/resolve/main/',
+  'small.en': 'https://huggingface.co/Systran/faster-whisper-small.en/resolve/main/',
+  'small': 'https://huggingface.co/Systran/faster-whisper-small/resolve/main/',
+  'medium.en': 'https://huggingface.co/Systran/faster-whisper-medium.en/resolve/main/',
+  'medium': 'https://huggingface.co/Systran/faster-whisper-medium/resolve/main/',
+  'large-v2': 'https://huggingface.co/Systran/faster-whisper-large-v2/resolve/main/',
+  'large-v3': 'https://huggingface.co/Systran/faster-whisper-large-v3/resolve/main/'
+};
+
+// Model file structure for faster-whisper
+const MODEL_FILES = [
+  'config.json',
+  'model.bin',
+  'tokenizer.json',
+  'vocabulary.txt'
 ];
 
-const SUPPORTED_AUDIO_FORMATS = [
-  '.mp3', '.wav', '.flac', '.aac', '.ogg', '.wma', '.m4a',
-  '.opus', '.aiff', '.ape', '.alac'
-];
+// Whisper models info
+const WHISPER_MODELS = {
+  'tiny': { size: '75MB', params: '39M', speed: 'fastest', quality: 'basic', vram: '~1GB' },
+  'tiny.en': { size: '75MB', params: '39M', speed: 'fastest', quality: 'basic', english_only: true, vram: '~1GB', recommended: true },
+  'base': { size: '142MB', params: '74M', speed: 'fast', quality: 'good', vram: '~1GB' },
+  'base.en': { size: '142MB', params: '74M', speed: 'fast', quality: 'good', english_only: true, vram: '~1GB' },
+  'small': { size: '466MB', params: '244M', speed: 'medium', quality: 'better', vram: '~2GB' },
+  'small.en': { size: '466MB', params: '244M', speed: 'medium', quality: 'better', english_only: true, vram: '~2GB' },
+  'medium': { size: '1.5GB', params: '769M', speed: 'slow', quality: 'great', vram: '~5GB' },
+  'medium.en': { size: '1.5GB', params: '769M', speed: 'slow', quality: 'great', english_only: true, vram: '~5GB' },
+  'large-v2': { size: '2.9GB', params: '1550M', speed: 'slowest', quality: 'best', vram: '~10GB' },
+  'large-v3': { size: '2.9GB', params: '1550M', speed: 'slowest', quality: 'best', vram: '~10GB' }
+};
+
+// Supported formats
+const SUPPORTED_VIDEO = ['.mp4', '.mkv', '.avi', '.mov', '.wmv', '.flv', '.webm', '.m4v', '.mpeg', '.mpg', '.3gp', '.ts'];
+const SUPPORTED_AUDIO = ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.wma', '.m4a', '.opus', '.aiff'];
 
 export class TranscriptionService {
   constructor(options = {}) {
-    this.whisperPath = options.whisperPath || 'whisper';
-    this.model = options.model || 'base'; // tiny, base, small, medium, large
-    this.language = options.language || 'auto';
-    this.device = options.device || 'cpu'; // cpu or cuda
+    this.model = options.model || DEFAULT_MODEL;
+    this.language = options.language || 'en';
+    this.device = options.device || 'auto'; // auto, cpu, cuda
     this.outputFormats = options.outputFormats || ['srt', 'vtt', 'txt', 'json'];
     this.threads = options.threads || 4;
+    this.modelsDir = options.modelsDir || path.join(process.cwd(), 'models', 'whisper');
+    this.backend = null;
+    this.isInitialized = false;
+  }
+
+  /**
+   * Initialize the transcription service
+   * Auto-detects backend and downloads model if needed
+   */
+  async initialize() {
+    console.log('🎤 Initializing Transcription Service...');
+    
+    // Detect available backend
+    this.backend = await this.detectBackend();
+    
+    if (!this.backend) {
+      console.log('⚠️ No Whisper backend found. Will provide installation guide.');
+      return { initialized: false, backend: null, needsInstall: true };
+    }
+    
+    console.log(`✓ Using backend: ${this.backend.type}`);
+    
+    // Check/download model
+    const modelReady = await this.ensureModelReady(this.model);
+    
+    this.isInitialized = modelReady;
+    
+    return {
+      initialized: this.isInitialized,
+      backend: this.backend,
+      model: this.model,
+      modelReady
+    };
+  }
+
+  /**
+   * Detect available Whisper backend
+   */
+  async detectBackend() {
+    const backends = [
+      { type: 'faster-whisper', cmd: 'faster-whisper', args: '--help', speed: 4, recommended: true },
+      { type: 'whisper-ctranslate2', cmd: 'whisper-ctranslate2', args: '--help', speed: 3 },
+      { type: 'insanely-fast-whisper', cmd: 'insanely-fast-whisper', args: '--help', speed: 5 },
+      { type: 'whisper-cpp', cmd: 'whisper-cpp', args: '--help', speed: 2 },
+      { type: 'openai-whisper', cmd: 'whisper', args: '--help', speed: 1 }
+    ];
+
+    for (const backend of backends) {
+      try {
+        await execAsync(`${backend.cmd} ${backend.args}`, { timeout: 10000 });
+        return backend;
+      } catch {
+        // Try next backend
+      }
+    }
+
+    // Check for Python with faster-whisper module
+    try {
+      await execAsync('python -c "import faster_whisper; print(\'ok\')"', { timeout: 10000 });
+      return { type: 'faster-whisper-python', cmd: 'python', speed: 4, usePython: true };
+    } catch {}
+
+    return null;
+  }
+
+  /**
+   * Ensure model is downloaded and ready
+   */
+  async ensureModelReady(modelName) {
+    const modelPath = path.join(this.modelsDir, modelName);
+    
+    // Check if model exists
+    if (await fs.pathExists(modelPath)) {
+      const configPath = path.join(modelPath, 'config.json');
+      if (await fs.pathExists(configPath)) {
+        console.log(`✓ Model ${modelName} ready at ${modelPath}`);
+        return true;
+      }
+    }
+
+    // Try to download model
+    console.log(`📥 Model ${modelName} not found. Attempting download...`);
+    
+    try {
+      await this.downloadModel(modelName);
+      return true;
+    } catch (error) {
+      console.log(`⚠️ Could not auto-download model: ${error.message}`);
+      console.log('The model will be downloaded on first use by the backend.');
+      return true; // Still return true - backend will handle download
+    }
+  }
+
+  /**
+   * Download model from HuggingFace
+   */
+  async downloadModel(modelName, onProgress = () => {}) {
+    const baseUrl = MODEL_URLS[modelName];
+    if (!baseUrl) {
+      throw new Error(`Unknown model: ${modelName}`);
+    }
+
+    const modelPath = path.join(this.modelsDir, modelName);
+    await fs.ensureDir(modelPath);
+
+    console.log(`📥 Downloading ${modelName} model to ${modelPath}...`);
+    onProgress({ status: 'starting', model: modelName });
+
+    for (const file of MODEL_FILES) {
+      const fileUrl = baseUrl + file;
+      const filePath = path.join(modelPath, file);
+      
+      onProgress({ status: 'downloading', file, model: modelName });
+      
+      try {
+        await this.downloadFile(fileUrl, filePath);
+        console.log(`  ✓ ${file}`);
+      } catch (error) {
+        console.log(`  ⚠️ ${file} - ${error.message}`);
+        // Some files may be optional
+      }
+    }
+
+    onProgress({ status: 'complete', model: modelName });
+    console.log(`✓ Model ${modelName} downloaded`);
+    return modelPath;
+  }
+
+  /**
+   * Download a file from URL
+   */
+  downloadFile(url, dest) {
+    return new Promise((resolve, reject) => {
+      const file = fs.createWriteStream(dest);
+      const protocol = url.startsWith('https') ? https : http;
+      
+      protocol.get(url, { 
+        headers: { 'User-Agent': 'Galion-Universal-Downloader/2.0' }
+      }, (response) => {
+        if (response.statusCode === 301 || response.statusCode === 302) {
+          // Follow redirect
+          this.downloadFile(response.headers.location, dest).then(resolve).catch(reject);
+          return;
+        }
+        
+        if (response.statusCode !== 200) {
+          reject(new Error(`HTTP ${response.statusCode}`));
+          return;
+        }
+        
+        response.pipe(file);
+        file.on('finish', () => {
+          file.close();
+          resolve(dest);
+        });
+      }).on('error', (err) => {
+        fs.unlink(dest, () => {});
+        reject(err);
+      });
+    });
   }
 
   /**
@@ -37,24 +235,49 @@ export class TranscriptionService {
    */
   isSupported(filePath) {
     const ext = path.extname(filePath).toLowerCase();
-    return SUPPORTED_VIDEO_FORMATS.includes(ext) || SUPPORTED_AUDIO_FORMATS.includes(ext);
+    return SUPPORTED_VIDEO.includes(ext) || SUPPORTED_AUDIO.includes(ext);
   }
 
   /**
-   * Check if Whisper is installed
+   * Get system status
    */
-  async checkWhisperInstalled() {
+  async getStatus() {
+    const backend = await this.detectBackend();
+    const ffmpegInstalled = await this.checkFFmpeg();
+    
+    return {
+      backend: backend ? backend.type : null,
+      backendInstalled: !!backend,
+      ffmpegInstalled,
+      defaultModel: DEFAULT_MODEL,
+      currentModel: this.model,
+      modelsDir: this.modelsDir,
+      availableModels: Object.keys(WHISPER_MODELS),
+      supportedFormats: {
+        video: SUPPORTED_VIDEO,
+        audio: SUPPORTED_AUDIO
+      },
+      installInstructions: this.getInstallInstructions()
+    };
+  }
+
+  /**
+   * Check if FFmpeg is installed
+   */
+  async checkFFmpeg() {
     try {
-      await execAsync('whisper --help');
-      return { installed: true, type: 'openai-whisper' };
+      await execAsync('ffmpeg -version');
+      return true;
     } catch {
-      try {
-        await execAsync('whisper-cpp --help');
-        return { installed: true, type: 'whisper-cpp' };
-      } catch {
-        return { installed: false, type: null };
-      }
+      return false;
     }
+  }
+
+  /**
+   * Get available models info
+   */
+  getAvailableModels() {
+    return WHISPER_MODELS;
   }
 
   /**
@@ -62,46 +285,83 @@ export class TranscriptionService {
    */
   getInstallInstructions() {
     return {
+      quickStart: `
+# Quick Start - Install faster-whisper (recommended)
+pip install faster-whisper
+
+# Or use pipx for isolated install
+pipx install faster-whisper
+
+# Install FFmpeg (required for video processing)
+# Windows: winget install ffmpeg
+# macOS: brew install ffmpeg
+# Linux: sudo apt install ffmpeg
+      `.trim(),
+      
       windows: `
-# Install OpenAI Whisper (requires Python 3.8+)
-pip install openai-whisper
+# Option 1: Install faster-whisper (Python required)
+pip install faster-whisper
 
-# Or install Whisper.cpp (faster, no Python needed)
-# Download from: https://github.com/ggerganov/whisper.cpp
+# Option 2: Install via Scoop
+scoop install ffmpeg
+pip install faster-whisper
 
-# Install FFmpeg (required)
-winget install ffmpeg
-# or download from https://ffmpeg.org
-      `,
+# Option 3: Use pre-built binary
+# Download from: https://github.com/Purfview/whisper-standalone-win/releases
+      `.trim(),
+      
+      mac: `
+# Install with Homebrew
+brew install ffmpeg
+pip3 install faster-whisper
+
+# For Apple Silicon (M1/M2) GPU acceleration
+pip3 install faster-whisper[cpu]
+      `.trim(),
+      
       linux: `
-# Install OpenAI Whisper
-pip install openai-whisper
+# Ubuntu/Debian
+sudo apt update
+sudo apt install ffmpeg python3-pip
+pip3 install faster-whisper
 
-# Install FFmpeg
-sudo apt install ffmpeg
-      `,
+# Fedora
+sudo dnf install ffmpeg python3-pip
+pip3 install faster-whisper
+
+# For NVIDIA GPU support
+pip3 install faster-whisper[gpu]
+      `.trim(),
+      
       docker: `
-# Use Scriberr Docker container
-docker run -d -p 3050:3050 -v /path/to/data:/data ghcr.io/scriberr/scriberr:latest
-      `
+# Use our pre-built Docker image with faster-whisper
+docker pull galion/transcription:latest
+
+# Or use standalone Whisper container
+docker run --gpus all -v /data:/data \\
+  onerahmet/openai-whisper-asr-webservice:latest
+      `.trim()
     };
   }
 
   /**
-   * Extract audio from video file
+   * Extract audio from video file (required before transcription)
    */
   async extractAudio(videoPath, outputPath = null) {
     const ext = path.extname(videoPath).toLowerCase();
     
-    if (SUPPORTED_AUDIO_FORMATS.includes(ext)) {
-      return videoPath; // Already audio
+    // Already audio file
+    if (SUPPORTED_AUDIO.includes(ext)) {
+      return videoPath;
     }
 
     const audioPath = outputPath || videoPath.replace(ext, '.wav');
 
     try {
+      // Use FFmpeg to extract audio as 16kHz mono WAV (optimal for Whisper)
       await execAsync(
-        `ffmpeg -i "${videoPath}" -vn -acodec pcm_s16le -ar 16000 -ac 1 "${audioPath}" -y`
+        `ffmpeg -i "${videoPath}" -vn -acodec pcm_s16le -ar 16000 -ac 1 "${audioPath}" -y`,
+        { maxBuffer: 100 * 1024 * 1024 }
       );
       return audioPath;
     } catch (error) {
@@ -110,7 +370,7 @@ docker run -d -p 3050:3050 -v /path/to/data:/data ghcr.io/scriberr/scriberr:late
   }
 
   /**
-   * Transcribe audio/video file
+   * Main transcription method
    */
   async transcribe(filePath, options = {}) {
     const {
@@ -122,150 +382,303 @@ docker run -d -p 3050:3050 -v /path/to/data:/data ghcr.io/scriberr/scriberr:late
     } = options;
 
     const baseName = path.basename(filePath, path.extname(filePath));
+    const results = { outputFiles: [], sourceFile: filePath };
 
-    onProgress({ status: 'Checking Whisper installation...', progress: 5 });
+    onProgress({ status: 'Initializing...', progress: 5 });
 
-    const whisperCheck = await this.checkWhisperInstalled();
-    
-    if (!whisperCheck.installed) {
-      // Fallback: Use built-in simple transcription or external API
-      onProgress({ status: 'Whisper not installed. Using fallback method...', progress: 10 });
-      return this.transcribeFallback(filePath, options);
+    // Ensure backend is available
+    if (!this.backend) {
+      this.backend = await this.detectBackend();
     }
 
-    onProgress({ status: 'Extracting audio...', progress: 15 });
+    if (!this.backend) {
+      onProgress({ status: 'No Whisper backend found', progress: 100 });
+      return this.createFallbackOutput(filePath, outputDir, baseName);
+    }
+
+    onProgress({ status: 'Preparing audio...', progress: 10 });
 
     // Extract audio if video
     let audioPath = filePath;
     let tempAudio = false;
     
-    if (SUPPORTED_VIDEO_FORMATS.includes(path.extname(filePath).toLowerCase())) {
-      audioPath = path.join(outputDir, `${baseName}_temp.wav`);
+    if (SUPPORTED_VIDEO.includes(path.extname(filePath).toLowerCase())) {
+      const tempDir = path.join(outputDir, '.temp');
+      await fs.ensureDir(tempDir);
+      audioPath = path.join(tempDir, `${baseName}.wav`);
       await this.extractAudio(filePath, audioPath);
       tempAudio = true;
     }
 
-    onProgress({ status: 'Transcribing with Whisper...', progress: 30 });
+    onProgress({ status: `Transcribing with ${this.backend.type}...`, progress: 20 });
 
-    // Run Whisper
-    const outputFiles = [];
-    
     try {
-      const formatArgs = formats.map(f => `--output_format ${f}`).join(' ');
-      const langArg = language !== 'auto' ? `--language ${language}` : '';
-      
-      const cmd = `whisper "${audioPath}" --model ${model} ${langArg} --output_dir "${outputDir}" ${formatArgs}`;
-      
-      await execAsync(cmd, { maxBuffer: 50 * 1024 * 1024 });
+      // Run transcription based on backend
+      const transcription = await this.runTranscription(audioPath, {
+        language,
+        model,
+        outputDir,
+        baseName,
+        onProgress
+      });
 
-      // Collect output files
+      // Generate output files
+      onProgress({ status: 'Generating output files...', progress: 85 });
+      
       for (const format of formats) {
-        const outputFile = path.join(outputDir, `${path.basename(audioPath, '.wav')}.${format}`);
-        if (await fs.pathExists(outputFile)) {
-          // Rename to match original video name
-          const finalPath = path.join(outputDir, `${baseName}.${format}`);
-          await fs.move(outputFile, finalPath, { overwrite: true });
-          outputFiles.push(finalPath);
-        }
+        const outputPath = path.join(outputDir, `${baseName}.${format}`);
+        await this.saveTranscription(transcription, outputPath, format);
+        results.outputFiles.push(outputPath);
       }
 
-      // Clean up temp audio
-      if (tempAudio && await fs.pathExists(audioPath)) {
-        await fs.remove(audioPath);
+      // Cleanup temp audio
+      if (tempAudio) {
+        await fs.remove(path.dirname(audioPath));
       }
 
-      onProgress({ status: 'Transcription complete!', progress: 100 });
+      onProgress({ status: 'Complete!', progress: 100 });
 
       return {
         success: true,
-        sourceFile: filePath,
-        outputFiles,
-        language: language,
-        model: model
+        ...results,
+        transcription,
+        language,
+        model,
+        backend: this.backend.type
       };
 
     } catch (error) {
-      // Clean up
+      // Cleanup on error
       if (tempAudio && await fs.pathExists(audioPath)) {
-        await fs.remove(audioPath);
+        await fs.remove(path.dirname(audioPath));
       }
       throw error;
     }
   }
 
   /**
-   * Fallback transcription using free API or placeholder
+   * Run transcription with detected backend
    */
-  async transcribeFallback(filePath, options = {}) {
-    const { outputDir = path.dirname(filePath), onProgress = () => {} } = options;
-    const baseName = path.basename(filePath, path.extname(filePath));
+  async runTranscription(audioPath, options) {
+    const { language, model, outputDir, baseName, onProgress } = options;
 
-    onProgress({ status: 'Creating placeholder transcription files...', progress: 50 });
+    if (this.backend.usePython) {
+      // Use Python faster-whisper module directly
+      return this.runPythonTranscription(audioPath, options);
+    }
 
-    // Create placeholder SRT file with instructions
-    const srtContent = `1
-00:00:00,000 --> 00:00:05,000
-[Transcription requires Whisper installation]
+    // Build command based on backend type
+    let cmd;
+    const modelPath = path.join(this.modelsDir, model);
+    
+    switch (this.backend.type) {
+      case 'faster-whisper':
+        cmd = `faster-whisper "${audioPath}" --model ${model} --language ${language} --output_dir "${outputDir}" --output_format all`;
+        break;
+      
+      case 'whisper-ctranslate2':
+        cmd = `whisper-ctranslate2 "${audioPath}" --model ${model} --language ${language} --output_dir "${outputDir}"`;
+        break;
+      
+      case 'insanely-fast-whisper':
+        cmd = `insanely-fast-whisper --file-name "${audioPath}" --model-name openai/whisper-${model} --language ${language}`;
+        break;
+      
+      case 'whisper-cpp':
+        cmd = `whisper-cpp -m "${modelPath}/ggml-model.bin" -f "${audioPath}" -l ${language}`;
+        break;
+      
+      case 'openai-whisper':
+      default:
+        cmd = `whisper "${audioPath}" --model ${model} --language ${language} --output_dir "${outputDir}" --output_format all`;
+    }
 
-2
-00:00:05,000 --> 00:00:15,000
-Install OpenAI Whisper: pip install openai-whisper
+    onProgress({ status: `Running: ${this.backend.type}`, progress: 40 });
 
-3
-00:00:15,000 --> 00:00:25,000
-Or use Scriberr: docker run -p 3050:3050 ghcr.io/scriberr/scriberr
+    try {
+      const { stdout, stderr } = await execAsync(cmd, { 
+        maxBuffer: 100 * 1024 * 1024,
+        timeout: 30 * 60 * 1000 // 30 minute timeout
+      });
+      
+      // Parse output for transcription
+      return this.parseTranscriptionOutput(stdout, stderr, outputDir, baseName);
+    } catch (error) {
+      console.error('Transcription error:', error);
+      throw new Error(`Transcription failed: ${error.message}`);
+    }
+  }
 
-4
-00:00:25,000 --> 00:00:35,000
-Then run: whisper "${filePath}" --output_format srt
+  /**
+   * Run transcription using Python faster-whisper module
+   */
+  async runPythonTranscription(audioPath, options) {
+    const { language, model } = options;
+    
+    const pythonScript = `
+import sys
+import json
+from faster_whisper import WhisperModel
 
-5
-00:00:35,000 --> 00:00:45,000
-For GPU acceleration add: --device cuda
-`;
+model = WhisperModel("${model}", device="auto", compute_type="auto")
+segments, info = model.transcribe("${audioPath.replace(/\\/g, '/')}", language="${language}")
 
-    const vttContent = `WEBVTT
+result = {
+    "language": info.language,
+    "language_probability": info.language_probability,
+    "segments": []
+}
 
-00:00:00.000 --> 00:00:05.000
-[Transcription requires Whisper installation]
+for segment in segments:
+    result["segments"].append({
+        "start": segment.start,
+        "end": segment.end,
+        "text": segment.text.strip()
+    })
 
-00:00:05.000 --> 00:00:15.000
-Install OpenAI Whisper: pip install openai-whisper
+print(json.dumps(result))
+    `.trim();
 
-00:00:15.000 --> 00:00:25.000
-Or use Scriberr Docker: ghcr.io/scriberr/scriberr
-`;
+    const { stdout } = await execAsync(`python -c "${pythonScript}"`, {
+      maxBuffer: 100 * 1024 * 1024
+    });
 
-    const srtPath = path.join(outputDir, `${baseName}.srt`);
-    const vttPath = path.join(outputDir, `${baseName}.vtt`);
-    const infoPath = path.join(outputDir, `${baseName}_transcription_info.json`);
+    return JSON.parse(stdout);
+  }
 
-    await fs.writeFile(srtPath, srtContent);
-    await fs.writeFile(vttPath, vttContent);
-    await fs.writeJson(infoPath, {
-      sourceFile: filePath,
-      status: 'pending',
-      needsWhisper: true,
-      instructions: 'Install Whisper and run transcription manually',
-      commands: {
-        install: 'pip install openai-whisper',
-        transcribe: `whisper "${filePath}" --model base --output_format srt vtt txt json`
-      },
-      scriberr: {
-        docs: 'https://scriberr.app/docs/installation.html',
-        docker: 'docker run -d -p 3050:3050 -v /data:/data ghcr.io/scriberr/scriberr:latest'
+  /**
+   * Parse transcription output from CLI
+   */
+  parseTranscriptionOutput(stdout, stderr, outputDir, baseName) {
+    // Try to read generated files first
+    const formats = ['json', 'srt', 'vtt', 'txt'];
+    
+    for (const format of formats) {
+      const filePath = path.join(outputDir, `${baseName}.${format}`);
+      if (fs.existsSync(filePath)) {
+        if (format === 'json') {
+          try {
+            return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+          } catch {}
+        }
+        if (format === 'srt') {
+          return this.parseSRT(fs.readFileSync(filePath, 'utf-8'));
+        }
       }
+    }
+
+    // Parse from stdout if no files
+    return { text: stdout.trim(), segments: [] };
+  }
+
+  /**
+   * Parse SRT content into segments
+   */
+  parseSRT(content) {
+    const segments = [];
+    const blocks = content.trim().split(/\n\n+/);
+    
+    for (const block of blocks) {
+      const lines = block.split('\n');
+      if (lines.length >= 3) {
+        const timeLine = lines[1];
+        const match = timeLine.match(/(\d{2}):(\d{2}):(\d{2}),(\d{3}) --> (\d{2}):(\d{2}):(\d{2}),(\d{3})/);
+        if (match) {
+          const start = parseInt(match[1]) * 3600 + parseInt(match[2]) * 60 + parseInt(match[3]) + parseInt(match[4]) / 1000;
+          const end = parseInt(match[5]) * 3600 + parseInt(match[6]) * 60 + parseInt(match[7]) + parseInt(match[8]) / 1000;
+          const text = lines.slice(2).join(' ').trim();
+          segments.push({ start, end, text });
+        }
+      }
+    }
+    
+    return { segments, text: segments.map(s => s.text).join(' ') };
+  }
+
+  /**
+   * Save transcription to file
+   */
+  async saveTranscription(transcription, outputPath, format) {
+    const segments = transcription.segments || [];
+    let content;
+
+    switch (format) {
+      case 'srt':
+        content = this.toSRT(segments);
+        break;
+      case 'vtt':
+        content = this.toVTT(segments);
+        break;
+      case 'txt':
+        content = transcription.text || segments.map(s => s.text).join('\n');
+        break;
+      case 'json':
+        content = JSON.stringify(transcription, null, 2);
+        break;
+      default:
+        throw new Error(`Unknown format: ${format}`);
+    }
+
+    await fs.writeFile(outputPath, content, 'utf-8');
+    return outputPath;
+  }
+
+  /**
+   * Convert segments to SRT format
+   */
+  toSRT(segments) {
+    return segments.map((s, i) => {
+      const start = this.formatTime(s.start, ',');
+      const end = this.formatTime(s.end, ',');
+      return `${i + 1}\n${start} --> ${end}\n${s.text}\n`;
+    }).join('\n');
+  }
+
+  /**
+   * Convert segments to VTT format
+   */
+  toVTT(segments) {
+    const content = segments.map(s => {
+      const start = this.formatTime(s.start, '.');
+      const end = this.formatTime(s.end, '.');
+      return `${start} --> ${end}\n${s.text}\n`;
+    }).join('\n');
+    return `WEBVTT\n\n${content}`;
+  }
+
+  /**
+   * Format seconds to timestamp
+   */
+  formatTime(seconds, msDelimiter = ',') {
+    const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+    const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+    const s = Math.floor(seconds % 60).toString().padStart(2, '0');
+    const ms = Math.round((seconds % 1) * 1000).toString().padStart(3, '0');
+    return `${h}:${m}:${s}${msDelimiter}${ms}`;
+  }
+
+  /**
+   * Create fallback output when no backend available
+   */
+  async createFallbackOutput(filePath, outputDir, baseName) {
+    const instructions = this.getInstallInstructions();
+    
+    const infoFile = path.join(outputDir, `${baseName}_transcription.json`);
+    await fs.writeJson(infoFile, {
+      status: 'pending',
+      sourceFile: filePath,
+      needsInstallation: true,
+      instructions: instructions.quickStart,
+      detailedInstructions: instructions,
+      recommendedCommand: `pip install faster-whisper && faster-whisper "${filePath}" --model tiny.en`
     }, { spaces: 2 });
 
-    onProgress({ status: 'Placeholder files created', progress: 100 });
-
     return {
-      success: true,
-      placeholder: true,
+      success: false,
+      needsInstallation: true,
+      outputFiles: [infoFile],
       sourceFile: filePath,
-      outputFiles: [srtPath, vttPath, infoPath],
-      message: 'Install Whisper for actual transcription',
-      installGuide: this.getInstallInstructions()
+      instructions
     };
   }
 
@@ -275,16 +688,17 @@ Or use Scriberr Docker: ghcr.io/scriberr/scriberr
   async batchTranscribe(filePaths, options = {}) {
     const { onProgress = () => {} } = options;
     const results = [];
+    const total = filePaths.length;
 
-    for (let i = 0; i < filePaths.length; i++) {
+    for (let i = 0; i < total; i++) {
       const file = filePaths[i];
-      const progress = (i / filePaths.length) * 100;
-      
-      onProgress({ 
-        status: `Transcribing ${i + 1}/${filePaths.length}: ${path.basename(file)}`,
+      const progress = (i / total) * 100;
+
+      onProgress({
+        status: `Transcribing ${i + 1}/${total}: ${path.basename(file)}`,
         progress,
         current: i + 1,
-        total: filePaths.length
+        total
       });
 
       try {
@@ -294,8 +708,8 @@ Or use Scriberr Docker: ghcr.io/scriberr/scriberr
             onProgress({
               ...p,
               current: i + 1,
-              total: filePaths.length,
-              overallProgress: progress + (p.progress / 100) * (100 / filePaths.length)
+              total,
+              overallProgress: progress + (p.progress / 100) * (100 / total)
             });
           }
         });
@@ -307,7 +721,7 @@ Or use Scriberr Docker: ghcr.io/scriberr/scriberr
 
     return {
       success: true,
-      total: filePaths.length,
+      total,
       completed: results.filter(r => r.success).length,
       failed: results.filter(r => !r.success).length,
       results
@@ -326,37 +740,22 @@ Or use Scriberr Docker: ghcr.io/scriberr/scriberr
     let converted;
 
     if (inputFormat === 'srt' && outputFormat === 'vtt') {
-      converted = this.srtToVtt(content);
+      converted = 'WEBVTT\n\n' + content
+        .replace(/(\d{2}):(\d{2}):(\d{2}),(\d{3})/g, '$1:$2:$3.$4')
+        .replace(/^\d+\s*$/gm, '');
     } else if (inputFormat === 'vtt' && outputFormat === 'srt') {
-      converted = this.vttToSrt(content);
+      converted = content
+        .replace('WEBVTT\n', '')
+        .replace(/(\d{2}):(\d{2}):(\d{2})\.(\d{3})/g, '$1:$2:$3,$4');
+      // Add sequence numbers
+      const blocks = converted.trim().split('\n\n');
+      converted = blocks.map((block, i) => `${i + 1}\n${block}`).join('\n\n');
     } else {
       throw new Error(`Conversion from ${inputFormat} to ${outputFormat} not supported`);
     }
 
     await fs.writeFile(outputPath, converted);
     return outputPath;
-  }
-
-  srtToVtt(srt) {
-    let vtt = 'WEBVTT\n\n';
-    vtt += srt
-      .replace(/(\d{2}):(\d{2}):(\d{2}),(\d{3})/g, '$1:$2:$3.$4')
-      .replace(/^\d+\s*$/gm, '')
-      .trim();
-    return vtt;
-  }
-
-  vttToSrt(vtt) {
-    let srt = vtt
-      .replace('WEBVTT\n', '')
-      .replace(/(\d{2}):(\d{2}):(\d{2})\.(\d{3})/g, '$1:$2:$3,$4')
-      .trim();
-    
-    // Add sequence numbers
-    const blocks = srt.split('\n\n');
-    srt = blocks.map((block, i) => `${i + 1}\n${block}`).join('\n\n');
-    
-    return srt;
   }
 }
 
