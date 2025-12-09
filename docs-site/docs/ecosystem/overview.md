@@ -1,168 +1,178 @@
+# Galion Ecosystem Overview
+
+The Galion Universal Downloader is part of the larger **Galion Studio** ecosystem - a suite of open-source tools for AI, media, and development.
+
 ---
-sidebar_position: 1
+
+## 🌐 Ecosystem Components
+
+### 1. 📥 Universal Downloader (This Project)
+Download content from 36+ platforms with a beautiful UI.
+
+- **GitHub**: [galion-studio/galion-universal-downloader](https://github.com/galion-studio/galion-universal-downloader)
+- **Features**: Multi-platform downloads, transcription, batch processing
+
+### 2. 🤖 Galion AI
+Talk to our AI assistant for help with downloads, transcription, and more.
+
+- **Website**: [galion.studio](https://galion.studio)
+- **HuggingFace**: [huggingface.co/galion-studio](https://huggingface.co/galion-studio)
+
+### 3. 🧠 Cognitive Engine
+AI-powered content analysis and intelligent download suggestions.
+
+- **Features**: Smart recommendations, content summarization, metadata extraction
+
+### 4. 📝 Transcription Service
+Automatic subtitles and transcription using Whisper AI.
+
+- **Backends**: faster-whisper, whisper.cpp, openai-whisper
+- **Models**: tiny, base, small, medium, large, turbo
+
 ---
 
-# The Galion Ecosystem
-
-> **"Imagination is the End"**
-
-The Galion Ecosystem is a collection of interconnected tools and services designed to empower creators, developers, and dreamers.
-
-## 🌐 Ecosystem Overview
+## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    GALION ECOSYSTEM                          │
-│                                                              │
-│  ┌──────────────────┐    ┌──────────────────┐              │
-│  │   galion.app     │    │  galion.studio   │              │
-│  │   Talk to AI     │←──→│ Developer Portal │              │
-│  └────────┬─────────┘    └────────┬─────────┘              │
-│           │                       │                         │
-│           └───────────┬───────────┘                         │
-│                       │                                      │
-│           ┌───────────┴───────────┐                         │
-│           │  Universal Downloader │                         │
-│           │   Download Everything │                         │
-│           └───────────┬───────────┘                         │
-│                       │                                      │
-│           ┌───────────┴───────────┐                         │
-│           │   The Galion          │                         │
-│           │   Initiative          │                         │
-│           │   (Safe AI Research)  │                         │
-│           └───────────────────────┘                         │
-│                                                              │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                         GALION ECOSYSTEM                         │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                   │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐           │
+│  │   Frontend   │  │  API Server  │  │   Workers    │           │
+│  │  React/Vite  │──│   Express    │──│   Node.js    │           │
+│  │  Port: 5173  │  │  Port: 4444  │  │   Threads    │           │
+│  └──────────────┘  └──────────────┘  └──────────────┘           │
+│         │                  │                  │                  │
+│         └──────────────────┼──────────────────┘                  │
+│                            │                                     │
+│  ┌─────────────────────────┼─────────────────────────────────┐  │
+│  │              Platform Manager                              │  │
+│  │  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐  │  │
+│  │  │CivitAI │ │ GitHub │ │YouTube │ │Telegram│ │  ...   │  │  │
+│  │  └────────┘ └────────┘ └────────┘ └────────┘ └────────┘  │  │
+│  └───────────────────────────────────────────────────────────┘  │
+│                            │                                     │
+│  ┌─────────────────────────┼─────────────────────────────────┐  │
+│  │                   Core Services                            │  │
+│  │  ┌────────────┐ ┌────────────┐ ┌────────────┐             │  │
+│  │  │Transcriber │ │  Scanner   │ │   Queue    │             │  │
+│  │  └────────────┘ └────────────┘ └────────────┘             │  │
+│  └───────────────────────────────────────────────────────────┘  │
+│                                                                   │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-## 🚀 Products
+---
 
-### galion.app
-**[galion.app](https://galion.app)** - Talk to Galion AI
+## 🔌 Integration Points
 
-The flagship AI assistant with:
-- Ultra-low latency voice conversations (<600ms)
-- Emotional intelligence
-- Agentic capabilities (takes real actions)
-- Free for everyone
-
-### galion.studio
-**[galion.studio](https://galion.studio)** - Developer Portal
-
-For developers building on Galion:
-- API access to Galion AI
-- Documentation and SDKs
-- Integration guides
-- Developer community
-
-### Universal Downloader
-**[GitHub](https://github.com/galion-studio/galion-universal-downloader)** - This project!
-
-The ultimate download tool:
-- 6+ platform support
-- AI-powered cognitive features
-- 100% open source
-- MIT licensed
-
-### The Galion Initiative
-**[galioninitiative.org](https://galioninitiative.org)** - Safe AI Research
-
-Our research arm focused on:
-- Building safe AI systems
-- Transparent AI development
-- Human-aligned AI
-- Open research publications
-
-## 🔗 How They Connect
-
-### Data Flow
-
-```
-User → Universal Downloader → Local Storage
-         │
-         ↓ (optional)
-     galion.app API → Cognitive Features
-         │
-         ↓ (research data)
-  The Galion Initiative → Better AI
+### REST API
+```http
+POST /api/download
+POST /api/parse
+GET /api/history
+POST /api/transcribe
 ```
 
-### Integration Points
+### WebSocket Events
+- `progress` - Download progress
+- `complete` - Download complete
+- `error` - Error occurred
+- `transcription-progress` - Transcription progress
 
-1. **Downloader ↔ galion.app**
-   - Optional cognitive features
-   - AI-powered file organization
-   - Semantic search
+### Browser Extension
+Right-click any link to download with Galion.
 
-2. **Downloader ↔ galion.studio**
-   - Developer APIs
-   - Build custom integrations
-   - Extend functionality
+---
 
-3. **All Products ↔ Initiative**
-   - Research insights improve products
-   - Products generate research data
-   - Feedback loop for safety
+## 🧩 Open Source Stack
 
-## 🌍 Third-Party Integrations
+| Layer | Technology | License |
+|-------|------------|---------|
+| Frontend | React, TypeScript, Tailwind | MIT |
+| Backend | Node.js, Express | MIT |
+| Video | yt-dlp | Unlicense |
+| Transcription | faster-whisper | MIT |
+| Scraping | Puppeteer | Apache 2.0 |
 
-The ecosystem connects with:
+### Key Libraries
+| Library | Stars | Purpose |
+|---------|-------|---------|
+| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | ⭐ 91k | Video downloads |
+| [puppeteer](https://github.com/puppeteer/puppeteer) | ⭐ 89k | Web automation |
+| [faster-whisper](https://github.com/SYSTRAN/faster-whisper) | ⭐ 12k | Transcription |
+| [instaloader](https://github.com/instaloader/instaloader) | ⭐ 8k | Instagram |
+| [telegraf](https://github.com/telegraf/telegraf) | ⭐ 8k | Telegram |
+| [octokit](https://github.com/octokit/octokit.js) | ⭐ 7k | GitHub |
+| [TikTok-Api](https://github.com/davidteather/TikTok-Api) | ⭐ 5k | TikTok |
 
-### AI Platforms
-- **HuggingFace** - Model downloads and API
-- **CivitAI** - AI model marketplace
-- **OpenAI** - Cognitive features (optional)
+---
 
-### Development Platforms
-- **GitHub** - Repository downloads
-- **GitLab** - Mirror support
+## 📊 Platform Support Matrix
 
-### Content Platforms
-- **YouTube** - Video downloads
-- **Telegram** - File downloads
+| Category | Count | Examples |
+|----------|-------|----------|
+| Video | 7 | YouTube, Vimeo, Twitch |
+| Social | 7 | Instagram, TikTok, Twitter |
+| AI/ML | 2 | CivitAI, HuggingFace |
+| Audio | 3 | SoundCloud, Spotify, Bandcamp |
+| Cloud | 3 | Google Drive, Dropbox, MEGA |
+| Art | 4 | ArtStation, DeviantArt, Imgur |
+| Code | 1 | GitHub |
+| Messaging | 2 | Telegram, Discord |
+| News | 2 | RSS, Archive.org |
+| Adult | 2 | PornHub, XVideos |
+| **Total** | **36+** | And growing! |
 
-## 📡 API Access
-
-### Public APIs
-
-```typescript
-// Universal Downloader API
-GET  /api/download?url={url}
-POST /api/batch-download
-
-// galion.app API
-POST /api/chat
-GET  /api/voice/connect
-
-// galion.studio API
-GET  /api/models
-POST /api/generate
-```
-
-### Authentication
-
-Most features work without authentication. For premium features:
-
-1. Get an API key from [galion.studio](https://galion.studio)
-2. Add to your requests: `Authorization: Bearer YOUR_KEY`
-
-## 🔒 Privacy & Security
-
-All ecosystem products follow strict privacy principles:
-
-1. **Local First** - Data processed locally when possible
-2. **Opt-In Sync** - Cloud features are always optional
-3. **Encryption** - All data encrypted in transit and at rest
-4. **No Tracking** - No analytics, no telemetry (unless opt-in)
-5. **Open Source** - Verify our code yourself
+---
 
 ## 🚀 Getting Started
 
-1. **Try the Downloader** - [Live Demo](https://galion-studio.github.io/galion-universal-downloader/)
-2. **Talk to Galion** - [galion.app](https://galion.app)
-3. **Build with us** - [galion.studio](https://galion.studio)
-4. **Contribute** - [GitHub](https://github.com/galion-studio)
+```bash
+# Clone
+git clone https://github.com/galion-studio/galion-universal-downloader.git
+cd galion-universal-downloader
+
+# Install
+npm install
+
+# Run backend
+node server.js
+
+# Run frontend (new terminal)
+cd galion-v2 && npm run dev
+
+# Access
+# Frontend: http://localhost:5173/galion-universal-downloader/
+# API: http://localhost:4444
+```
 
 ---
 
-**Part of something bigger.** The Galion Ecosystem is more than individual products—it's a vision of open, accessible, and safe AI for everyone.
+## 🤝 Contributing
+
+We welcome contributions!
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing`)
+5. Open Pull Request
+
+See [CONTRIBUTING.md](https://github.com/galion-studio/galion-universal-downloader/blob/main/CONTRIBUTING.md) for guidelines.
+
+---
+
+## 📜 License
+
+MIT License - Free for personal and commercial use.
+
+---
+
+## 🔗 Links
+
+- **GitHub**: [galion-studio/galion-universal-downloader](https://github.com/galion-studio/galion-universal-downloader)
+- **Documentation**: [galion-studio.github.io/galion-universal-downloader](https://galion-studio.github.io/galion-universal-downloader/)
+- **HuggingFace**: [huggingface.co/galion-studio](https://huggingface.co/galion-studio)
+- **Website**: [galion.studio](https://galion.studio)

@@ -1,174 +1,61 @@
----
-title: Galion Universal Downloader
-emoji: 🏴‍☠️
-colorFrom: purple
-colorTo: blue
-sdk: docker
-app_port: 7860
-pinned: true
-license: mit
-short_description: Download anything from anywhere - CivitAI, GitHub, YouTube, HuggingFace & more
-tags:
-  - downloader
-  - universal
-  - civitai
-  - github
-  - youtube
-  - huggingface
-  - telegram
-  - ai-models
----
-
-# 🏴‍☠️ Galion Universal Downloader
+# 🚀 Galion Universal Downloader
 
 <div align="center">
 
-  <img src="galion-v2/public/favicon.svg" alt="Galion Logo" width="120" />
+![Galion Logo](galion-v2/public/galion-logo.svg)
 
-  ### **"Your Only Limit Is Your Imagination"**
+**Download EVERYTHING from ANY platform** - YouTube, Instagram, TikTok, CivitAI, GitHub, and 30+ more!
 
-  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-  [![Open Source](https://img.shields.io/badge/Open%20Source-Forever-green.svg)](https://github.com/galion-studio/galion-universal-downloader)
-  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-  [![Information Freedom](https://img.shields.io/badge/🏴‍☠️-Information%20Freedom-black.svg)](#our-philosophy)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18+-61DAFB.svg)](https://reactjs.org/)
+[![GitHub Stars](https://img.shields.io/github/stars/galion-studio/galion-universal-downloader?style=social)](https://github.com/galion-studio/galion-universal-downloader)
 
-  **Download anything. From anywhere. Effortlessly.**
-
-  [🚀 Live Demo](https://galion-studio.github.io/galion-universal-downloader/) | [📖 Documentation](docs/) | [🤝 Contribute](CONTRIBUTING.md)
+[🌐 Website](https://galion.studio) | [📖 Documentation](https://galion-studio.github.io/galion-universal-downloader/) | [🤗 HuggingFace](https://huggingface.co/galion-studio) | [💬 Discord](https://discord.gg/galion)
 
 </div>
 
 ---
 
-## 🏴‍☠️ Our Philosophy
-
-> **"We believe information wants to be free."**
-
-Just like The Pirate Bay fought for information freedom, Galion Universal Downloader stands as a **tool of digital liberation**. We believe that:
-
-- 📖 **Knowledge should be accessible to everyone**
-- 🌍 **Information transcends borders and paywalls**
-- 🔓 **Digital freedom is a fundamental right**
-- 🤝 **Open source is the foundation of trust**
-- ⚖️ **Users have the right to download content they have access to**
-
-### We Will Fight For This
-
-This project is **MIT Licensed** and will **always remain open source**. No corporation, government, or entity can take this away from the community. The code lives in the public domain, distributed across countless forks and mirrors.
-
-**If they close one door, a thousand more will open.**
-
----
-
-## 🚀 What is Galion?
-
-Galion Universal Downloader is a **powerful, multi-platform content downloader** that puts you in control of your digital content. Download from **30+ platforms**:
-
-### 📱 Social Media
-| Platform | Status | Description |
-|----------|--------|-------------|
-| 📸 **Instagram** | ✅ Ready | Posts, Reels, Stories, IGTV, Profiles |
-| 🎵 **TikTok** | ✅ Ready | Videos, Sounds, Profiles (no watermark) |
-| 🐦 **Twitter/X** | ✅ Ready | Tweets, Videos, GIFs, Spaces, Threads |
-| 🔴 **Reddit** | ✅ Ready | Posts, Videos, Galleries, GIFs |
-| 📘 **Facebook** | ✅ Ready | Videos, Photos, Stories, Reels |
-| 📌 **Pinterest** | ✅ Ready | Pins, Boards, Videos |
-| 📝 **Tumblr** | ✅ Ready | Posts, Images, Videos |
-
-### 🎬 Video Platforms
-| Platform | Status | Description |
-|----------|--------|-------------|
-| ▶️ **YouTube** | ✅ Ready | Videos, Audio, Playlists, Shorts |
-| 🎥 **Vimeo** | ✅ Ready | Videos, Channels, Showcases |
-| 📺 **Dailymotion** | ✅ Ready | Videos, Playlists |
-| 🎮 **Twitch** | ✅ Ready | VODs, Clips, Streams |
-| 🦶 **Kick** | ✅ Ready | VODs, Clips, Streams |
-
-### 🎵 Audio Platforms
-| Platform | Status | Description |
-|----------|--------|-------------|
-| 🔊 **SoundCloud** | ✅ Ready | Tracks, Playlists, Artists |
-| 🎧 **Spotify** | ⚡ Info Only | Track info, Playlists, Podcasts |
-| 🎸 **Bandcamp** | ✅ Ready | Albums, Tracks, Artists |
-
-### 🤖 AI & Models
-| Platform | Status | Description |
-|----------|--------|-------------|
-| 🎨 **CivitAI** | ✅ Ready | AI models, LoRAs, embeddings |
-| 🤗 **HuggingFace** | ✅ Ready | ML models, datasets, spaces |
-
-### 💻 Development
-| Platform | Status | Description |
-|----------|--------|-------------|
-| 🐙 **GitHub** | ✅ Ready | Repositories, releases, raw files |
-
-### 💬 Messaging
-| Platform | Status | Description |
-|----------|--------|-------------|
-| ✈️ **Telegram** | ✅ Ready | Channels, Files, Media, Stickers |
-| 💬 **Discord** | ✅ Ready | Attachments, Emojis, Stickers |
-
-### 🖼️ Image Hosting
-| Platform | Status | Description |
-|----------|--------|-------------|
-| 🖼️ **Imgur** | ✅ Ready | Images, Albums, GIFs |
-| 📷 **Flickr** | ✅ Ready | Photos, Albums |
-| 🎨 **ArtStation** | ✅ Ready | Artwork, Projects |
-| 🖌️ **DeviantArt** | ✅ Ready | Artwork, Galleries |
-
-### ☁️ Cloud Storage
-| Platform | Status | Description |
-|----------|--------|-------------|
-| 📁 **Google Drive** | ✅ Ready | Files, Folders |
-| 📦 **Dropbox** | ✅ Ready | Files, Shared Links |
-| ☁️ **MEGA** | ✅ Ready | Files, Folders |
-
-### 🌐 Generic
-| Platform | Status | Description |
-|----------|--------|-------------|
-| 🌐 **Any URL** | ✅ Ready | Universal downloader for any direct link |
-
----
-
 ## ✨ Features
 
-### Core Features
-- 🎯 **Auto-Platform Detection** - Paste any URL, we detect the source
-- 📥 **30+ Platforms Supported** - Social media, video, audio, AI, and more
-- 🎨 **Beautiful UI** - Dark/light modes with stunning animations
-- 🧠 **AI-Powered** - Semantic search and knowledge graph
-- 🔒 **100% Local** - Your data stays on your machine
-- ⚡ **Lightning Fast** - Optimized for speed
-- 🔍 **API Search** - Search and discover platform APIs
+### 🎯 36+ Supported Platforms
+Download from any of these platforms with a single URL paste:
 
-### 🎙️ Transcription Features (NEW!)
-- 🗣️ **Whisper Integration** - Automatic video/audio transcription
-- ⚡ **Faster-Whisper Support** - 4x faster transcription on GPU
-- 📝 **Multiple Formats** - SRT, VTT, TXT, JSON subtitles
-- 🌍 **Multi-language** - Auto-detect or specify language
-- 📁 **Batch Processing** - Transcribe multiple files at once
-- 🔄 **Format Conversion** - Convert between subtitle formats
+| Category | Platforms |
+|----------|-----------|
+| **Video** | YouTube, Vimeo, Dailymotion, Twitch, Kick, Bilibili, NicoNico |
+| **Social** | Instagram, TikTok, Twitter/X, Facebook, Reddit, Pinterest, Tumblr |
+| **AI/ML Models** | CivitAI, HuggingFace |
+| **Code** | GitHub (repos, releases, gists) |
+| **Audio** | SoundCloud, Spotify, Bandcamp |
+| **Messaging** | Telegram, Discord |
+| **Cloud** | Google Drive, Dropbox, MEGA |
+| **Art** | ArtStation, DeviantArt, Flickr, Imgur |
+| **News** | RSS Feeds, Articles, Archives |
+| **Adult** | PornHub, XVideos (with age verification) |
+| **Dark Web** | Onion sites (requires Tor) |
 
-**Supported Whisper Backends:**
-- OpenAI Whisper (`pip install openai-whisper`)
-- Faster-Whisper (`pip install faster-whisper`) - Recommended!
-- Whisper.cpp (C++ native, no Python needed)
-- Insanely-Fast-Whisper (GPU optimized)
+### 🔥 Key Features
 
-### Coming Soon
-- ⏸️ Pause/Resume downloads
-- 📊 Download queue with priorities
-- ⏰ Scheduled downloads
-- 📋 Clipboard monitoring
-- 🔗 Link grabber (extract all URLs from page)
-- 📦 Batch downloads
+- **🎨 Beautiful Modern UI** - React + Tailwind CSS with dark mode
+- **📥 Automatic Platform Detection** - Just paste a URL
+- **📊 Real-time Progress** - WebSocket-powered live updates
+- **🔐 API Key Management** - Secure storage for platform tokens
+- **📝 Transcription** - Auto-generate subtitles with Whisper AI
+- **🗂️ Download History** - Track and manage all downloads
+- **📦 Batch Download** - Download multiple URLs at once
+- **🌐 Browser Extension** - Right-click to download from any page
+- **🐳 Docker Support** - Deploy anywhere
+- **🔓 100% Open Source** - MIT Licensed
 
 ---
 
-## 🛠️ Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ 
+- Node.js 18+
 - npm or yarn
 
 ### Installation
@@ -176,177 +63,226 @@ Galion Universal Downloader is a **powerful, multi-platform content downloader**
 ```bash
 # Clone the repository
 git clone https://github.com/galion-studio/galion-universal-downloader.git
-
-# Navigate to project
 cd galion-universal-downloader
 
-# Install frontend dependencies
+# Install dependencies
+npm install
+
+# Start the backend server
+node server.js
+
+# In a new terminal, start the frontend
 cd galion-v2
 npm install
-
-# Start development server
 npm run dev
-
-# Open http://localhost:5173 in your browser
 ```
 
-### For Backend (Optional)
+### Access the App
+- **Frontend**: http://localhost:5173/galion-universal-downloader/
+- **API Server**: http://localhost:4444
 
-```bash
-# In the root directory
-npm install
+---
 
-# Start backend server
-npm start
+## 📁 Download Location
 
-# API available at http://localhost:3000
+All downloads are saved to:
+```
+C:\Users\[YourUsername]\Downloads\Galion\
+```
+
+On Mac/Linux:
+```
+~/Downloads/Galion/
 ```
 
 ---
 
-## 🏗️ Architecture
+## 🔑 API Keys
+
+Some platforms require API keys for full functionality:
+
+| Platform | Required For | Get Key |
+|----------|--------------|---------|
+| **CivitAI** | 18+ content, higher rate limits | [civitai.com/user/account](https://civitai.com/user/account) |
+| **HuggingFace** | Gated models | [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) |
+| **Telegram** | Private channels | [t.me/BotFather](https://t.me/BotFather) |
+| **GitHub** | Higher rate limits (60 → 5000/hr) | [github.com/settings/tokens](https://github.com/settings/tokens) |
+| **Twitter** | Protected tweets | [developer.twitter.com](https://developer.twitter.com/en/portal/dashboard) |
+| **Reddit** | Higher rate limits | [reddit.com/prefs/apps](https://www.reddit.com/prefs/apps) |
+
+Configure API keys in the **Settings** tab of the app.
+
+---
+
+## 🛠️ API Documentation
+
+### Base URL
+```
+http://localhost:4444/api
+```
+
+### Endpoints
+
+#### Status
+```http
+GET /api/status
+```
+Returns server status and available platforms.
+
+#### Download
+```http
+POST /api/download
+Content-Type: application/json
+
+{
+  "url": "https://civitai.com/models/12345",
+  "options": {
+    "downloadFiles": true
+  }
+}
+```
+
+#### Parse URL
+```http
+POST /api/parse
+Content-Type: application/json
+
+{
+  "url": "https://github.com/user/repo"
+}
+```
+
+#### History
+```http
+GET /api/history
+DELETE /api/history/:folder
+```
+
+#### API Keys
+```http
+GET /api/keys
+POST /api/keys/:platform
+DELETE /api/keys/:platform
+POST /api/keys/:platform/verify
+```
+
+#### Transcription
+```http
+GET /api/transcribe/status
+POST /api/transcribe/init
+GET /api/transcribe/models
+POST /api/transcribe
+```
+
+---
+
+## 🧩 Open Source Libraries Used
+
+We leverage the best open-source tools:
+
+| Library | Purpose | GitHub |
+|---------|---------|--------|
+| **yt-dlp** | Video downloads | [yt-dlp/yt-dlp](https://github.com/yt-dlp/yt-dlp) ⭐ 91k |
+| **instaloader** | Instagram | [instaloader/instaloader](https://github.com/instaloader/instaloader) ⭐ 8k |
+| **TikTok-Api** | TikTok | [davidteather/TikTok-Api](https://github.com/davidteather/TikTok-Api) ⭐ 5k |
+| **faster-whisper** | Transcription | [SYSTRAN/faster-whisper](https://github.com/SYSTRAN/faster-whisper) ⭐ 12k |
+| **octokit** | GitHub API | [octokit/octokit.js](https://github.com/octokit/octokit.js) ⭐ 7k |
+| **puppeteer** | Web scraping | [puppeteer/puppeteer](https://github.com/puppeteer/puppeteer) ⭐ 89k |
+| **telegraf** | Telegram | [telegraf/telegraf](https://github.com/telegraf/telegraf) ⭐ 8k |
+| **snoowrap** | Reddit | [not-an-aardvark/snoowrap](https://github.com/not-an-aardvark/snoowrap) ⭐ 1k |
+
+---
+
+## 🐳 Docker Deployment
+
+```bash
+# Build the image
+docker build -t galion-downloader .
+
+# Run the container
+docker run -p 4444:4444 -v ~/Downloads/Galion:/app/downloads galion-downloader
+```
+
+Or use Docker Compose:
+```bash
+docker-compose up -d
+```
+
+---
+
+## 📂 Project Structure
 
 ```
 galion-universal-downloader/
-├── galion-v2/                 # React frontend (Vite + TypeScript)
+├── server.js                 # Main API server
+├── src/
+│   ├── core/                 # Core modules
+│   │   ├── PlatformManager.js
+│   │   ├── UniversalDownloader.js
+│   │   ├── TranscriptionService.js
+│   │   └── ...
+│   └── platforms/            # Platform implementations
+│       ├── CivitaiPlatform.js
+│       ├── GithubPlatform.js
+│       ├── YoutubePlatform.js
+│       └── ...
+├── galion-v2/                # React frontend
 │   ├── src/
-│   │   ├── components/        # UI components
-│   │   ├── lib/              # Utilities & ecosystem config
-│   │   └── hooks/            # Custom React hooks
-│   └── public/               # Static assets & logo
-├── src/                      # Node.js backend
-│   ├── platforms/            # Platform-specific downloaders
-│   └── core/                 # Core services
+│   │   ├── components/
+│   │   ├── lib/
+│   │   └── ...
+│   └── public/
+├── extension/                # Browser extension
 ├── docs/                     # Documentation
-└── docs-site/                # Docusaurus documentation site
+└── docs-site/                # Documentation website
 ```
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions from everyone! This is a community project.
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
+```bash
+# Fork the repository
+# Create your feature branch
+git checkout -b feature/amazing-feature
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+# Commit your changes
+git commit -m 'Add some amazing feature'
 
----
+# Push to the branch
+git push origin feature/amazing-feature
 
-## 📜 Legal Notice & Disclaimer
-
-### Open Source Forever
-
-This software is released under the **MIT License**. This means:
-
-- ✅ You can **use** it for any purpose
-- ✅ You can **modify** it freely
-- ✅ You can **distribute** copies
-- ✅ You can **sell** copies (but why would you? It's free!)
-- ✅ You can **fork** and create derivatives
-
-### User Responsibility
-
-Galion Universal Downloader is a **neutral tool**. Like a web browser, it facilitates access to content on the internet. 
-
-**Important:**
-- 👤 **Users are responsible** for how they use this tool
-- ⚖️ **Respect copyright** in your jurisdiction
-- 📝 **Only download content** you have legal rights to access
-- 🚫 We **do not host** any content
-- 🔧 We provide a **tool**, not content
-
-### Why This Matters
-
-We believe in **information freedom**, but we also believe in **responsible use**. This tool is designed to help you:
-- Archive content you've purchased or have rights to
-- Download free and open content
-- Back up your own uploads
-- Access content you're subscribed to
-
-**The tool doesn't distinguish rights - that's your responsibility as a user.**
-
----
-
-## 🌐 The Galion Ecosystem
-
-Galion Universal Downloader is part of a larger ecosystem:
-
-- 🌐 [galion.app](https://galion.app) - Talk to Galion AI
-- 🏢 [galion.studio](https://galion.studio) - Developer Portal  
-- 🤗 [HuggingFace](https://huggingface.co/galion-studio) - ML Models
-- 📖 [Documentation](https://galion-studio.github.io/galion-universal-downloader/)
-
----
-
-## 🏴‍☠️ The Manifesto
-
-```
-In a world where information is power,
-And access is increasingly controlled,
-We build tools that empower users.
-
-We don't ask permission.
-We don't wait for approval.
-We create, we share, we liberate.
-
-Your Only Limit Is Your Imagination.
-
-- The Galion Crew 🏴‍☠️
+# Open a Pull Request
 ```
 
 ---
 
-## ⭐ Support the Project
+## 📜 License
 
-If Galion helps you, consider:
-
-- ⭐ **Star** this repository
-- 🍴 **Fork** and contribute
-- 📣 **Share** with others
-- 🐛 **Report** bugs and suggestions
-- 💬 **Join** the discussion
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📄 License
+## 🌟 Star History
 
-```
-MIT License
+[![Star History Chart](https://api.star-history.com/svg?repos=galion-studio/galion-universal-downloader&type=Date)](https://star-history.com/#galion-studio/galion-universal-downloader&Date)
 
-Copyright (c) 2024-2025 Galion Studio
+---
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+## 🙏 Acknowledgments
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+- [Galion Studio](https://galion.studio) - Project maintainers
+- All the amazing open-source libraries we use
+- Our contributors and community
 
 ---
 
 <div align="center">
 
-  **Made with ❤️ and 🏴‍☠️ by the Galion Community**
+**Made with ❤️ by [Galion Studio](https://galion.studio)**
 
-  *"Your Only Limit Is Your Imagination"*
-
-  [⬆ Back to Top](#-galion-universal-downloader)
+[⬆ Back to Top](#-galion-universal-downloader)
 
 </div>
