@@ -244,20 +244,27 @@ app.post('/api/download', async (req, res) => {
     if (downloadFiles && result.files && result.files.length > 0) {
       sendProgress({ status: 'Downloading files...', progress: 80 });
       
-      const fileResults = await downloader.downloadFiles(
-        result.files.map(f => f.downloadUrl || f.url || f.src),
-        {
-          destDir: result.outputDir,
-          onProgress: (p) => {
-            sendProgress({
-              status: `Downloading: ${p.filename}`,
-              progress: 80 + (p.overallProgress || 0) * 0.15
-            });
-          }
-        }
-      );
+      // Filter out any undefined or invalid URLs
+      const fileUrls = result.files
+        .map(f => f?.downloadUrl || f?.url || f?.src)
+        .filter(url => url && typeof url === 'string');
       
-      result.downloadedFiles = fileResults;
+      if (fileUrls.length > 0) {
+        const fileResults = await downloader.downloadFiles(
+          fileUrls,
+          {
+            destDir: result.outputDir,
+            onProgress: (p) => {
+              sendProgress({
+                status: `Downloading: ${p.filename}`,
+                progress: 80 + (p.overallProgress || 0) * 0.15
+              });
+            }
+          }
+        );
+        
+        result.downloadedFiles = fileResults;
+      }
     }
     
     // Also download images if present
@@ -267,18 +274,24 @@ app.post('/api/download', async (req, res) => {
       const imagesDir = path.join(result.outputDir, 'images');
       await fs.ensureDir(imagesDir);
       
-      const imageUrls = result.images.map(i => i.url || i.src);
-      const imageResults = await downloader.downloadFiles(imageUrls, {
-        destDir: imagesDir,
-        onProgress: (p) => {
-          sendProgress({
-            status: `Downloading image: ${p.filename}`,
-            progress: 90 + (p.overallProgress || 0) * 0.08
-          });
-        }
-      });
+      // Filter out any undefined or invalid image URLs
+      const imageUrls = result.images
+        .map(i => i?.url || i?.src)
+        .filter(url => url && typeof url === 'string');
       
-      result.downloadedImages = imageResults;
+      if (imageUrls.length > 0) {
+        const imageResults = await downloader.downloadFiles(imageUrls, {
+          destDir: imagesDir,
+          onProgress: (p) => {
+            sendProgress({
+              status: `Downloading image: ${p.filename}`,
+              progress: 90 + (p.overallProgress || 0) * 0.08
+            });
+          }
+        });
+        
+        result.downloadedImages = imageResults;
+      }
     }
     
     sendProgress({ status: 'Complete!', progress: 100 });

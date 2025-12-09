@@ -1,189 +1,337 @@
-# Platform Compatibility
+---
+sidebar_position: 2
+---
 
-Galion Universal Downloader supports **36+ platforms** with automatic URL detection.
+# 📊 Platform Compatibility Matrix
+
+<div align="center">
+
+### **Everything Galion Can Do, At a Glance**
+
+*A comprehensive feature matrix for all 36+ supported platforms* 🏴‍☠️
+
+</div>
+
+---
+
+## 📋 Feature Matrix Legend
+
+| Icon | Meaning |
+|------|---------|
+| ✅ | Fully supported |
+| 🔄 | Partial/basic support |
+| 🔑 | Requires API key or authentication |
+| ⚠️ | Limited or experimental |
+| ❌ | Not supported |
+| 🔜 | Coming soon |
+
+---
 
 ## 🎬 Video Platforms
 
-| Platform | URL Patterns | Features | API Key |
-|----------|--------------|----------|---------|
-| **YouTube** | youtube.com, youtu.be | Videos, Playlists, Channels, Shorts | Optional |
-| **Vimeo** | vimeo.com | Videos, Channels | Optional |
-| **Dailymotion** | dailymotion.com | Videos | No |
-| **Twitch** | twitch.tv | VODs, Clips, Channels | No |
-| **Kick** | kick.com | Videos, Streams | No |
-| **Bilibili** | bilibili.com | Videos | No |
-| **NicoNico** | nicovideo.jp | Videos | No |
+| Platform | Videos | Playlists | Channels | Live | Audio Only | Subtitles | Thumbnails | Quality |
+|----------|--------|-----------|----------|------|------------|-----------|------------|---------|
+| **YouTube** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | Up to 8K |
+| **TikTok** | ✅ | ❌ | ✅ | ❌ | ✅ | ❌ | ✅ | Best available |
+| **Vimeo** | ✅ | ✅ | ✅ | ⚠️ | ✅ | ✅ | ✅ | Up to 8K |
+| **Twitch** | ✅ | ❌ | ⚠️ | ⚠️ | ✅ | ⚠️ | ✅ | Source |
+| **Dailymotion** | ✅ | ✅ | ⚠️ | ❌ | ✅ | ⚠️ | ✅ | Up to 4K |
+| **Kick** | ✅ | ❌ | ⚠️ | ⚠️ | ✅ | ❌ | ✅ | Source |
+| **Rumble** | ✅ | ⚠️ | ⚠️ | ❌ | ✅ | ❌ | ✅ | Best available |
+| **Odysee** | ✅ | ✅ | ✅ | ❌ | ✅ | ⚠️ | ✅ | Best available |
+| **PeerTube** | ✅ | ⚠️ | ⚠️ | ❌ | ✅ | ⚠️ | ✅ | Best available |
+| **Bilibili** | ✅ | ⚠️ | ⚠️ | ❌ | ✅ | ⚠️ | ✅ | Best available |
 
-## 📱 Social Media
+---
 
-| Platform | URL Patterns | Features | API Key |
-|----------|--------------|----------|---------|
-| **Instagram** | instagram.com | Posts, Reels, Stories, Profiles | Optional |
-| **TikTok** | tiktok.com | Videos, Profiles | No |
-| **Twitter/X** | twitter.com, x.com | Tweets, Media, Threads | Optional |
-| **Facebook** | facebook.com, fb.com | Videos, Posts | No |
-| **Reddit** | reddit.com | Posts, Images, Videos, Comments | Optional |
-| **Pinterest** | pinterest.com | Pins, Boards | No |
-| **Tumblr** | tumblr.com | Posts, Blogs | No |
+## 📸 Social Media Platforms
 
-## 🤖 AI/ML Platforms
+| Platform | Posts | Videos | Images | Stories | Profiles | Comments | Metadata |
+|----------|-------|--------|--------|---------|----------|----------|----------|
+| **Instagram** | ✅ | ✅ | ✅ | 🔑 | ✅ | ❌ | ✅ |
+| **Twitter/X** | ✅ | ✅ | ✅ | ❌ | ✅ | ⚠️ | ✅ |
+| **Reddit** | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
+| **Pinterest** | ⚠️ | ⚠️ | ✅ | ❌ | ⚠️ | ❌ | ⚠️ |
+| **Tumblr** | ✅ | ⚠️ | ✅ | ❌ | ⚠️ | ❌ | ⚠️ |
+| **Facebook** | 🔑 | 🔑 | 🔑 | 🔑 | 🔑 | ❌ | 🔑 |
+| **LinkedIn** | 🔑 | 🔑 | ⚠️ | ❌ | 🔑 | ❌ | ⚠️ |
+| **Snapchat** | ❌ | ⚠️ | ⚠️ | ⚠️ | ❌ | ❌ | ⚠️ |
 
-| Platform | URL Patterns | Features | API Key |
-|----------|--------------|----------|---------|
-| **CivitAI** | civitai.com | Models, Images, Articles, Profiles | **Required for 18+** |
-| **HuggingFace** | huggingface.co | Models, Datasets, Spaces | Required for gated |
+---
 
-## 💻 Code & Development
+## 🎨 AI & Creative Platforms
 
-| Platform | URL Patterns | Features | API Key |
-|----------|--------------|----------|---------|
-| **GitHub** | github.com, raw.githubusercontent.com | Repositories, Releases, Gists, Files | Optional |
+| Platform | Models | Images | Profiles | Metadata | Large Files | API Key |
+|----------|--------|--------|----------|----------|-------------|---------|
+| **CivitAI** | ✅ | ✅ | ✅ | ✅ | ✅ | 🔑 (optional) |
+| **HuggingFace** | ✅ | ⚠️ | ✅ | ✅ | ✅ | 🔑 (optional) |
+| **ArtStation** | ❌ | ✅ | ⚠️ | ⚠️ | ❌ | ❌ |
+| **DeviantArt** | ❌ | ✅ | ⚠️ | ⚠️ | ❌ | ❌ |
+| **Pixiv** | ❌ | 🔑 | 🔑 | 🔑 | ❌ | 🔑 |
+| **Newgrounds** | ❌ | ⚠️ | ⚠️ | ⚠️ | ❌ | ❌ |
 
-## 🎵 Audio Platforms
+### CivitAI Feature Details
 
-| Platform | URL Patterns | Features | API Key |
-|----------|--------------|----------|---------|
-| **SoundCloud** | soundcloud.com | Tracks, Playlists | No |
-| **Spotify** | spotify.com | Track info (no download) | No |
-| **Bandcamp** | bandcamp.com | Albums, Tracks | No |
+| Feature | Without Key | With API Key |
+|---------|-------------|--------------|
+| Model Downloads | ✅ | ✅ |
+| Preview Images | ✅ | ✅ |
+| NSFW Content | ❌ | ✅ |
+| Full Resolution | ⚠️ | ✅ |
+| Rate Limits | ~100/hour | ~500/hour |
+| Early Access | ❌ | ✅ |
 
-## 💬 Messaging Platforms
+### HuggingFace Feature Details
 
-| Platform | URL Patterns | Features | API Key |
-|----------|--------------|----------|---------|
-| **Telegram** | t.me, telegram.me | Channels, Groups, Files | **Required** |
-| **Discord** | discord.com | Attachments, Embeds | No |
+| Feature | Without Token | With Token |
+|---------|---------------|------------|
+| Public Models | ✅ | ✅ |
+| Private Models | ❌ | ✅ |
+| Gated Models (Llama) | ❌ | ✅ |
+| Datasets | ✅ | ✅ |
+| LFS Files | ✅ | ✅ |
+| Rate Limits | Standard | Higher |
 
-## ☁️ Cloud Storage
+---
 
-| Platform | URL Patterns | Features | API Key |
-|----------|--------------|----------|---------|
-| **Google Drive** | drive.google.com | Files, Folders | No |
-| **Dropbox** | dropbox.com | Files | No |
-| **MEGA** | mega.nz | Files, Folders | No |
+## 💻 Developer Platforms
 
-## 🎨 Art & Image Platforms
+| Platform | Repos | Releases | Gists | Raw Files | Private | API Key |
+|----------|-------|----------|-------|-----------|---------|---------|
+| **GitHub** | ✅ | ✅ | ✅ | ✅ | 🔑 | 🔑 (optional) |
+| **GitLab** | ✅ | ✅ | ⚠️ | ✅ | 🔑 | 🔑 (optional) |
+| **Bitbucket** | ✅ | ⚠️ | ⚠️ | ✅ | 🔑 | 🔑 (optional) |
+| **SourceForge** | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ |
 
-| Platform | URL Patterns | Features | API Key |
-|----------|--------------|----------|---------|
-| **ArtStation** | artstation.com | Artwork, Galleries | No |
-| **DeviantArt** | deviantart.com | Art, Galleries | No |
-| **Flickr** | flickr.com | Photos, Albums | No |
-| **Imgur** | imgur.com | Images, Albums | No |
+### GitHub Rate Limits
+
+| Type | Without Token | With Token |
+|------|---------------|------------|
+| API Requests | 60/hour | 5,000/hour |
+| Search API | 10/min | 30/min |
+| Download | Unlimited | Unlimited |
+
+---
+
+## 🔊 Audio Platforms
+
+| Platform | Tracks | Playlists | Albums | Artists | Quality | Metadata |
+|----------|--------|-----------|--------|---------|---------|----------|
+| **SoundCloud** | ✅ | ✅ | ⚠️ | ✅ | 128/320 kbps | ✅ |
+| **Bandcamp** | ✅ | ❌ | ✅ | ⚠️ | FLAC/MP3 | ✅ |
+| **Spotify** | ❌ | ⚠️ | ⚠️ | ⚠️ | N/A | ✅ |
+| **Mixcloud** | ⚠️ | ⚠️ | ❌ | ⚠️ | Variable | ⚠️ |
+| **Audius** | ✅ | ⚠️ | ⚠️ | ⚠️ | Variable | ⚠️ |
+
+**Note:** Spotify audio is DRM-protected. We can only extract metadata and playlist information.
+
+---
 
 ## 📰 News & Archives
 
-| Platform | URL Patterns | Features | API Key |
-|----------|--------------|----------|---------|
-| **News/RSS** | Various | Articles, RSS Feeds | No |
-| **Archive.org** | archive.org | Wayback Machine, Media | No |
+| Platform | Articles | Images | PDFs | Full Text | Metadata |
+|----------|----------|--------|------|-----------|----------|
+| **Archive.org** | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Wayback Machine** | ✅ | ✅ | ⚠️ | ✅ | ✅ |
+| **arXiv** | ✅ | ⚠️ | ✅ | ⚠️ | ✅ |
+| **News Sites (200+)** | ✅ | ✅ | ❌ | ✅ | ✅ |
+| **Medium** | ✅ | ✅ | ❌ | ✅ | ⚠️ |
+| **Substack** | ✅ | ✅ | ❌ | ✅ | ⚠️ |
 
-## 🔞 Adult Platforms
+### Supported News Outlets
 
-| Platform | URL Patterns | Features | API Key |
-|----------|--------------|----------|---------|
-| **PornHub** | pornhub.com | Videos | No |
-| **XVideos** | xvideos.com | Videos | No |
+We support **200+ news sites** including:
 
-*Age verification required. Use responsibly.*
-
-## 🧅 Dark Web
-
-| Platform | Features | Requirements |
-|----------|----------|--------------|
-| **Onion Sites** | .onion domains | Tor required |
-
----
-
-## API Key Details
-
-### CivitAI
-**Required for:** 18+ NSFW content, higher rate limits
-
-**Get key:** [civitai.com/user/account](https://civitai.com/user/account)
-1. Log in to CivitAI
-2. Go to Account Settings
-3. Navigate to API Keys section
-4. Create new key
-5. Copy and paste in Settings
-
-### HuggingFace
-**Required for:** Gated models that require accepting terms
-
-**Get key:** [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)
-1. Log in to HuggingFace
-2. Go to Settings → Access Tokens
-3. Create new token with read access
-4. Copy and paste in Settings
-
-### GitHub
-**Optional but recommended:** Increases rate limits from 60/hour to 5000/hour
-
-**Get key:** [github.com/settings/tokens](https://github.com/settings/tokens)
-1. Go to Developer Settings → Personal Access Tokens
-2. Generate new token (classic)
-3. Select `repo` scope
-4. Copy and paste in Settings
-
-### Telegram
-**Required for:** Private channels and groups
-
-**Get key:** [t.me/BotFather](https://t.me/BotFather)
-1. Message @BotFather
-2. Send `/newbot`
-3. Follow instructions to create bot
-4. Copy the token provided
-
-### Twitter
-**Optional:** For protected tweets
-
-**Get key:** [developer.twitter.com](https://developer.twitter.com/en/portal/dashboard)
-1. Create Twitter Developer account
-2. Create a project and app
-3. Generate Bearer Token
-
-### Reddit
-**Optional:** For higher rate limits
-
-**Get key:** [reddit.com/prefs/apps](https://www.reddit.com/prefs/apps)
-1. Create "script" type app
-2. Note the client ID and secret
+| Region | Major Outlets |
+|--------|---------------|
+| **US** | NYT, Washington Post, CNN, Fox, AP, Reuters, NPR |
+| **UK** | BBC, Guardian, Telegraph, Independent, Sky |
+| **EU** | DW, France24, EuroNews, Spiegel, Le Monde |
+| **Asia** | SCMP, Japan Times, Al Jazeera, Times of India |
+| **Tech** | TechCrunch, Ars Technica, Wired, The Verge |
+| **Other** | And 150+ more regional/niche outlets |
 
 ---
 
-## Content Types Supported
+## ☁️ Cloud Storage
 
-### Video
-- `.mp4`, `.mkv`, `.avi`, `.mov`, `.webm`, `.flv`, `.wmv`, `.m4v`
-
-### Audio
-- `.mp3`, `.wav`, `.flac`, `.aac`, `.ogg`, `.m4a`, `.opus`
-
-### Images
-- `.jpg`, `.jpeg`, `.png`, `.gif`, `.webp`, `.svg`, `.bmp`
-
-### Models
-- `.safetensors`, `.ckpt`, `.pt`, `.pth`, `.bin`, `.onnx`, `.h5`
-
-### Documents
-- `.pdf`, `.md`, `.txt`, `.json`, `.yaml`
-
-### Archives
-- `.zip`, `.rar`, `.7z`, `.tar`, `.gz`
+| Service | Public Links | Shared Folders | Auth Required | Large Files |
+|---------|--------------|----------------|---------------|-------------|
+| **Google Drive** | ⚠️ | ❌ | 🔑 | ⚠️ |
+| **Dropbox** | ✅ | ⚠️ | ❌ | ✅ |
+| **MEGA** | ✅ | ⚠️ | ❌ | ✅ |
+| **OneDrive** | ⚠️ | ❌ | 🔑 | ⚠️ |
+| **MediaFire** | ✅ | ❌ | ❌ | ✅ |
+| **Sendspace** | ✅ | ❌ | ❌ | ⚠️ |
 
 ---
 
-## Open Source Libraries
+## 🧅 Special Platforms
 
-We use these amazing open-source tools:
+| Platform | Content Types | Auth | Proxy Required | Notes |
+|----------|---------------|------|----------------|-------|
+| **Telegram** | Files, Images, Videos | 🔑 (optional) | ❌ | Public channels only without auth |
+| **Tor/.onion** | Any | ❌ | ✅ (Tor) | Requires Tor running |
+| **Pastebin** | Text | ❌ | ❌ | Public pastes only |
+| **Discord** | Attachments | 🔑 | ❌ | Limited support |
 
-| Library | Stars | Purpose |
-|---------|-------|---------|
-| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | ⭐ 91k | Video downloads |
-| [puppeteer](https://github.com/puppeteer/puppeteer) | ⭐ 89k | Web scraping |
-| [faster-whisper](https://github.com/SYSTRAN/faster-whisper) | ⭐ 12k | Transcription |
-| [instaloader](https://github.com/instaloader/instaloader) | ⭐ 8k | Instagram |
-| [telegraf](https://github.com/telegraf/telegraf) | ⭐ 8k | Telegram |
-| [octokit](https://github.com/octokit/octokit.js) | ⭐ 7k | GitHub API |
-| [TikTok-Api](https://github.com/davidteather/TikTok-Api) | ⭐ 5k | TikTok |
-| [snoowrap](https://github.com/not-an-aardvark/snoowrap) | ⭐ 1k | Reddit |
+---
+
+## 📱 Mobile/Short-form Video
+
+| Platform | Videos | No Watermark | Profiles | Audio | Slideshows |
+|----------|--------|--------------|----------|-------|------------|
+| **TikTok** | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **YouTube Shorts** | ✅ | ✅ | ✅ | ✅ | ❌ |
+| **Instagram Reels** | ✅ | ✅ | ✅ | ⚠️ | ❌ |
+| **Snapchat Spotlight** | ⚠️ | ⚠️ | ❌ | ⚠️ | ❌ |
+
+---
+
+## 🔞 Adult Platforms (18+)
+
+| Platform | Videos | Quality | Profiles | Auth |
+|----------|--------|---------|----------|------|
+| **PornHub** | ✅ | Up to 4K | ⚠️ | ❌ |
+| **XVideos** | ✅ | Variable | ⚠️ | ❌ |
+| **xHamster** | ✅ | Variable | ⚠️ | ❌ |
+| **RedGIFs** | ✅ | HD | ⚠️ | ❌ |
+
+**Note:** Adult content is disabled by default. Enable in settings if needed.
+
+---
+
+## 🤖 AI Feature Compatibility
+
+| Platform | Transcription | Metadata Export | Resume Support | Batch Download |
+|----------|---------------|-----------------|----------------|----------------|
+| **YouTube** | ✅ | ✅ | ✅ | ✅ |
+| **TikTok** | ✅ | ✅ | ❌ | ✅ |
+| **Instagram** | ✅ | ✅ | ❌ | ✅ |
+| **CivitAI** | ❌ | ✅ | ✅ | ✅ |
+| **GitHub** | ❌ | ✅ | ✅ | ✅ |
+| **Podcast RSS** | ✅ | ✅ | ✅ | ✅ |
+
+### Whisper Transcription Support
+
+Works with any downloaded video/audio file:
+- **Video:** MP4, MKV, AVI, MOV, WEBM
+- **Audio:** MP3, WAV, FLAC, OGG, M4A
+- **Output:** SRT, VTT, TXT, JSON
+
+---
+
+## 📊 Performance Characteristics
+
+| Platform | Typical Speed | Multi-connection | Rate Limits | Best Practices |
+|----------|---------------|------------------|-------------|----------------|
+| **YouTube** | Fast | ✅ | Rare | Use yt-dlp |
+| **TikTok** | Medium | ❌ | Aggressive | Slow requests |
+| **Instagram** | Slow | ❌ | Very Aggressive | Use sessions |
+| **CivitAI** | Fast | ✅ | Moderate | Use API key |
+| **GitHub** | Fast | ✅ | 60/hour (5000 w/ key) | Use token |
+| **HuggingFace** | Fast | ✅ | Liberal | Token for gated |
+
+---
+
+## 🔄 Generic Fallback
+
+When a platform doesn't have a native handler, Galion uses intelligent fallbacks:
+
+### Fallback Chain
+
+```
+1. yt-dlp (1000+ sites)
+   │
+   └─ If fails ─►  2. Direct Scraping
+                      │
+                      └─ If fails ─►  3. Puppeteer Rendering
+                                        │
+                                        └─ If fails ─►  4. Network Interception
+```
+
+### What Generic Can Extract
+
+| Content Type | Detection | Extraction | Notes |
+|--------------|-----------|------------|-------|
+| Videos | ✅ | ✅ | Via yt-dlp or <video> tags |
+| Images | ✅ | ✅ | <img> tags, background images |
+| Audio | ✅ | ✅ | <audio> tags, podcasts |
+| Files | ✅ | ✅ | Direct links, PDFs |
+| Text | ✅ | ✅ | Article extraction |
+
+---
+
+## 🔧 Platform Configuration
+
+### API Keys
+
+| Platform | Key Name | Env Variable | How to Get |
+|----------|----------|--------------|------------|
+| **CivitAI** | API Token | `CIVITAI_API_KEY` | [Settings/API Keys](https://civitai.com/user/account) |
+| **GitHub** | Personal Token | `GITHUB_TOKEN` | [Settings/Tokens](https://github.com/settings/tokens) |
+| **HuggingFace** | Access Token | `HF_TOKEN` | [Settings/Tokens](https://huggingface.co/settings/tokens) |
+| **Telegram** | Bot Token | `TELEGRAM_TOKEN` | [@BotFather](https://t.me/BotFather) |
+
+### Setting Keys via API
+
+```bash
+# CivitAI
+curl -X POST http://localhost:4444/api/keys/civitai \
+  -H "Content-Type: application/json" \
+  -d '{"apiKey": "your-key"}'
+
+# GitHub
+curl -X POST http://localhost:4444/api/keys/github \
+  -H "Content-Type: application/json" \
+  -d '{"apiKey": "ghp_xxxxxxxxxxxx"}'
+```
+
+---
+
+## 📈 Reliability Status
+
+Based on community testing and maintenance:
+
+| Status | Meaning | Count |
+|--------|---------|-------|
+| 🟢 **Stable** | Works reliably, maintained | 20 platforms |
+| 🟡 **Moderate** | Works but occasional issues | 10 platforms |
+| 🟠 **Flaky** | Platform changes break often | 4 platforms |
+| 🔴 **Broken** | Currently non-functional | 0 platforms |
+
+### Current Status (Updated Dec 2025)
+
+| Platform | Status | Notes |
+|----------|--------|-------|
+| YouTube | 🟢 | Stable with yt-dlp |
+| TikTok | 🟡 | Sometimes needs retries |
+| Instagram | 🟡 | Rate limits aggressive |
+| Twitter/X | 🟢 | Stable |
+| Reddit | 🟢 | Stable |
+| CivitAI | 🟢 | Excellent with API key |
+| GitHub | 🟢 | Very stable |
+| HuggingFace | 🟢 | Stable |
+| Archive.org | 🟢 | Very stable |
+| Telegram | 🟢 | Stable for public |
+
+---
+
+## 🆘 Platform Issues?
+
+If a platform isn't working:
+
+1. **Check if it's a known issue:** [GitHub Issues](https://github.com/galion-studio/galion-universal-downloader/issues)
+2. **Try updating yt-dlp:** `pip install -U yt-dlp`
+3. **Clear cookies/sessions**
+4. **Report the issue:** Include URL and error message
+
+---
+
+<div align="center">
+
+**Missing a platform or feature?** [Request it!](https://github.com/galion-studio/galion-universal-downloader/issues)
+
+🏴‍☠️
+
+</div>

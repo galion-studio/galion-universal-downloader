@@ -1,0 +1,116 @@
+{
+  "generatedAt": "2025-12-09T14:07:19.503Z",
+  "summary": {
+    "totalHealingAttempts": 3,
+    "successRate": "100.0%"
+  },
+  "platformBreakdown": {
+    "instagram": {
+      "success": 1,
+      "fail": 0
+    },
+    "tiktok": {
+      "success": 1,
+      "fail": 0
+    },
+    "youtube": {
+      "success": 1,
+      "fail": 0
+    }
+  },
+  "errorTypeBreakdown": {
+    "API_ENDPOINT_DOWN": 1,
+    "RATE_LIMITED": 1,
+    "REGEX_FAILURE": 1
+  },
+  "activeEndpoints": {},
+  "recentActions": [
+    {
+      "timestamp": "2025-12-09T13:52:18.009Z",
+      "platformId": "instagram",
+      "error": "404 API endpoint not found",
+      "analysis": {
+        "errorType": "API_ENDPOINT_DOWN",
+        "severity": "HIGH",
+        "autoFixable": true,
+        "suggestedActions": [
+          "SWITCH_ENDPOINT",
+          "ADD_FALLBACK"
+        ],
+        "details": {}
+      },
+      "actions": [
+        {
+          "action": "SWITCH_ENDPOINT",
+          "success": true,
+          "message": "Switched to endpoint: https://fastdl.app/api/convert",
+          "newEndpoint": "https://fastdl.app/api/convert"
+        }
+      ],
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T13:52:18.649Z",
+      "platformId": "tiktok",
+      "error": "429 Too Many Requests",
+      "analysis": {
+        "errorType": "RATE_LIMITED",
+        "severity": "MEDIUM",
+        "autoFixable": true,
+        "suggestedActions": [
+          "RATE_LIMIT_WAIT",
+          "ADD_RETRY"
+        ],
+        "details": {
+          "waitTime": 2771.977538579661
+        }
+      },
+      "actions": [
+        {
+          "action": "RATE_LIMIT_WAIT",
+          "success": true,
+          "message": "Waited 3s",
+          "waitTime": 2771.977538579661
+        }
+      ],
+      "success": true
+    },
+    {
+      "timestamp": "2025-12-09T13:52:21.433Z",
+      "platformId": "youtube",
+      "error": "No regex match found for URL",
+      "analysis": {
+        "errorType": "REGEX_FAILURE",
+        "severity": "HIGH",
+        "autoFixable": true,
+        "suggestedActions": [
+          "UPDATE_REGEX",
+          "ADD_FALLBACK"
+        ],
+        "details": {
+          "suggestion": "URL pattern may have changed on the platform"
+        }
+      },
+      "actions": [
+        {
+          "action": "UPDATE_REGEX",
+          "success": true,
+          "message": "Pattern analysis completed",
+          "suggestions": [
+            {
+              "type": "video",
+              "pattern": "/(?:youtube\\.com\\/watch\\?v=|youtu\\.be\\/)([a-zA-Z0-9_-]{11})/",
+              "description": "Updated video pattern for youtube"
+            },
+            {
+              "type": "shorts",
+              "pattern": "/youtube\\.com\\/shorts\\/([a-zA-Z0-9_-]{11})/",
+              "description": "Updated shorts pattern for youtube"
+            }
+          ]
+        }
+      ],
+      "success": true
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "summary": {
+    "timestamp": "2025-12-09T13:52:21.434Z",
+    "duration": 3902,
+    "durationFormatted": "3.9s",
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0,
+    "fixed": 0,
+    "passRate": "100.0%"
+  },
+  "results": [
+    {
+      "name": "Heal endpoint failure for Instagram",
+      "suite": "Self-Healing Tests",
+      "status": "PASS",
+      "startTime": "2025-12-09T13:52:18.008Z",
+      "endTime": "2025-12-09T13:52:18.648Z",
+      "duration": 640,
+      "error": null,
+      "errorType": null,
+      "healingAttempt": null,
+      "retries": 0
+    },
+    {
+      "name": "Heal rate limit error",
+      "suite": "Self-Healing Tests",
+      "status": "PASS",
+      "startTime": "2025-12-09T13:52:18.649Z",
+      "endTime": "2025-12-09T13:52:21.432Z",
+      "duration": 2783,
+      "error": null,
+      "errorType": null,
+      "healingAttempt": null,
+      "retries": 0
+    },
+    {
+      "name": "Suggest fix for regex failure",
+      "suite": "Self-Healing Tests",
+      "status": "PASS",
+      "startTime": "2025-12-09T13:52:21.433Z",
+      "endTime": "2025-12-09T13:52:21.433Z",
+      "duration": 0,
+      "error": null,
+      "errorType": null,
+      "healingAttempt": null,
+      "retries": 0
+    },
+    {
+      "name": "Generate healing statistics",
+      "suite": "Self-Healing Tests",
+      "status": "PASS",
+      "startTime": "2025-12-09T13:52:21.434Z",
+      "endTime": "2025-12-09T13:52:21.434Z",
+      "duration": 0,
+      "error": null,
+      "errorType": null,
+      "healingAttempt": null,
+      "retries": 0
+    }
+  ],
+  "healingLog": [],
+  "environment": {
+    "nodeVersion": "v22.14.0",
+    "platform": "win32",
+    "cwd": "C:\\Users\\Gigabyte\\Documents\\galion-universal-downloader"
+  }
+}

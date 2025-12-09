@@ -11,7 +11,18 @@
     "dev": "node --watch server.js",
     "start:serverless": "PORT=${PORT:-3000} NODE_ENV=production DOWNLOADS_DIR=/tmp/downloads node server.js",
     "docker": "docker build -t runpod-downloader . && docker run -p 3000:3000 runpod-downloader",
-    "docker:serverless": "docker build -t runpod-downloader . && docker run -e NODE_ENV=production -e DOWNLOADS_DIR=/tmp/downloads -p 3000:3000 runpod-downloader"
+    "docker:serverless": "docker build -t runpod-downloader . && docker run -e NODE_ENV=production -e DOWNLOADS_DIR=/tmp/downloads -p 3000:3000 runpod-downloader",
+    "test": "node tests/run-tests.js",
+    "test:quick": "node tests/run-tests.js --quick",
+    "test:all": "node tests/run-tests.js --all",
+    "test:platform": "node tests/run-tests.js --platform",
+    "test:youtube": "node tests/run-tests.js --platform=youtube",
+    "test:instagram": "node tests/run-tests.js --platform=instagram",
+    "test:tiktok": "node tests/run-tests.js --platform=tiktok",
+    "test:twitter": "node tests/run-tests.js --platform=twitter",
+    "test:healing": "node tests/run-tests.js --healing",
+    "test:fix": "node tests/run-tests.js --all --fix",
+    "test:report": "node tests/run-tests.js --all --report=html"
   },
   "bin": {
     "runpod-dl": "./index.js"

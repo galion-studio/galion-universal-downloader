@@ -1,0 +1,106 @@
+{
+  "summary": {
+    "timestamp": "2025-12-09T13:52:07.489Z",
+    "duration": 422,
+    "durationFormatted": "422ms",
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0,
+    "errors": 0,
+    "fixed": 0,
+    "passRate": "100.0%"
+  },
+  "results": [
+    {
+      "name": "Platform index loads without error",
+      "suite": "Quick Smoke Tests",
+      "status": "PASS",
+      "startTime": "2025-12-09T13:52:07.068Z",
+      "endTime": "2025-12-09T13:52:07.486Z",
+      "duration": 418,
+      "error": null,
+      "errorType": null,
+      "healingAttempt": null,
+      "retries": 0
+    },
+    {
+      "name": "detectPlatform works",
+      "suite": "Quick Smoke Tests",
+      "status": "PASS",
+      "startTime": "2025-12-09T13:52:07.487Z",
+      "endTime": "2025-12-09T13:52:07.487Z",
+      "duration": 0,
+      "error": null,
+      "errorType": null,
+      "healingAttempt": null,
+      "retries": 0
+    },
+    {
+      "name": "youtube platform loads",
+      "suite": "Quick Smoke Tests",
+      "status": "PASS",
+      "startTime": "2025-12-09T13:52:07.487Z",
+      "endTime": "2025-12-09T13:52:07.487Z",
+      "duration": 0,
+      "error": null,
+      "errorType": null,
+      "healingAttempt": null,
+      "retries": 0
+    },
+    {
+      "name": "instagram platform loads",
+      "suite": "Quick Smoke Tests",
+      "status": "PASS",
+      "startTime": "2025-12-09T13:52:07.488Z",
+      "endTime": "2025-12-09T13:52:07.488Z",
+      "duration": 0,
+      "error": null,
+      "errorType": null,
+      "healingAttempt": null,
+      "retries": 0
+    },
+    {
+      "name": "github platform loads",
+      "suite": "Quick Smoke Tests",
+      "status": "PASS",
+      "startTime": "2025-12-09T13:52:07.488Z",
+      "endTime": "2025-12-09T13:52:07.488Z",
+      "duration": 0,
+      "error": null,
+      "errorType": null,
+      "healingAttempt": null,
+      "retries": 0
+    },
+    {
+      "name": "twitter platform loads",
+      "suite": "Quick Smoke Tests",
+      "status": "PASS",
+      "startTime": "2025-12-09T13:52:07.488Z",
+      "endTime": "2025-12-09T13:52:07.488Z",
+      "duration": 0,
+      "error": null,
+      "errorType": null,
+      "healingAttempt": null,
+      "retries": 0
+    },
+    {
+      "name": "Server module syntax is valid",
+      "suite": "Quick Smoke Tests",
+      "status": "PASS",
+      "startTime": "2025-12-09T13:52:07.488Z",
+      "endTime": "2025-12-09T13:52:07.489Z",
+      "duration": 1,
+      "error": null,
+      "errorType": null,
+      "healingAttempt": null,
+      "retries": 0
+    }
+  ],
+  "healingLog": [],
+  "environment": {
+    "nodeVersion": "v22.14.0",
+    "platform": "win32",
+    "cwd": "C:\\Users\\Gigabyte\\Documents\\galion-universal-downloader"
+  }
+}

@@ -1,176 +1,312 @@
-# 🏴‍☠️ About Galion
+---
+sidebar_position: 1
+---
+
+# 🏢 About Galion Studio
 
 <div align="center">
 
-  **"Your Only Limit Is Your Imagination"**
+### **Building Tools for Digital Freedom**
+
+*We believe in a world where information flows freely, tools are open, and users own their data.* 🏴‍☠️
 
 </div>
 
 ---
 
-## Who We Are
+## 🌟 Who We Are
 
-Galion is not a company. **Galion is a movement.**
+**Galion Studio** is a collective of developers, designers, and digital freedom advocates building open-source tools that empower users.
 
-We are developers, hackers, dreamers, and believers in information freedom. We come from all corners of the world, united by a single belief:
+We're not a traditional company. We're a **community-driven initiative** focused on:
 
-> **Information wants to be free.**
-
----
-
-## The Galion Manifesto
-
-```
-In a world where content is locked behind paywalls,
-Where corporations decide what you can access,
-Where your downloads are tracked, throttled, and controlled,
-
-We build different.
-
-We build tools that put YOU in control.
-Tools that respect your privacy.
-Tools that work offline, on your machine.
-Tools that no one can take away.
-
-We are Galion.
-We are the community.
-We are unstoppable.
-
-🏴‍☠️
-```
+- 🔓 **Open Source Development** — All our code is MIT licensed
+- 🛡️ **Privacy-First Tools** — Zero tracking, zero telemetry
+- 🌍 **Global Accessibility** — Tools that work anywhere
+- 🤝 **Community Collaboration** — Built by and for the community
 
 ---
 
-## Our Philosophy
+## 🎯 Our Mission
 
-### 📖 Information Freedom
-Knowledge and content should be accessible to everyone, regardless of geography, payment ability, or status. We build tools that help break down barriers to information.
+> *"To build tools that give people control over their digital lives."*
 
-### 🔓 Open Source Forever
-Our code is MIT licensed. It lives on GitHub, on countless forks, on hard drives around the world. No corporation, no government can close this door. If they try, a thousand more will open.
+In an age where:
+- Content disappears without warning
+- Platforms shut down overnight
+- Data is locked behind paywalls
+- Privacy is treated as a luxury
 
-### 🛡️ Privacy First
-We don't track you. We don't collect data. We don't phone home. Your downloads, your history, your data - it all stays on YOUR machine.
-
-### 🤝 Community Driven
-Galion belongs to everyone who contributes. Every pull request, every bug report, every feature suggestion makes us stronger.
-
-### ⚔️ Fighting the Good Fight
-Like The Pirate Bay before us, we believe in standing up for digital rights. We provide tools - how users choose to use them is their responsibility and their right.
-
----
-
-## What We're NOT
-
-Let's be clear:
-
-- ❌ We are **NOT** a piracy site
-- ❌ We do **NOT** host any content
-- ❌ We do **NOT** store your downloads
-- ❌ We do **NOT** track your activity
-- ❌ We do **NOT** endorse illegal downloads
-
-We are a **TOOL** - like a web browser, like wget, like curl. We facilitate downloads from URLs. What content you choose to download, and whether you have the right to download it, is YOUR responsibility.
+We build tools that put **users first**. Tools that are:
+- **Free** — No subscriptions, no paywalls
+- **Open** — Inspect the code, verify it does what we say
+- **Private** — Your data stays yours
+- **Persistent** — Download it, own it, keep it forever
 
 ---
 
-## What We ARE
+## 🏴‍☠️ The Philosophy
 
-- ✅ A **free, open-source download manager**
-- ✅ A **neutral tool** for accessing content
-- ✅ A **community-driven project**
-- ✅ An **advocate for user rights**
-- ✅ A **privacy-respecting application**
+### The Pirate Bay Spirit
 
----
+We're inspired by the original spirit of The Pirate Bay (2003) — not the piracy, but the **philosophy**.
 
-## The Ecosystem
+> *"We believe information wants to be free."*
 
-Galion Universal Downloader is part of a larger vision:
+This doesn't mean "steal everything." It means:
+- **Public information should stay public**
+- **Archival is important and legal**
+- **Users have rights to their own data**
+- **Decentralization protects freedom**
 
-| Product | Description |
-|---------|-------------|
-| 🌐 **galion.app** | Talk to Galion AI |
-| 📥 **Universal Downloader** | Multi-platform downloads |
-| 🏢 **galion.studio** | Developer Portal |
-| 🤗 **HuggingFace** | ML Models & Datasets |
+### Our Principles
 
----
+1. **Open Source Forever**
+   - Every tool we build is MIT licensed
+   - No exceptions, no time limits
+   - Fork us, improve us, distribute us
 
-## Legal Stance
+2. **Privacy by Design**
+   - We can't track what we don't collect
+   - No telemetry baked into our tools
+   - Your data never touches our servers
 
-### Our Position
+3. **User Freedom**
+   - You own your downloads
+   - You control your data
+   - You decide what to do with it
 
-Galion Universal Downloader is a **neutral technology**. Like:
-- A web browser that can access any website
-- A knife that can cut vegetables or something else
-- A car that can drive to work or participate in a getaway
+4. **Community First**
+   - Issues are answered
+   - PRs are reviewed
+   - Ideas are welcomed
 
-The tool itself has legitimate uses:
-- Archiving content you've purchased
-- Downloading free and open content
-- Backing up your own uploads
-- Accessing content from platforms with poor native download options
-- Research and educational purposes
-
-### User Responsibility
-
-Users are **solely responsible** for:
-- Ensuring they have rights to download content
-- Complying with local copyright laws
-- Respecting creators' rights
-- Using the tool ethically
-
-### DMCA & Takedowns
-
-We do not host content. If you are a rights holder with concerns, please understand:
-- We cannot remove content we don't host
-- We are a tool provider, not a content platform
-- Contact the platform hosting the content directly
+5. **Transparency**
+   - Every decision is documented
+   - Code is readable and commented
+   - No hidden agendas
 
 ---
 
-## History
+## 🛠️ What We Build
 
-### 2024 - The Beginning
-Galion started as a simple download script for CivitAI models. Frustrated with slow downloads and lack of batch capabilities, we built something better.
+### 📥 Galion Universal Downloader
+**The flagship project.**
 
-### 2025 - Going Universal
-We expanded to support multiple platforms: GitHub, YouTube, Telegram, HuggingFace, and generic URLs. The community grew.
+A universal content downloader supporting 36+ platforms. Download anything from anywhere with a simple API.
+
+- **GitHub:** [galion-studio/galion-universal-downloader](https://github.com/galion-studio/galion-universal-downloader)
+- **Docs:** [galion-studio.github.io](https://galion-studio.github.io/galion-universal-downloader/)
+
+### 🤖 galion.app
+An AI-powered chat assistant that can help with code, research, creativity, and more.
+
+- **Website:** [galion.app](https://galion.app)
+
+### 🤗 HuggingFace Models
+We publish machine learning models and datasets for community use.
+
+- **Profile:** [huggingface.co/galion-studio](https://huggingface.co/galion-studio)
+
+### 🌐 galion.studio
+Our developer portal and project hub.
+
+- **Website:** [galion.studio](https://galion.studio)
+
+---
+
+## 🌍 Where We Are
+
+**Galion Studio is everywhere — and nowhere.**
+
+We're a distributed collective with contributors from around the world. We don't have:
+- A physical headquarters
+- Venture capital funding
+- Shareholders to please
+- Investors demanding growth
+
+This means we can focus on what matters: **building good tools**.
+
+---
+
+## 💚 How We're Funded
+
+**We're not.** (In the traditional sense.)
+
+Galion projects are:
+- Built by volunteers
+- Maintained by the community
+- Free for everyone
+
+We sustain ourselves through:
+- Community contributions
+- Occasional donations
+- The satisfaction of building something meaningful
+
+**We will never:**
+- Add paywalls
+- Sell user data
+- Insert tracking
+- Close-source our code
+
+---
+
+## 🤝 Join Us
+
+### As a User
+- **Use our tools** — That's why we build them!
+- **Report bugs** — Help us improve
+- **Suggest features** — Tell us what you need
+- **Share** — Tell others about digital freedom tools
+
+### As a Contributor
+- **Code** — Fix bugs, add features, create platforms
+- **Documentation** — Write guides, improve clarity
+- **Translation** — Help us reach global users
+- **Design** — Make our tools beautiful
+- **Testing** — Find edge cases, report issues
+
+### As an Advocate
+- **Star our repos** — Help others find us
+- **Share on social** — Spread the word
+- **Write about us** — Blog posts, tutorials
+- **Teach others** — Workshops, guides
+
+---
+
+## 📬 Contact
+
+**General Questions:**
+- GitHub Discussions: [discussions](https://github.com/galion-studio/galion-universal-downloader/discussions)
+
+**Bug Reports:**
+- GitHub Issues: [issues](https://github.com/galion-studio/galion-universal-downloader/issues)
+
+**Feature Requests:**
+- GitHub Issues with the `enhancement` label
+
+**Security Issues:**
+- Please report responsibly — open an issue or contact maintainers directly
+
+---
+
+## 🔗 Official Channels
+
+| Channel | URL |
+|---------|-----|
+| **Website** | [galion.studio](https://galion.studio) |
+| **GitHub** | [github.com/galion-studio](https://github.com/galion-studio) |
+| **HuggingFace** | [huggingface.co/galion-studio](https://huggingface.co/galion-studio) |
+| **AI Chat** | [galion.app](https://galion.app) |
+| **Documentation** | [galion-studio.github.io](https://galion-studio.github.io/galion-universal-downloader/) |
+
+---
+
+## 📜 History
+
+### 2024
+- 🎬 Project inception
+- 🚀 First public release
+- 📥 Universal Downloader v1.0
+
+### 2025
+- 🆕 Galion v2.0 release
+- 📚 Documentation site launch
+- 🤖 AI features integration
+- 🌍 36+ platforms supported
+- 🤗 HuggingFace presence
+- 🏴‍☠️ Growing community
 
 ### The Future
-Our roadmap includes:
-- Download queues and scheduling
-- More platform integrations
-- Decentralized mirror support
-- Community-driven development
+- 🌐 Browser extensions
+- 🖥️ Desktop apps
+- 📱 Mobile apps
+- 🔮 Whatever the community wants
 
 ---
 
-## Join Us
+## ❓ FAQ
 
-Want to be part of the movement?
+<details>
+<summary><strong>Is Galion Studio a company?</strong></summary>
 
-- ⭐ [Star the repository](https://github.com/galion-studio/galion-universal-downloader)
-- 🍴 [Fork and contribute](https://github.com/galion-studio/galion-universal-downloader/fork)
-- 🐛 [Report bugs](https://github.com/galion-studio/galion-universal-downloader/issues)
-- 💡 [Suggest features](https://github.com/galion-studio/galion-universal-downloader/issues)
-- 📖 [Improve documentation](https://github.com/galion-studio/galion-universal-downloader)
+Not in the traditional sense. We're a **community collective** focused on building open-source tools. We don't have offices, investors, or shareholders. We're just people who believe in digital freedom.
+</details>
+
+<details>
+<summary><strong>Who funds Galion?</strong></summary>
+
+Galion is built by volunteers and sustained by the community. We don't have VC funding or corporate sponsors. Our tools will always be free.
+</details>
+
+<details>
+<summary><strong>Can I trust Galion tools?</strong></summary>
+
+**Yes, and you can verify it.** All our code is open source. Read it. Audit it. Run it locally. Build it yourself. We have nothing to hide.
+</details>
+
+<details>
+<summary><strong>Will Galion ever sell out?</strong></summary>
+
+**No.** Our projects are MIT licensed. Even if we wanted to (we don't), the code is already free. Fork it, host it, distribute it. The cat is out of the bag.
+</details>
+
+<details>
+<summary><strong>How can I help?</strong></summary>
+
+- Use our tools
+- Report bugs
+- Contribute code
+- Write documentation
+- Share with others
+- Star our repos
+
+Every contribution matters!
+</details>
 
 ---
 
-## Contact
+## 🏴‍☠️ The Manifesto
 
-- **GitHub**: [galion-studio](https://github.com/galion-studio)
-- **Website**: [galion.app](https://galion.app)
-- **HuggingFace**: [galion-studio](https://huggingface.co/galion-studio)
+```
+We are not pirates who steal.
+We are archivists who preserve.
+
+We are not hackers who break.
+We are builders who create.
+
+We are not rebels without cause.
+We are advocates with purpose.
+
+In a digital world of walled gardens,
+We plant open forests.
+
+In an economy of surveillance,
+We build tools of privacy.
+
+In an age of corporate control,
+We champion user freedom.
+
+Join us.
+Build with us.
+Sail with us.
+
+The digital seas are vast,
+And there's room for everyone.
+
+                    — Galion Studio 🏴‍☠️
+```
 
 ---
 
 <div align="center">
 
-  **🏴‍☠️ "Your Only Limit Is Your Imagination" 🏴‍☠️**
+**We're always looking for new crew members.**
 
-  *Made by the community, for the community.*
+*"Your Only Limit Is Your Imagination"*
+
+[**GitHub**](https://github.com/galion-studio) • [**galion.studio**](https://galion.studio) • [**galion.app**](https://galion.app)
+
+🏴‍☠️
 
 </div>
