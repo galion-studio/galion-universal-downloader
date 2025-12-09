@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Galion Test Report - 2025-12-09T14:07:19.486Z</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; padding: 20px; }
+    .container { max-width: 1400px; margin: 0 auto; }
+    h1 { color: #38bdf8; margin-bottom: 20px; font-size: 2rem; }
+    h2 { color: #94a3b8; margin: 30px 0 15px; font-size: 1.25rem; }
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
+    .stat-card { background: #1e293b; border-radius: 8px; padding: 20px; text-align: center; }
+    .stat-value { font-size: 2rem; font-weight: bold; }
+    .stat-label { color: #64748b; font-size: 0.875rem; margin-top: 5px; }
+    .passed .stat-value { color: #22c55e; }
+    .failed .stat-value { color: #ef4444; }
+    .fixed .stat-value { color: #3b82f6; }
+    table { width: 100%; border-collapse: collapse; background: #1e293b; border-radius: 8px; overflow: hidden; }
+    th { background: #334155; padding: 12px; text-align: left; font-weight: 600; color: #cbd5e1; }
+    td { padding: 12px; border-top: 1px solid #334155; }
+    .test-row:hover { background: #334155; }
+    .status { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; color: white; }
+    .pass { background: rgba(34, 197, 94, 0.1); }
+    .fail { background: rgba(239, 68, 68, 0.1); }
+    .fixed { background: rgba(59, 130, 246, 0.1); }
+    .healing-section { margin-top: 40px; }
+    .footer { margin-top: 40px; text-align: center; color: #64748b; font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 Galion Test Report</h1>
+    
+    <div class="summary">
+      <div class="stat-card">
+        <div class="stat-value">79</div>
+        <div class="stat-label">Total Tests</div>
+      </div>
+      <div class="stat-card passed">
+        <div class="stat-value">74</div>
+        <div class="stat-label">Passed</div>
+      </div>
+      <div class="stat-card failed">
+        <div class="stat-value">4</div>
+        <div class="stat-label">Failed</div>
+      </div>
+      <div class="stat-card fixed">
+        <div class="stat-value">1</div>
+        <div class="stat-label">Auto-Fixed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Skipped</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">93.7%</div>
+        <div class="stat-label">Pass Rate</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">474ms</div>
+        <div class="stat-label">Duration</div>
+      </div>
+    </div>
+    
+    <h2>📋 Test Results</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Suite</th>
+          <th>Test Name</th>
+          <th>Status</th>
+          <th>Duration</th>
+          <th>Error</th>
+          <th>Auto-Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      <tr class="test-row pass">
+        <td>Core Modules</td>
+        <td>Platform index exports all platforms</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Core Modules</td>
+        <td>getAllPlatforms returns valid structure</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Core Modules</td>
+        <td>getCategories returns all categories</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect youtube from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect youtube from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect instagram from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect instagram from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect tiktok from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect tiktok from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect twitter from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect twitter from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row fixed">
+        <td>Platform Detection</td>
+        <td>Detect reddit from URL</td>
+        <td><span class="status" style="background: #3b82f6">FIXED</span></td>
+        <td>0ms</td>
+        <td>URL https://www.reddit.com/r/test/ should detect as reddit</td>
+        <td>URL format may have changed</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect reddit from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect github from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect civitai from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect telegram from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect archive from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect news from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect onion from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Detect generic from URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Handle null URL gracefully</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Platform Detection</td>
+        <td>Handle empty URL gracefully</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>YouTube URL Parsing</td>
+        <td>Parse standard video URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>YouTube URL Parsing</td>
+        <td>Parse short video URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>YouTube URL Parsing</td>
+        <td>Parse shorts URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>YouTube URL Parsing</td>
+        <td>Parse playlist URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>YouTube URL Parsing</td>
+        <td>Parse channel URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>1ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Instagram URL Parsing</td>
+        <td>Parse post URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Instagram URL Parsing</td>
+        <td>Parse reel URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Instagram URL Parsing</td>
+        <td>Parse story URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Instagram URL Parsing</td>
+        <td>Parse profile URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>1ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>TikTok URL Parsing</td>
+        <td>Parse TikTok video: https://www.tiktok.com/@username/video/1...</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>TikTok URL Parsing</td>
+        <td>Parse TikTok video: https://tiktok.com/@test/video/987654321...</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>TikTok URL Parsing</td>
+        <td>Parse TikTok video: https://vm.tiktok.com/ZMxxxxxx/...</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Twitter URL Parsing</td>
+        <td>Parse twitter.com tweet URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Twitter URL Parsing</td>
+        <td>Parse x.com tweet URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Reddit URL Parsing</td>
+        <td>Parse Reddit post: https://www.reddit.com/r/programming/com...</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>1ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Reddit URL Parsing</td>
+        <td>Parse Reddit post: https://reddit.com/r/pics/comments/xyz78...</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Reddit URL Parsing</td>
+        <td>Parse Reddit post: https://old.reddit.com/r/videos/comments...</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row fail">
+        <td>GitHub URL Parsing</td>
+        <td>Parse repo URL</td>
+        <td><span class="status" style="background: #ef4444">FAIL</span></td>
+        <td>1ms</td>
+        <td>Expected repo but got undefined</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>GitHub URL Parsing</td>
+        <td>Parse release URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>youtube/video pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>youtube/shorts pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>youtube/playlist pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>youtube/channel pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>1ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>instagram/post pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>instagram/reel pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>instagram/story pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>instagram/profile pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>tiktok/video pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>tiktok/shortlink pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>tiktok/profile pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>twitter/tweet pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>twitter/profile pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>reddit/post pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>1ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>reddit/subreddit pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>github/repo pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>github/release pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Regex Pattern Validation</td>
+        <td>github/file pattern is valid regex</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle invalid URL: "..."</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle null URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>1ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle undefined URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle invalid URL: "not-a-url..."</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle invalid URL: "http://..."</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle invalid URL: "https://..."</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle invalid URL: "ftp://example.com..."</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle invalid URL: "javascript:alert(1)..."</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle invalid URL: "<script>alert(1)</script>..."</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle invalid URL: "https://youtube.com/watch?v=..."</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle invalid URL: "https://instagram.com/p/..."</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle invalid URL: "https://twitter.com/status/..."</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle invalid URL: "https://github.com/..."</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Invalid URL Handling</td>
+        <td>Handle invalid URL: "://missing-protocol.com..."</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row fail">
+        <td>API Endpoint Health</td>
+        <td>YouTube oEmbed endpoint is reachable</td>
+        <td><span class="status" style="background: #ef4444">FAIL</span></td>
+        <td>0ms</td>
+        <td>require is not defined</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row fail">
+        <td>API Endpoint Health</td>
+        <td>GitHub API endpoint is reachable</td>
+        <td><span class="status" style="background: #ef4444">FAIL</span></td>
+        <td>0ms</td>
+        <td>require is not defined</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row fail">
+        <td>API Endpoint Health</td>
+        <td>Reddit JSON API is reachable</td>
+        <td><span class="status" style="background: #ef4444">FAIL</span></td>
+        <td>1ms</td>
+        <td>require is not defined</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Integration Tests</td>
+        <td>PlatformManager parses YouTube URL</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Integration Tests</td>
+        <td>PlatformManager has all platforms registered</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>0ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      <tr class="test-row pass">
+        <td>Integration Tests</td>
+        <td>Download handles invalid URL gracefully</td>
+        <td><span class="status" style="background: #22c55e">PASS</span></td>
+        <td>1ms</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    
+      </tbody>
+    </table>
+    
+    
+    <div class="healing-section">
+      <h2>🔧 Auto-Healing Log</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Test</th>
+            <th>Error Type</th>
+            <th>Fix Applied</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+      <tr>
+        <td>3:07:19 PM</td>
+        <td>Detect reddit from URL</td>
+        <td>URL_FORMAT_CHANGED</td>
+        <td>URL format may have changed</td>
+      </tr>
+    
+        </tbody>
+      </table>
+    </div>
+    
+    
+    <div class="footer">
+      <p>Generated at 2025-12-09T14:07:19.486Z | Node v22.14.0 | win32</p>
+    </div>
+  </div>
+</body>
+</html>

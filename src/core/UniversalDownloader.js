@@ -291,17 +291,29 @@ export class UniversalDownloader {
   async downloadFiles(files, options = {}) {
     const { destDir, onProgress, onComplete } = options;
     
+    // Filter out invalid files (undefined, null, or objects without url)
+    const validFiles = (files || []).filter(file => {
+      if (!file) return false;
+      if (typeof file === 'string') return file.trim().length > 0;
+      return file.url && typeof file.url === 'string';
+    });
+    
     const results = {
       successful: [],
       failed: [],
-      total: files.length
+      total: validFiles.length
     };
+
+    if (validFiles.length === 0) {
+      console.warn('No valid files to download');
+      return results;
+    }
 
     let completed = 0;
 
     // Process in batches
-    for (let i = 0; i < files.length; i += this.concurrent) {
-      const batch = files.slice(i, i + this.concurrent);
+    for (let i = 0; i < validFiles.length; i += this.concurrent) {
+      const batch = validFiles.slice(i, i + this.concurrent);
       
       const batchPromises = batch.map(async (file) => {
         const url = typeof file === 'string' ? file : file.url;

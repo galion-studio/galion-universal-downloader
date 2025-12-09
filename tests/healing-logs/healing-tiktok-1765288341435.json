@@ -1,0 +1,26 @@
+{
+  "timestamp": "2025-12-09T13:52:18.649Z",
+  "platformId": "tiktok",
+  "error": "429 Too Many Requests",
+  "analysis": {
+    "errorType": "RATE_LIMITED",
+    "severity": "MEDIUM",
+    "autoFixable": true,
+    "suggestedActions": [
+      "RATE_LIMIT_WAIT",
+      "ADD_RETRY"
+    ],
+    "details": {
+      "waitTime": 2771.977538579661
+    }
+  },
+  "actions": [
+    {
+      "action": "RATE_LIMIT_WAIT",
+      "success": true,
+      "message": "Waited 3s",
+      "waitTime": 2771.977538579661
+    }
+  ],
+  "success": true
+}

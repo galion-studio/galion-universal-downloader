@@ -1,0 +1,24 @@
+{
+  "timestamp": "2025-12-09T13:52:18.009Z",
+  "platformId": "instagram",
+  "error": "404 API endpoint not found",
+  "analysis": {
+    "errorType": "API_ENDPOINT_DOWN",
+    "severity": "HIGH",
+    "autoFixable": true,
+    "suggestedActions": [
+      "SWITCH_ENDPOINT",
+      "ADD_FALLBACK"
+    ],
+    "details": {}
+  },
+  "actions": [
+    {
+      "action": "SWITCH_ENDPOINT",
+      "success": true,
+      "message": "Switched to endpoint: https://fastdl.app/api/convert",
+      "newEndpoint": "https://fastdl.app/api/convert"
+    }
+  ],
+  "success": true
+}
