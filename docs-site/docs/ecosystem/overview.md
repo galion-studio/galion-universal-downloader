@@ -1,5 +1,11 @@
 # Galion Ecosystem Overview
 
+<div align="center">
+
+<img src="/galion-logo.png" alt="Galion Universal Downloader" width="150" style={{borderRadius: '15px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)'}}/>
+
+</div>
+
 The Galion Universal Downloader is part of the larger **Galion Studio** ecosystem - a suite of open-source tools for AI, media, and development.
 
 ---
