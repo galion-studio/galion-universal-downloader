@@ -6,6 +6,8 @@ sidebar_position: 1
 
 <div align="center">
 
+<img src="/galion-logo.png" alt="Galion Universal Downloader" width="200" style={{borderRadius: '20px', boxShadow: '0 4px 20px rgba(0,0,0,0.3)'}}/>
+
   **"Your Only Limit Is Your Imagination"**
 
   *The Universal Downloader That Puts You In Control*
