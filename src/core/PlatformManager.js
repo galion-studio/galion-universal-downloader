@@ -11,12 +11,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export class PlatformManager {
-  constructor() {
+  constructor(options = {}) {
     this.platforms = new Map();
     this.apiKeys = new Map();
     this.downloadQueue = [];
     this.activeDownloads = 0;
     this.maxConcurrent = 5;
+    this.downloadDir = options.downloadDir || null;
+  }
+
+  /**
+   * Set default download directory
+   */
+  setDownloadDir(dir) {
+    this.downloadDir = dir;
   }
 
   /**
@@ -158,11 +166,17 @@ export class PlatformManager {
     const platformId = this.detectPlatform(url);
     const platform = this.platforms.get(platformId);
 
+    // Always include downloadDir in options
+    const downloadOptions = {
+      ...options,
+      downloadDir: options.downloadDir || this.downloadDir
+    };
+
     if (!platform) {
       // Try generic platform
       const genericPlatform = this.platforms.get('generic');
       if (genericPlatform) {
-        return genericPlatform.download(url, options);
+        return genericPlatform.download(url, downloadOptions);
       }
       throw new Error(`No handler for platform: ${platformId}`);
     }
@@ -173,7 +187,7 @@ export class PlatformManager {
       platform.setApiKey(apiKey);
     }
 
-    return platform.download(url, options);
+    return platform.download(url, downloadOptions);
   }
 
   /**

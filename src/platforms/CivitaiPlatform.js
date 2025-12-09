@@ -157,10 +157,9 @@ export class CivitaiPlatform {
         images: []
       };
 
-      // Create download directory
+      // Create download directory - use downloadDir directly (it's already the correct path)
       const modelDir = path.join(
-        downloadDir || process.cwd(),
-        'downloads',
+        downloadDir || path.join(process.cwd(), 'downloads'),
         `civitai_${model.type}_${model.name.replace(/[<>:"/\\|?*]/g, '-')}`
       );
       await fs.ensureDir(modelDir);
@@ -248,7 +247,7 @@ export class CivitaiPlatform {
       // Get original quality URL
       const url = image.url.replace(/\/width=\d+/, '');
       
-      const imgDir = path.join(downloadDir || process.cwd(), 'downloads', 'civitai_images');
+      const imgDir = path.join(downloadDir || path.join(process.cwd(), 'downloads'), 'civitai_images');
       await fs.ensureDir(imgDir);
 
       return {
@@ -339,8 +338,7 @@ export class CivitaiPlatform {
 
       // Create output directory
       const articleDir = path.join(
-        downloadDir || process.cwd(),
-        'downloads',
+        downloadDir || path.join(process.cwd(), 'downloads'),
         `civitai_article_${articleId}_${articleData.title.substring(0, 50).replace(/[<>:"/\\|?*]/g, '-')}`
       );
       await fs.ensureDir(articleDir);
@@ -387,8 +385,7 @@ export class CivitaiPlatform {
 
     try {
       const profileDir = path.join(
-        downloadDir || process.cwd(),
-        'downloads',
+        downloadDir || path.join(process.cwd(), 'downloads'),
         `civitai_profile_${username}`
       );
       await fs.ensureDir(profileDir);
@@ -486,8 +483,7 @@ export class CivitaiPlatform {
       }));
 
       const postDir = path.join(
-        downloadDir || process.cwd(),
-        'downloads',
+        downloadDir || path.join(process.cwd(), 'downloads'),
         `civitai_post_${postId}`
       );
       await fs.ensureDir(postDir);
@@ -575,8 +571,7 @@ export class CivitaiPlatform {
       await page.close();
 
       const galleryDir = path.join(
-        downloadDir || process.cwd(),
-        'downloads',
+        downloadDir || path.join(process.cwd(), 'downloads'),
         `civitai_gallery_${Date.now()}`
       );
       await fs.ensureDir(galleryDir);

@@ -64,8 +64,13 @@ async function initializeSystems() {
   apiKeyManager = new ApiKeyManager();
   await apiKeyManager.init();
   
-  // Initialize Platform Manager
-  platformManager = new PlatformManager();
+  // Get user's downloads folder - C:\Users\Gigabyte\Downloads\Galion
+  const userDownloadsDir = getUserDownloadsFolder();
+  console.log(`📂 Downloads will be saved to: ${userDownloadsDir}`);
+  
+  // Initialize Platform Manager with downloads directory
+  platformManager = new PlatformManager({ downloadDir: userDownloadsDir });
+  platformManager.setDownloadDir(userDownloadsDir);
   await registerAllPlatforms(platformManager);
   
   // Load saved API keys into platforms
@@ -77,8 +82,6 @@ async function initializeSystems() {
   }
   
   // Initialize Universal Downloader - saves to user's Downloads folder
-  const userDownloadsDir = getUserDownloadsFolder();
-  console.log(`📂 Downloads will be saved to: ${userDownloadsDir}`);
   
   downloader = new UniversalDownloader({
     downloadDir: userDownloadsDir,
@@ -549,7 +552,8 @@ app.get('/api/history', async (req, res) => {
  */
 app.delete('/api/history/:folder', async (req, res) => {
   const { folder } = req.params;
-  const folderPath = path.join(__dirname, 'downloads', folder);
+  const downloadsDir = getUserDownloadsFolder();
+  const folderPath = path.join(downloadsDir, folder);
   
   if (!fs.existsSync(folderPath)) {
     return res.status(404).json({ error: 'Folder not found' });
