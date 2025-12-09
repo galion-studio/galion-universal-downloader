@@ -2,9 +2,9 @@
 
 <div align="center">
 
-![Galion Logo](galion-v2/public/galion-logo.svg)
+<h1>🔥 GALION</h1>
 
-**Download EVERYTHING from ANY platform** - YouTube, Instagram, TikTok, CivitAI, GitHub, and 30+ more!
+**Download EVERYTHING from ANY platform** - YouTube, Instagram, TikTok, CivitAI, GitHub, and 36+ more!
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
