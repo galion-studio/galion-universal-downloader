@@ -1,4 +1,4 @@
-/**
+ /**
  * Platform Index
  * Exports all available platform modules
  * Galion Universal Downloader - Download from ANY platform
@@ -13,6 +13,9 @@ export { InstagramPlatform } from './InstagramPlatform.js';
 export { TikTokPlatform } from './TikTokPlatform.js';
 export { TwitterPlatform } from './TwitterPlatform.js';
 export { RedditPlatform } from './RedditPlatform.js';
+export { NewsPlatform } from './NewsPlatform.js';
+export { ArchivePlatform } from './ArchivePlatform.js';
+export { OnionPlatform } from './OnionPlatform.js';
 
 /**
  * Get all available platforms
@@ -321,6 +324,37 @@ export function getAllPlatforms() {
       requiresAuth: false,
       category: 'articles'
     },
+    news: {
+      module: () => import('./NewsPlatform.js'),
+      name: 'News Sites',
+      icon: '📰',
+      emoji: '📰',
+      description: 'BBC, CNN, NYT, Guardian, Reuters, and 50+ news sites',
+      requiresAuth: false,
+      category: 'articles'
+    },
+    
+    // Archives & Text
+    archive: {
+      module: () => import('./ArchivePlatform.js'),
+      name: 'Web Archives',
+      icon: '📚',
+      emoji: '📚',
+      description: 'Archive.org, Wayback Machine, Pastebin, Gists, arXiv',
+      requiresAuth: false,
+      category: 'archives'
+    },
+    
+    // Dark Web / Onion
+    onion: {
+      module: () => import('./OnionPlatform.js'),
+      name: 'Onion/Tor',
+      icon: '🧅',
+      emoji: '🧅',
+      description: '.onion sites via Tor network (requires Tor)',
+      requiresAuth: false,
+      category: 'darkweb'
+    },
     
     // Generic fallback for any URL
     generic: {
@@ -360,6 +394,8 @@ export function getCategories() {
     cloud: { name: 'Cloud Storage', icon: '☁️' },
     streaming: { name: 'Streaming', icon: '📺' },
     articles: { name: 'News & Articles', icon: '📰' },
+    archives: { name: 'Archives & Text', icon: '📚' },
+    darkweb: { name: 'Dark Web/Onion', icon: '🧅' },
     adult: { name: 'Adult (18+)', icon: '🔞' },
     generic: { name: 'Other', icon: '🌐' }
   };
@@ -372,6 +408,16 @@ export function detectPlatform(url) {
   if (!url) return null;
   
   const patterns = {
+    // Dark web first (highest priority for .onion)
+    onion: /\.onion/,
+    
+    // Archives
+    archive: /archive\.org|web\.archive\.org|archive\.is|archive\.ph|pastebin\.com|gist\.github\.com|arxiv\.org|gutenberg\.org/,
+    
+    // News sites
+    news: /bbc\.(com|co\.uk)|cnn\.com|nytimes\.com|theguardian\.com|reuters\.com|apnews\.com|washingtonpost\.com|wsj\.com|forbes\.com|bloomberg\.com|techcrunch\.com|theverge\.com|wired\.com|arstechnica\.com/,
+    
+    // Regular platforms
     civitai: /civitai\.com/,
     huggingface: /huggingface\.co|hf\.co/,
     github: /github\.com/,
@@ -427,6 +473,9 @@ export async function registerAllPlatforms(platformManager) {
   const { TikTokPlatform } = await import('./TikTokPlatform.js');
   const { TwitterPlatform } = await import('./TwitterPlatform.js');
   const { RedditPlatform } = await import('./RedditPlatform.js');
+  const { NewsPlatform } = await import('./NewsPlatform.js');
+  const { ArchivePlatform } = await import('./ArchivePlatform.js');
+  const { OnionPlatform } = await import('./OnionPlatform.js');
 
   // Register all platform instances
   platformManager.registerPlatform('civitai', new CivitaiPlatform());
@@ -437,6 +486,9 @@ export async function registerAllPlatforms(platformManager) {
   platformManager.registerPlatform('tiktok', new TikTokPlatform());
   platformManager.registerPlatform('twitter', new TwitterPlatform());
   platformManager.registerPlatform('reddit', new RedditPlatform());
+  platformManager.registerPlatform('news', new NewsPlatform());
+  platformManager.registerPlatform('archive', new ArchivePlatform());
+  platformManager.registerPlatform('onion', new OnionPlatform());
   
   // Generic platform as fallback for all other URLs
   platformManager.registerPlatform('generic', new GenericPlatform());

@@ -154,8 +154,7 @@ export class GithubPlatform {
       const zipUrl = `https://github.com/${owner}/${repo}/archive/refs/heads/${defaultBranch}.zip`;
       
       const repoDir = path.join(
-        downloadDir || process.cwd(),
-        'downloads',
+        downloadDir || path.join(process.cwd(), 'downloads'),
         `github_${owner}_${repo}`
       );
       await fs.ensureDir(repoDir);
@@ -226,8 +225,7 @@ export class GithubPlatform {
       const release = releaseResponse.data;
       
       const releaseDir = path.join(
-        downloadDir || process.cwd(),
-        'downloads',
+        downloadDir || path.join(process.cwd(), 'downloads'),
         `github_release_${owner}_${repo}_${release.tag_name}`
       );
       await fs.ensureDir(releaseDir);
@@ -312,7 +310,7 @@ export class GithubPlatform {
 
     try {
       const filename = path.basename(new URL(url).pathname);
-      const assetDir = path.join(downloadDir || process.cwd(), 'downloads', 'github_assets');
+      const assetDir = path.join(downloadDir || path.join(process.cwd(), 'downloads'), 'github_assets');
       await fs.ensureDir(assetDir);
 
       const assetPath = path.join(assetDir, filename);
@@ -354,7 +352,7 @@ export class GithubPlatform {
       // Get raw file URL
       const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${filePath}`;
       
-      const fileDir = path.join(downloadDir || process.cwd(), 'downloads', `github_${owner}_${repo}`);
+      const fileDir = path.join(downloadDir || path.join(process.cwd(), 'downloads'), `github_${owner}_${repo}`);
       await fs.ensureDir(fileDir);
 
       const filename = path.basename(filePath);
@@ -399,8 +397,7 @@ export class GithubPlatform {
       const results = { files: [], directories: [] };
 
       const baseDir = path.join(
-        downloadDir || process.cwd(),
-        'downloads',
+        downloadDir || path.join(process.cwd(), 'downloads'),
         `github_${owner}_${repo}`,
         dirPath || ''
       );
@@ -447,7 +444,7 @@ export class GithubPlatform {
 
     try {
       const filename = path.basename(new URL(url).pathname);
-      const rawDir = path.join(downloadDir || process.cwd(), 'downloads', 'github_raw');
+      const rawDir = path.join(downloadDir || path.join(process.cwd(), 'downloads'), 'github_raw');
       await fs.ensureDir(rawDir);
 
       const response = await axios({
@@ -488,8 +485,7 @@ export class GithubPlatform {
       const gist = response.data;
       
       const gistDir = path.join(
-        downloadDir || process.cwd(),
-        'downloads',
+        downloadDir || path.join(process.cwd(), 'downloads'),
         `github_gist_${gistId}`
       );
       await fs.ensureDir(gistDir);
@@ -569,8 +565,7 @@ export class GithubPlatform {
       );
 
       const profileDir = path.join(
-        downloadDir || process.cwd(),
-        'downloads',
+        downloadDir || path.join(process.cwd(), 'downloads'),
         `github_profile_${username}`
       );
       await fs.ensureDir(profileDir);

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
   Download, 
@@ -24,7 +24,11 @@ import {
   Image,
   Headphones,
   Tv,
-  ListPlus
+  ListPlus,
+  Shield,
+  ExternalLink,
+  X,
+  Info
 } from 'lucide-react'
 import { TAGLINES, SOCIAL_LINKS } from '@/lib/galion-ecosystem'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -47,6 +51,67 @@ interface DownloadItem {
   progress: number
   status: 'pending' | 'downloading' | 'completed' | 'error'
   error?: string
+}
+
+// Platform API key requirements and documentation
+const platformApiInfo: Record<string, {
+  requiresKey: boolean
+  keyName: string
+  getKeyUrl: string
+  description: string
+  note?: string
+}> = {
+  civitai: {
+    requiresKey: true,
+    keyName: 'CivitAI API Key',
+    getKeyUrl: 'https://civitai.com/user/account',
+    description: 'Required for 18+ content and higher rate limits',
+    note: '💡 Go to Account Settings → API Keys → Create new key'
+  },
+  github: {
+    requiresKey: false,
+    keyName: 'GitHub Token',
+    getKeyUrl: 'https://github.com/settings/tokens',
+    description: 'Optional: Increases rate limits from 60 to 5000/hour'
+  },
+  telegram: {
+    requiresKey: true,
+    keyName: 'Telegram Bot Token',
+    getKeyUrl: 'https://t.me/BotFather',
+    description: 'Required for downloading from private channels',
+    note: '💡 Message @BotFather to create a bot and get token'
+  },
+  instagram: {
+    requiresKey: false,
+    keyName: 'Instagram Session',
+    getKeyUrl: 'https://www.instagram.com',
+    description: 'Optional: Login for private profiles'
+  },
+  twitter: {
+    requiresKey: false,
+    keyName: 'Twitter Bearer Token',
+    getKeyUrl: 'https://developer.twitter.com/en/portal/dashboard',
+    description: 'Optional: For protected tweets'
+  },
+  youtube: {
+    requiresKey: false,
+    keyName: 'YouTube API Key',
+    getKeyUrl: 'https://console.cloud.google.com/apis/credentials',
+    description: 'Optional: For playlist metadata'
+  },
+  huggingface: {
+    requiresKey: false,
+    keyName: 'HuggingFace Token',
+    getKeyUrl: 'https://huggingface.co/settings/tokens',
+    description: 'Required for gated models',
+    note: '💡 Some models require accepting terms first'
+  },
+  reddit: {
+    requiresKey: false,
+    keyName: 'Reddit Client ID/Secret',
+    getKeyUrl: 'https://www.reddit.com/prefs/apps',
+    description: 'Optional: For higher rate limits'
+  }
 }
 
 // Extended platform configuration with all supported platforms + open-source APIs
@@ -124,10 +189,171 @@ export function DownloadSection() {
   const [isLoading, setIsLoading] = useState(false)
   const [showApiSearch, setShowApiSearch] = useState(false)
   const [apiSearchQuery, setApiSearchQuery] = useState('')
+  const [showApiKeyDialog, setShowApiKeyDialog] = useState(false)
+  const [pendingDownloadUrl, setPendingDownloadUrl] = useState('')
+  const [pendingPlatform, setPendingPlatform] = useState<Platform>(null)
+  const [apiKeyInput, setApiKeyInput] = useState('')
+  const [configuredKeys, setConfiguredKeys] = useState<Record<string, boolean>>({})
+  const [isSavingKey, setIsSavingKey] = useState(false)
   const { toast } = useToast()
   
   const detectedPlatform = detectPlatform(url)
   const PlatformIcon = detectedPlatform ? platformConfig[detectedPlatform].icon : Link2
+
+  // Load configured API keys on mount
+  useEffect(() => {
+    const loadKeys = async () => {
+      try {
+        const keys = await apiClient.getApiKeys()
+        setConfiguredKeys(keys)
+      } catch (e) {
+        console.log('Could not load API keys')
+      }
+    }
+    loadKeys()
+  }, [])
+
+  // Check if platform needs API key and whether we have it
+  const checkApiKeyRequired = (platform: Platform): boolean => {
+    if (!platform) return false
+    const apiInfo = platformApiInfo[platform]
+    if (!apiInfo) return false
+    // Check if platform requires key AND we don't have it configured
+    return apiInfo.requiresKey && !configuredKeys[platform]
+  }
+
+  // Save API key for platform
+  const handleSaveApiKey = async () => {
+    if (!pendingPlatform || !apiKeyInput.trim()) return
+    
+    setIsSavingKey(true)
+    try {
+      const result = await apiClient.saveApiKey(pendingPlatform, apiKeyInput)
+      if (result.success) {
+        setConfiguredKeys(prev => ({ ...prev, [pendingPlatform]: true }))
+        setShowApiKeyDialog(false)
+        setApiKeyInput('')
+        toast({
+          title: '✅ API Key Saved',
+          description: `${platformConfig[pendingPlatform]?.label || pendingPlatform} API key saved successfully!`,
+        })
+        // Now proceed with the download
+        if (pendingDownloadUrl) {
+          executeDownload(pendingDownloadUrl, pendingPlatform)
+          setPendingDownloadUrl('')
+          setPendingPlatform(null)
+        }
+      } else {
+        toast({
+          title: '❌ Invalid API Key',
+          description: result.error || 'Could not verify the API key',
+          variant: 'destructive',
+        })
+      }
+    } catch (error) {
+      toast({
+        title: '❌ Error',
+        description: 'Failed to save API key',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsSavingKey(false)
+    }
+  }
+
+  // Skip API key and try download anyway
+  const handleSkipApiKey = () => {
+    setShowApiKeyDialog(false)
+    toast({
+      title: '⚠️ Downloading without API key',
+      description: 'Some content may not be accessible. 18+ content on CivitAI requires an API key.',
+    })
+    if (pendingDownloadUrl && pendingPlatform) {
+      executeDownload(pendingDownloadUrl, pendingPlatform)
+    }
+    setApiKeyInput('')
+    setPendingDownloadUrl('')
+    setPendingPlatform(null)
+  }
+
+  // Actual download execution
+  const executeDownload = async (downloadUrl: string, platform: Platform) => {
+    const newDownload: DownloadItem = {
+      id: Date.now().toString(),
+      url: downloadUrl,
+      platform: platform,
+      filename: downloadUrl.split('/').pop() || 'file',
+      progress: 0,
+      status: 'downloading',
+    }
+    
+    setDownloads(prev => [newDownload, ...prev])
+    
+    try {
+      const result = await apiClient.download(
+        downloadUrl,
+        { downloadFiles: true },
+        (progress) => {
+          setDownloads(prev => 
+            prev.map(d => 
+              d.id === newDownload.id 
+                ? { 
+                    ...d, 
+                    progress: progress.progress || d.progress,
+                    filename: progress.result?.title || d.filename,
+                    status: progress.type === 'complete' ? 'completed' : 
+                            progress.type === 'error' ? 'error' : 'downloading',
+                    error: progress.message
+                  }
+                : d
+            )
+          )
+        }
+      )
+
+      if (result.success) {
+        setDownloads(prev => 
+          prev.map(d => 
+            d.id === newDownload.id 
+              ? { ...d, progress: 100, status: 'completed', filename: result.title || d.filename }
+              : d
+          )
+        )
+        toast({
+          title: '✅ Download Complete',
+          description: `Downloaded to: ${result.outputDir || 'downloads folder'}`,
+        })
+      } else {
+        setDownloads(prev => 
+          prev.map(d => 
+            d.id === newDownload.id 
+              ? { ...d, status: 'error', error: result.error }
+              : d
+          )
+        )
+        toast({
+          title: '❌ Download Failed',
+          description: result.error || 'Unknown error',
+          variant: 'destructive',
+        })
+      }
+    } catch (error) {
+      setDownloads(prev => 
+        prev.map(d => 
+          d.id === newDownload.id 
+            ? { ...d, status: 'error', error: error instanceof Error ? error.message : 'Download failed' }
+            : d
+        )
+      )
+      toast({
+        title: '❌ Download Failed',
+        description: error instanceof Error ? error.message : 'Could not connect to server.',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const handleDownload = async () => {
     if (!url.trim()) {
