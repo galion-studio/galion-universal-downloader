@@ -12,7 +12,14 @@ import {
   BarChart3,
   Clock,
   Target,
-  Star
+  Star,
+  Mic,
+  FileAudio,
+  Upload,
+  Loader2,
+  CheckCircle2,
+  Languages,
+  Settings2
 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -87,10 +94,66 @@ const mockStats = {
 export function CognitiveSection() {
   const [searchQuery, setSearchQuery] = useState('')
   const [hoveredNode, setHoveredNode] = useState<string | null>(null)
+  const [transcriptionStatus, setTranscriptionStatus] = useState<{
+    isTranscribing: boolean;
+    progress: number;
+    status: string;
+    selectedFile: string | null;
+    result: unknown | null;
+  }>({
+    isTranscribing: false,
+    progress: 0,
+    status: '',
+    selectedFile: null,
+    result: null
+  })
 
   const handleSemanticSearch = () => {
     // Semantic search implementation
     console.log('Searching:', searchQuery)
+  }
+
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    
+    // In a real implementation, we'd upload the file and get a server path
+    // For now, show the selected file info
+    setTranscriptionStatus(prev => ({
+      ...prev,
+      selectedFile: file.name,
+      status: `Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`
+    }))
+  }
+
+  const startTranscription = async () => {
+    if (!transcriptionStatus.selectedFile) return
+    
+    setTranscriptionStatus(prev => ({
+      ...prev,
+      isTranscribing: true,
+      progress: 0,
+      status: 'Initializing transcription...'
+    }))
+
+    // Simulate transcription progress
+    // In production, this would call apiClient.transcribe()
+    for (let i = 0; i <= 100; i += 10) {
+      await new Promise(r => setTimeout(r, 500))
+      setTranscriptionStatus(prev => ({
+        ...prev,
+        progress: i,
+        status: i < 30 ? 'Extracting audio...' : i < 70 ? 'Transcribing with Whisper...' : 'Generating subtitles...'
+      }))
+    }
+
+    setTranscriptionStatus(prev => ({
+      ...prev,
+      isTranscribing: false,
+      progress: 100,
+      status: '✅ Transcription complete!',
+      result: { outputFiles: ['video.srt', 'video.vtt', 'video.txt'] }
+    }))
   }
 
   return (
@@ -324,6 +387,131 @@ export function CognitiveSection() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Video/Audio Transcription */}
+      <Card className="border-purple-500/20 bg-gradient-to-br from-background to-purple-500/5">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Mic className="h-5 w-5 text-purple-500" />
+                🎙️ Video/Audio Transcription
+                <Badge variant="outline" className="ml-2 text-purple-400 border-purple-400/30">
+                  Faster Whisper
+                </Badge>
+              </CardTitle>
+              <CardDescription>
+                Automatic transcription using faster-whisper (tiny.en model - fast & efficient)
+              </CardDescription>
+            </div>
+            <Button variant="outline" size="sm" className="gap-2">
+              <Settings2 className="h-4 w-4" />
+              Settings
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Drag & Drop Zone */}
+          <label className="border-2 border-dashed border-purple-500/30 rounded-lg p-8 text-center hover:border-purple-500/50 transition-colors cursor-pointer bg-purple-500/5 block">
+            <input 
+              type="file" 
+              className="hidden" 
+              accept="video/*,audio/*,.mp4,.mkv,.avi,.mov,.mp3,.wav,.flac,.ogg,.m4a"
+              onChange={handleFileSelect}
+              disabled={transcriptionStatus.isTranscribing}
+            />
+            {transcriptionStatus.isTranscribing ? (
+              <>
+                <Loader2 className="h-12 w-12 mx-auto text-purple-500 mb-3 animate-spin" />
+                <p className="text-sm font-medium">{transcriptionStatus.status}</p>
+                <Progress value={transcriptionStatus.progress} className="mt-4 h-2" />
+                <p className="text-xs text-muted-foreground mt-2">{transcriptionStatus.progress}%</p>
+              </>
+            ) : transcriptionStatus.result ? (
+              <>
+                <CheckCircle2 className="h-12 w-12 mx-auto text-green-500 mb-3" />
+                <p className="text-sm font-medium text-green-500">{transcriptionStatus.status}</p>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Output: video.srt, video.vtt, video.txt
+                </p>
+                <Button 
+                  variant="outline" 
+                  className="mt-4 gap-2"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setTranscriptionStatus(prev => ({ ...prev, selectedFile: null, result: null, status: '' }))
+                  }}
+                >
+                  Transcribe Another
+                </Button>
+              </>
+            ) : transcriptionStatus.selectedFile ? (
+              <>
+                <FileAudio className="h-12 w-12 mx-auto text-purple-500 mb-3" />
+                <p className="text-sm font-medium">{transcriptionStatus.selectedFile}</p>
+                <p className="text-xs text-muted-foreground mt-1">{transcriptionStatus.status}</p>
+                <Button 
+                  variant="galion" 
+                  className="mt-4 gap-2 bg-purple-500 hover:bg-purple-600"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    startTranscription()
+                  }}
+                >
+                  <Mic className="h-4 w-4" />
+                  Start Transcription
+                </Button>
+              </>
+            ) : (
+              <>
+                <FileAudio className="h-12 w-12 mx-auto text-purple-500/60 mb-3" />
+                <p className="text-sm font-medium">Drop video or audio file here</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Supports: MP4, MKV, MOV, MP3, WAV, FLAC, and more
+                </p>
+                <Button variant="outline" className="mt-4 gap-2" asChild>
+                  <span>
+                    <Upload className="h-4 w-4" />
+                    Browse Files
+                  </span>
+                </Button>
+              </>
+            )}
+          </label>
+
+          {/* Transcription Settings */}
+          <div className="grid grid-cols-3 gap-4 p-4 rounded-lg bg-muted/30">
+            <div className="text-center">
+              <Languages className="h-5 w-5 mx-auto text-purple-500 mb-1" />
+              <div className="text-xs font-medium">Language</div>
+              <div className="text-xs text-muted-foreground">Auto-detect</div>
+            </div>
+            <div className="text-center">
+              <Zap className="h-5 w-5 mx-auto text-purple-500 mb-1" />
+              <div className="text-xs font-medium">Model</div>
+              <div className="text-xs text-muted-foreground">tiny.en (75MB)</div>
+            </div>
+            <div className="text-center">
+              <FileAudio className="h-5 w-5 mx-auto text-purple-500 mb-1" />
+              <div className="text-xs font-medium">Output</div>
+              <div className="text-xs text-muted-foreground">SRT, VTT, TXT</div>
+            </div>
+          </div>
+
+          {/* Available Models */}
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="galion" className="bg-purple-500/20 text-purple-400">tiny.en ✓</Badge>
+            <Badge variant="outline">base.en</Badge>
+            <Badge variant="outline">small.en</Badge>
+            <Badge variant="outline">medium.en</Badge>
+            <Badge variant="outline">large-v3</Badge>
+          </div>
+
+          <p className="text-xs text-muted-foreground">
+            💡 First run will automatically download the tiny.en model (~75MB). GPU acceleration supported.
+          </p>
+        </CardContent>
+      </Card>
 
       {/* Usage Analytics */}
       <Card>

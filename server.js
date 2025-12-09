@@ -21,6 +21,7 @@ import { TranscriptionService } from './src/core/TranscriptionService.js';
 import { FileSystemScanner } from './src/core/FileSystemScanner.js';
 import { PDFService } from './src/core/PDFService.js';
 import { EmailService } from './src/core/EmailService.js';
+import os from 'os';
 
 // Platform modules
 import { registerAllPlatforms } from './src/platforms/index.js';
@@ -28,8 +29,18 @@ import { registerAllPlatforms } from './src/platforms/index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Get user's Downloads folder
+const getUserDownloadsFolder = () => {
+  const homeDir = os.homedir();
+  const downloadsPath = path.join(homeDir, 'Downloads', 'Galion');
+  
+  // Ensure the Galion subfolder exists
+  fs.ensureDirSync(downloadsPath);
+  return downloadsPath;
+};
+
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4444;
 
 // Create HTTP server for WebSocket support
 const server = http.createServer(app);
@@ -65,9 +76,12 @@ async function initializeSystems() {
     }
   }
   
-  // Initialize Universal Downloader
+  // Initialize Universal Downloader - saves to user's Downloads folder
+  const userDownloadsDir = getUserDownloadsFolder();
+  console.log(`📂 Downloads will be saved to: ${userDownloadsDir}`);
+  
   downloader = new UniversalDownloader({
-    downloadDir: path.join(process.cwd(), 'downloads'),
+    downloadDir: userDownloadsDir,
     concurrent: 5
   });
   
@@ -486,7 +500,7 @@ app.post('/api/download-zip', async (req, res) => {
  * Get download history
  */
 app.get('/api/history', async (req, res) => {
-  const downloadsDir = path.join(__dirname, 'downloads');
+  const downloadsDir = getUserDownloadsFolder();
   
   if (!fs.existsSync(downloadsDir)) {
     return res.json([]);
@@ -561,20 +575,86 @@ app.post('/api/stats/clear', (req, res) => {
 });
 
 // ==============================
-// TRANSCRIPTION ENDPOINTS
+// TRANSCRIPTION ENDPOINTS (Faster-Whisper with tiny.en)
 // ==============================
 
-const transcriptionService = new TranscriptionService();
+const transcriptionService = new TranscriptionService({
+  model: 'tiny.en', // English mini model - fastest
+  language: 'en'
+});
+
+// Initialize transcription service on startup
+let transcriptionInitialized = false;
 
 /**
- * Check if transcription is available (Whisper installed)
+ * Get transcription service status
  */
 app.get('/api/transcribe/status', async (req, res) => {
-  const status = await transcriptionService.checkWhisperInstalled();
+  try {
+    const status = await transcriptionService.getStatus();
+    res.json({
+      ...status,
+      initialized: transcriptionInitialized,
+      defaultModel: 'tiny.en',
+      recommendation: 'Install faster-whisper: pip install faster-whisper'
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * Initialize transcription service
+ */
+app.post('/api/transcribe/init', async (req, res) => {
+  try {
+    const result = await transcriptionService.initialize();
+    transcriptionInitialized = result.initialized;
+    res.json({
+      success: true,
+      ...result
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * Get available Whisper models
+ */
+app.get('/api/transcribe/models', (req, res) => {
   res.json({
-    ...status,
-    installInstructions: transcriptionService.getInstallInstructions()
+    models: transcriptionService.getAvailableModels(),
+    recommended: 'tiny.en',
+    current: transcriptionService.model
   });
+});
+
+/**
+ * Download a Whisper model
+ */
+app.post('/api/transcribe/models/download', async (req, res) => {
+  const { model = 'tiny.en' } = req.body;
+  
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Transfer-Encoding', 'chunked');
+  
+  try {
+    broadcast({ type: 'model-download-start', model });
+    
+    const modelPath = await transcriptionService.downloadModel(model, (progress) => {
+      res.write(JSON.stringify({ type: 'progress', ...progress }) + '\n');
+      broadcast({ type: 'model-download-progress', model, ...progress });
+    });
+    
+    res.write(JSON.stringify({ type: 'complete', success: true, modelPath }) + '\n');
+    broadcast({ type: 'model-download-complete', model, modelPath });
+    res.end();
+  } catch (error) {
+    res.write(JSON.stringify({ type: 'error', error: error.message }) + '\n');
+    broadcast({ type: 'model-download-error', model, error: error.message });
+    res.end();
+  }
 });
 
 /**
@@ -587,13 +667,57 @@ app.post('/api/transcribe', async (req, res) => {
     return res.status(400).json({ error: 'Valid file path required' });
   }
   
+  // Check if file is supported
+  if (!transcriptionService.isSupported(filePath)) {
+    return res.status(400).json({ 
+      error: 'Unsupported file format',
+      supportedVideo: ['.mp4', '.mkv', '.avi', '.mov', '.webm'],
+      supportedAudio: ['.mp3', '.wav', '.flac', '.ogg', '.m4a']
+    });
+  }
+  
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Transfer-Encoding', 'chunked');
+  
   try {
     const result = await transcriptionService.transcribe(filePath, {
-      language,
-      model,
-      formats,
+      language: language || 'en',
+      model: model || 'tiny.en',
+      formats: formats || ['srt', 'vtt', 'txt', 'json'],
+      onProgress: (p) => {
+        res.write(JSON.stringify({ type: 'progress', ...p }) + '\n');
+        broadcast({ type: 'transcription-progress', filePath, ...p });
+      }
+    });
+    
+    res.write(JSON.stringify({ type: 'complete', ...result }) + '\n');
+    broadcast({ type: 'transcription-complete', filePath, ...result });
+    res.end();
+  } catch (error) {
+    res.write(JSON.stringify({ type: 'error', error: error.message }) + '\n');
+    broadcast({ type: 'transcription-error', filePath, error: error.message });
+    res.end();
+  }
+});
+
+/**
+ * Quick transcribe with default settings (tiny.en English model)
+ */
+app.post('/api/transcribe/quick', async (req, res) => {
+  const { filePath } = req.body;
+  
+  if (!filePath || !fs.existsSync(filePath)) {
+    return res.status(400).json({ error: 'Valid file path required' });
+  }
+  
+  try {
+    const result = await transcriptionService.transcribe(filePath, {
+      language: 'en',
+      model: 'tiny.en',
+      formats: ['srt', 'vtt'],
       onProgress: (p) => broadcast({ type: 'transcription-progress', filePath, ...p })
     });
+    
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -604,7 +728,7 @@ app.post('/api/transcribe', async (req, res) => {
  * Batch transcribe files in a directory
  */
 app.post('/api/transcribe/batch', async (req, res) => {
-  const { dirPath, language, model } = req.body;
+  const { dirPath, language = 'en', model = 'tiny.en' } = req.body;
   
   if (!dirPath || !fs.existsSync(dirPath)) {
     return res.status(400).json({ error: 'Valid directory path required' });
@@ -618,6 +742,8 @@ app.post('/api/transcribe/batch', async (req, res) => {
       return res.json({ success: true, message: 'No videos needing transcription', results: [] });
     }
     
+    broadcast({ type: 'batch-transcription-start', total: videos.length });
+    
     const result = await transcriptionService.batchTranscribe(
       videos.map(v => v.path),
       {
@@ -627,6 +753,7 @@ app.post('/api/transcribe/batch', async (req, res) => {
       }
     );
     
+    broadcast({ type: 'batch-transcription-complete', ...result });
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -649,6 +776,21 @@ app.post('/api/transcribe/convert', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+/**
+ * Get installation instructions
+ */
+app.get('/api/transcribe/install', (req, res) => {
+  res.json({
+    quickStart: 'pip install faster-whisper',
+    instructions: transcriptionService.getInstallInstructions(),
+    links: {
+      fasterWhisper: 'https://github.com/SYSTRAN/faster-whisper',
+      whisperCpp: 'https://github.com/ggerganov/whisper.cpp',
+      openaiWhisper: 'https://github.com/openai/whisper'
+    }
+  });
 });
 
 // ==============================

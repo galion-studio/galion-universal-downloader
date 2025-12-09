@@ -62,16 +62,71 @@ This project is **MIT Licensed** and will **always remain open source**. No corp
 
 ## 🚀 What is Galion?
 
-Galion Universal Downloader is a **powerful, multi-platform content downloader** that puts you in control of your digital content. Download from:
+Galion Universal Downloader is a **powerful, multi-platform content downloader** that puts you in control of your digital content. Download from **30+ platforms**:
 
+### 📱 Social Media
+| Platform | Status | Description |
+|----------|--------|-------------|
+| 📸 **Instagram** | ✅ Ready | Posts, Reels, Stories, IGTV, Profiles |
+| 🎵 **TikTok** | ✅ Ready | Videos, Sounds, Profiles (no watermark) |
+| 🐦 **Twitter/X** | ✅ Ready | Tweets, Videos, GIFs, Spaces, Threads |
+| 🔴 **Reddit** | ✅ Ready | Posts, Videos, Galleries, GIFs |
+| 📘 **Facebook** | ✅ Ready | Videos, Photos, Stories, Reels |
+| 📌 **Pinterest** | ✅ Ready | Pins, Boards, Videos |
+| 📝 **Tumblr** | ✅ Ready | Posts, Images, Videos |
+
+### 🎬 Video Platforms
+| Platform | Status | Description |
+|----------|--------|-------------|
+| ▶️ **YouTube** | ✅ Ready | Videos, Audio, Playlists, Shorts |
+| 🎥 **Vimeo** | ✅ Ready | Videos, Channels, Showcases |
+| 📺 **Dailymotion** | ✅ Ready | Videos, Playlists |
+| 🎮 **Twitch** | ✅ Ready | VODs, Clips, Streams |
+| 🦶 **Kick** | ✅ Ready | VODs, Clips, Streams |
+
+### 🎵 Audio Platforms
+| Platform | Status | Description |
+|----------|--------|-------------|
+| 🔊 **SoundCloud** | ✅ Ready | Tracks, Playlists, Artists |
+| 🎧 **Spotify** | ⚡ Info Only | Track info, Playlists, Podcasts |
+| 🎸 **Bandcamp** | ✅ Ready | Albums, Tracks, Artists |
+
+### 🤖 AI & Models
 | Platform | Status | Description |
 |----------|--------|-------------|
 | 🎨 **CivitAI** | ✅ Ready | AI models, LoRAs, embeddings |
+| 🤗 **HuggingFace** | ✅ Ready | ML models, datasets, spaces |
+
+### 💻 Development
+| Platform | Status | Description |
+|----------|--------|-------------|
 | 🐙 **GitHub** | ✅ Ready | Repositories, releases, raw files |
-| ▶️ **YouTube** | ✅ Ready | Videos, audio, playlists |
-| ✈️ **Telegram** | ✅ Ready | Media, documents, channels |
-| 🤗 **HuggingFace** | ✅ Ready | ML models, datasets |
-| 🌐 **Generic URL** | ✅ Ready | Any direct download link |
+
+### 💬 Messaging
+| Platform | Status | Description |
+|----------|--------|-------------|
+| ✈️ **Telegram** | ✅ Ready | Channels, Files, Media, Stickers |
+| 💬 **Discord** | ✅ Ready | Attachments, Emojis, Stickers |
+
+### 🖼️ Image Hosting
+| Platform | Status | Description |
+|----------|--------|-------------|
+| 🖼️ **Imgur** | ✅ Ready | Images, Albums, GIFs |
+| 📷 **Flickr** | ✅ Ready | Photos, Albums |
+| 🎨 **ArtStation** | ✅ Ready | Artwork, Projects |
+| 🖌️ **DeviantArt** | ✅ Ready | Artwork, Galleries |
+
+### ☁️ Cloud Storage
+| Platform | Status | Description |
+|----------|--------|-------------|
+| 📁 **Google Drive** | ✅ Ready | Files, Folders |
+| 📦 **Dropbox** | ✅ Ready | Files, Shared Links |
+| ☁️ **MEGA** | ✅ Ready | Files, Folders |
+
+### 🌐 Generic
+| Platform | Status | Description |
+|----------|--------|-------------|
+| 🌐 **Any URL** | ✅ Ready | Universal downloader for any direct link |
 
 ---
 
@@ -79,11 +134,26 @@ Galion Universal Downloader is a **powerful, multi-platform content downloader**
 
 ### Core Features
 - 🎯 **Auto-Platform Detection** - Paste any URL, we detect the source
-- 📥 **Multi-Platform Support** - 6+ platforms and growing
+- 📥 **30+ Platforms Supported** - Social media, video, audio, AI, and more
 - 🎨 **Beautiful UI** - Dark/light modes with stunning animations
 - 🧠 **AI-Powered** - Semantic search and knowledge graph
 - 🔒 **100% Local** - Your data stays on your machine
 - ⚡ **Lightning Fast** - Optimized for speed
+- 🔍 **API Search** - Search and discover platform APIs
+
+### 🎙️ Transcription Features (NEW!)
+- 🗣️ **Whisper Integration** - Automatic video/audio transcription
+- ⚡ **Faster-Whisper Support** - 4x faster transcription on GPU
+- 📝 **Multiple Formats** - SRT, VTT, TXT, JSON subtitles
+- 🌍 **Multi-language** - Auto-detect or specify language
+- 📁 **Batch Processing** - Transcribe multiple files at once
+- 🔄 **Format Conversion** - Convert between subtitle formats
+
+**Supported Whisper Backends:**
+- OpenAI Whisper (`pip install openai-whisper`)
+- Faster-Whisper (`pip install faster-whisper`) - Recommended!
+- Whisper.cpp (C++ native, no Python needed)
+- Insanely-Fast-Whisper (GPU optimized)
 
 ### Coming Soon
 - ⏸️ Pause/Resume downloads

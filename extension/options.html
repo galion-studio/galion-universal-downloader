@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galion Downloader - Settings</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo { font-size: 48px; margin-bottom: 16px; }
+    h1 { font-size: 24px; margin-bottom: 8px; }
+    .subtitle { color: #888; }
+
+    .section {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #333;
+    }
+
+    .option:last-child { border-bottom: none; }
+
+    .option-label {
+      font-size: 14px;
+    }
+
+    .option-desc {
+      font-size: 12px;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .toggle {
+      position: relative;
+      width: 48px;
+      height: 26px;
+      background: #333;
+      border-radius: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+
+    .toggle.active {
+      background: #22c55e;
+    }
+
+    .toggle.active::after {
+      transform: translateX(22px);
+    }
+
+    input[type="text"] {
+      padding: 10px 14px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: #0a0a0a;
+      color: #fff;
+      font-size: 14px;
+      width: 200px;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #22c55e;
+    }
+
+    select {
+      padding: 10px 14px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: #0a0a0a;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover { opacity: 0.9; }
+
+    .btn-secondary {
+      background: #333;
+    }
+
+    .save-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px 40px;
+      background: rgba(10, 10, 10, 0.9);
+      border-top: 1px solid #333;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(34, 197, 94, 0.1);
+      border-radius: 8px;
+      font-size: 13px;
+      color: #22c55e;
+    }
+
+    .platforms {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .platform {
+      padding: 12px;
+      background: #0a0a0a;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 24px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .platform:hover {
+      transform: scale(1.05);
+      background: #222;
+    }
+
+    .platform-name {
+      font-size: 10px;
+      color: #888;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">⬇️</div>
+      <h1>Galion Downloader Settings</h1>
+      <p class="subtitle">Configure your download preferences</p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">⚙️ General Settings</div>
+      
+      <div class="option">
+        <div>
+          <div class="option-label">Backend URL</div>
+          <div class="option-desc">URL of the Galion backend server</div>
+        </div>
+        <input type="text" id="backend-url" value="http://localhost:3000" />
+      </div>
+
+      <div class="option">
+        <div>
+          <div class="option-label">Default Quality</div>
+          <div class="option-desc">Default video quality for downloads</div>
+        </div>
+        <select id="default-quality">
+          <option value="best">Best Quality</option>
+          <option value="1080p">1080p</option>
+          <option value="720p">720p</option>
+          <option value="480p">480p</option>
+          <option value="audio">Audio Only</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">🔔 Notifications & Features</div>
+
+      <div class="option">
+        <div>
+          <div class="option-label">Show download notifications</div>
+          <div class="option-desc">Display notifications when downloads start/complete</div>
+        </div>
+        <div class="toggle active" data-setting="notifications"></div>
+      </div>
+
+      <div class="option">
+        <div>
+          <div class="option-label">Clipboard monitoring</div>
+          <div class="option-desc">Detect URLs copied to clipboard</div>
+        </div>
+        <div class="toggle" data-setting="clipboardMonitor"></div>
+      </div>
+
+      <div class="option">
+        <div>
+          <div class="option-label">Inject download buttons</div>
+          <div class="option-desc">Add download buttons directly on supported sites</div>
+        </div>
+        <div class="toggle active" data-setting="injectButtons"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">🌐 Supported Platforms</div>
+      <div class="platforms">
+        <div class="platform">▶️<div class="platform-name">YouTube</div></div>
+        <div class="platform">📸<div class="platform-name">Instagram</div></div>
+        <div class="platform">🎵<div class="platform-name">TikTok</div></div>
+        <div class="platform">🐦<div class="platform-name">Twitter</div></div>
+        <div class="platform">🔴<div class="platform-name">Reddit</div></div>
+        <div class="platform">🐙<div class="platform-name">GitHub</div></div>
+        <div class="platform">🎨<div class="platform-name">CivitAI</div></div>
+        <div class="platform">🎥<div class="platform-name">Vimeo</div></div>
+        <div class="platform">🔊<div class="platform-name">SoundCloud</div></div>
+        <div class="platform">📘<div class="platform-name">Facebook</div></div>
+        <div class="platform">🎮<div class="platform-name">Twitch</div></div>
+        <div class="platform">📌<div class="platform-name">Pinterest</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">📊 Statistics</div>
+      <div class="status" id="stats">
+        Loading stats...
+      </div>
+    </div>
+  </div>
+
+  <div class="save-bar">
+    <button class="btn btn-secondary" id="reset-btn">Reset to Defaults</button>
+    <button class="btn" id="save-btn">Save Settings</button>
+  </div>
+
+  <script>
+    // Load settings
+    async function loadSettings() {
+      const settings = await chrome.storage.local.get([
+        'backendUrl', 'defaultQuality', 'notifications', 
+        'clipboardMonitor', 'injectButtons', 'history'
+      ])
+
+      if (settings.backendUrl) {
+        document.getElementById('backend-url').value = settings.backendUrl
+      }
+      if (settings.defaultQuality) {
+        document.getElementById('default-quality').value = settings.defaultQuality
+      }
+
+      // Update toggles
+      document.querySelectorAll('.toggle').forEach(toggle => {
+        const setting = toggle.dataset.setting
+        const value = settings[setting] ?? toggle.classList.contains('active')
+        toggle.classList.toggle('active', value)
+      })
+
+      // Update stats
+      const history = settings.history || []
+      document.getElementById('stats').textContent = 
+        `${history.length} downloads in history`
+    }
+
+    // Save settings
+    async function saveSettings() {
+      const settings = {
+        backendUrl: document.getElementById('backend-url').value,
+        defaultQuality: document.getElementById('default-quality').value,
+      }
+
+      document.querySelectorAll('.toggle').forEach(toggle => {
+        settings[toggle.dataset.setting] = toggle.classList.contains('active')
+      })
+
+      await chrome.storage.local.set(settings)
+      alert('Settings saved!')
+    }
+
+    // Toggle click handler
+    document.querySelectorAll('.toggle').forEach(toggle => {
+      toggle.addEventListener('click', () => {
+        toggle.classList.toggle('active')
+      })
+    })
+
+    // Save button
+    document.getElementById('save-btn').addEventListener('click', saveSettings)
+
+    // Reset button
+    document.getElementById('reset-btn').addEventListener('click', async () => {
+      if (confirm('Reset all settings to defaults?')) {
+        await chrome.storage.local.clear()
+        loadSettings()
+        alert('Settings reset!')
+      }
+    })
+
+    // Initialize
+    loadSettings()
+  </script>
+</body>
+</html>

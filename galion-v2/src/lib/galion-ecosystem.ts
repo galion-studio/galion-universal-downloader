@@ -54,33 +54,182 @@ export const FEATURES = {
   cloudSync: false,        // Sync to Galion cloud (future)
 }
 
-// Platform-specific API configs
+// Platform-specific API configs - 30+ Platforms Supported
 export const PLATFORM_APIS = {
+  // AI & Models
   civitai: {
     name: 'CivitAI',
     baseUrl: 'https://civitai.com/api/v1',
-    rateLimit: 10, // requests per minute without API key
-  },
-  github: {
-    name: 'GitHub',
-    baseUrl: 'https://api.github.com',
-    rateLimit: 60, // requests per hour without token
-  },
-  youtube: {
-    name: 'YouTube',
-    baseUrl: 'https://www.youtube.com',
-    useCobalt: true, // Use cobalt.tools for download
-  },
-  telegram: {
-    name: 'Telegram',
-    requiresAuth: true,
+    rateLimit: 10,
+    icon: '🎨',
+    category: 'ai',
   },
   huggingface: {
     name: 'HuggingFace',
     baseUrl: 'https://huggingface.co',
     apiUrl: 'https://huggingface.co/api',
+    icon: '🤗',
+    category: 'ai',
+  },
+  
+  // Code & Development
+  github: {
+    name: 'GitHub',
+    baseUrl: 'https://api.github.com',
+    rateLimit: 60,
+    icon: '🐙',
+    category: 'code',
+  },
+  
+  // Video Platforms
+  youtube: {
+    name: 'YouTube',
+    baseUrl: 'https://www.youtube.com',
+    useCobalt: true,
+    icon: '▶️',
+    category: 'video',
+  },
+  tiktok: {
+    name: 'TikTok',
+    baseUrl: 'https://www.tikwm.com/api',
+    icon: '🎵',
+    category: 'video',
+  },
+  vimeo: {
+    name: 'Vimeo',
+    baseUrl: 'https://vimeo.com',
+    icon: '🎥',
+    category: 'video',
+  },
+  twitch: {
+    name: 'Twitch',
+    baseUrl: 'https://www.twitch.tv',
+    icon: '🎮',
+    category: 'streaming',
+  },
+  
+  // Social Media
+  instagram: {
+    name: 'Instagram',
+    baseUrl: 'https://instagram.com',
+    requiresSession: true,
+    icon: '📸',
+    category: 'social',
+  },
+  twitter: {
+    name: 'Twitter/X',
+    baseUrl: 'https://twitter.com',
+    icon: '🐦',
+    category: 'social',
+  },
+  reddit: {
+    name: 'Reddit',
+    baseUrl: 'https://www.reddit.com',
+    jsonApi: true,
+    icon: '🔴',
+    category: 'social',
+  },
+  facebook: {
+    name: 'Facebook',
+    baseUrl: 'https://facebook.com',
+    requiresAuth: true,
+    icon: '📘',
+    category: 'social',
+  },
+  pinterest: {
+    name: 'Pinterest',
+    baseUrl: 'https://pinterest.com',
+    icon: '📌',
+    category: 'social',
+  },
+  
+  // Messaging
+  telegram: {
+    name: 'Telegram',
+    requiresAuth: true,
+    icon: '✈️',
+    category: 'messaging',
+  },
+  discord: {
+    name: 'Discord',
+    requiresAuth: true,
+    icon: '💬',
+    category: 'messaging',
+  },
+  
+  // Audio
+  soundcloud: {
+    name: 'SoundCloud',
+    baseUrl: 'https://soundcloud.com',
+    icon: '🔊',
+    category: 'audio',
+  },
+  spotify: {
+    name: 'Spotify',
+    baseUrl: 'https://spotify.com',
+    infoOnly: true,
+    icon: '🎧',
+    category: 'audio',
+  },
+  bandcamp: {
+    name: 'Bandcamp',
+    baseUrl: 'https://bandcamp.com',
+    icon: '🎸',
+    category: 'audio',
+  },
+  
+  // Image Hosting
+  imgur: {
+    name: 'Imgur',
+    baseUrl: 'https://imgur.com',
+    icon: '🖼️',
+    category: 'images',
+  },
+  flickr: {
+    name: 'Flickr',
+    baseUrl: 'https://flickr.com',
+    icon: '📷',
+    category: 'images',
+  },
+  
+  // Cloud Storage
+  googledrive: {
+    name: 'Google Drive',
+    baseUrl: 'https://drive.google.com',
+    requiresAuth: true,
+    icon: '📁',
+    category: 'cloud',
+  },
+  dropbox: {
+    name: 'Dropbox',
+    baseUrl: 'https://dropbox.com',
+    requiresAuth: true,
+    icon: '📦',
+    category: 'cloud',
+  },
+  mega: {
+    name: 'MEGA',
+    baseUrl: 'https://mega.nz',
+    icon: '☁️',
+    category: 'cloud',
   },
 }
+
+// Platform categories
+export const PLATFORM_CATEGORIES = {
+  ai: { name: 'AI & Models', icon: '🤖', platforms: ['civitai', 'huggingface'] },
+  code: { name: 'Development', icon: '💻', platforms: ['github'] },
+  video: { name: 'Video', icon: '🎬', platforms: ['youtube', 'tiktok', 'vimeo'] },
+  streaming: { name: 'Streaming', icon: '📺', platforms: ['twitch'] },
+  social: { name: 'Social Media', icon: '📱', platforms: ['instagram', 'twitter', 'reddit', 'facebook', 'pinterest'] },
+  messaging: { name: 'Messaging', icon: '💬', platforms: ['telegram', 'discord'] },
+  audio: { name: 'Audio', icon: '🎵', platforms: ['soundcloud', 'spotify', 'bandcamp'] },
+  images: { name: 'Images', icon: '🖼️', platforms: ['imgur', 'flickr'] },
+  cloud: { name: 'Cloud Storage', icon: '☁️', platforms: ['googledrive', 'dropbox', 'mega'] },
+}
+
+// Total supported platforms count
+export const TOTAL_PLATFORMS = Object.keys(PLATFORM_APIS).length
 
 // Galion AI Chat Configuration
 export interface GalionChatMessage {

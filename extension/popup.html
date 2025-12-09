@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galion Downloader</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 360px;
+      min-height: 400px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+      color: #fff;
+    }
+
+    .header {
+      padding: 16px;
+      background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 32px;
+      height: 32px;
+      background: #fff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    .status-bar {
+      padding: 8px 16px;
+      background: rgba(34, 197, 94, 0.1);
+      border-bottom: 1px solid rgba(34, 197, 94, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .status-dot.offline {
+      background: #ef4444;
+    }
+
+    .main {
+      padding: 16px;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #22c55e;
+    }
+
+    input[type="text"]::placeholder {
+      color: #666;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: #333;
+    }
+
+    .current-page {
+      padding: 12px;
+      background: #1a1a1a;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .current-page-label {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .current-page-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .platform-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: rgba(34, 197, 94, 0.2);
+      border-radius: 12px;
+      font-size: 12px;
+      color: #22c55e;
+    }
+
+    .page-url {
+      font-size: 12px;
+      color: #ccc;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    .download-current-btn {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .history-list {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .history-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      background: #1a1a1a;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .history-item:hover {
+      background: #252525;
+    }
+
+    .history-emoji {
+      font-size: 20px;
+    }
+
+    .history-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .history-url {
+      font-size: 12px;
+      color: #ccc;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .history-time {
+      font-size: 10px;
+      color: #666;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 24px;
+      color: #666;
+      font-size: 13px;
+    }
+
+    .footer {
+      padding: 12px 16px;
+      border-top: 1px solid #222;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-link {
+      color: #888;
+      text-decoration: none;
+      font-size: 11px;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: #22c55e;
+    }
+
+    .quality-select {
+      padding: 6px 10px;
+      border: 1px solid #333;
+      border-radius: 6px;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 12px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Loading spinner */
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #fff;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">⬇️</div>
+    <div>
+      <div class="title">Galion Downloader</div>
+      <div class="subtitle">Download anything from anywhere</div>
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <div class="status-dot" id="status-dot"></div>
+    <span id="status-text">Checking backend...</span>
+  </div>
+
+  <div class="main">
+    <!-- Current Page -->
+    <div class="current-page" id="current-page">
+      <div class="current-page-label">Current Page</div>
+      <div class="current-page-info">
+        <span class="platform-badge" id="platform-badge">🌐 generic</span>
+        <span class="page-url" id="page-url">Loading...</span>
+      </div>
+    </div>
+
+    <button class="btn download-current-btn" id="download-current">
+      ⬇️ Download This Page
+    </button>
+
+    <!-- Manual URL Input -->
+    <div class="input-group">
+      <input type="text" id="url-input" placeholder="Paste URL here..." />
+      <button class="btn" id="download-btn">⬇️</button>
+    </div>
+
+    <!-- Quality Selector -->
+    <div style="margin-bottom: 16px; display: flex; gap: 8px; align-items: center;">
+      <span style="font-size: 12px; color: #888;">Quality:</span>
+      <select class="quality-select" id="quality-select">
+        <option value="best">Best Quality</option>
+        <option value="1080p">1080p</option>
+        <option value="720p">720p</option>
+        <option value="480p">480p</option>
+        <option value="audio">Audio Only (MP3)</option>
+      </select>
+    </div>
+
+    <!-- Recent History -->
+    <div class="section-title">Recent Downloads</div>
+    <div class="history-list" id="history-list">
+      <div class="empty-state">No downloads yet</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="#" class="footer-link" id="open-app">Open Full App</a>
+    <a href="#" class="footer-link" id="open-settings">Settings</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

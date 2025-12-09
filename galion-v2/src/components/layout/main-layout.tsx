@@ -30,8 +30,8 @@ const navItems = [
 
 // Galion Logo Component - Using the shield logo
 function GalionLogo({ className }: { className?: string }) {
-  // Use import.meta.env.BASE_URL for correct path with Vite base URL
-  const basePath = import.meta.env.BASE_URL || '/'
+  // Use base URL for correct path with Vite
+  const basePath = (import.meta as unknown as { env: { BASE_URL: string } }).env?.BASE_URL || '/'
   return (
     <img 
       src={`${basePath}favicon.svg`}
