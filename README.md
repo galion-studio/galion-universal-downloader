@@ -2,7 +2,9 @@
 
 <div align="center">
 
-<h1>🔥 GALION</h1>
+<img src="galion-v2/public/galion-logo.png" alt="Galion Logo" width="200"/>
+
+### Universal Downloader
 
 **Download EVERYTHING from ANY platform** - YouTube, Instagram, TikTok, CivitAI, GitHub, and 36+ more!
 
