@@ -1,0 +1,79 @@
+# Galion Universal Downloader v3 - Docker Compose (GPU)
+# For local GPU development and testing
+
+version: '3.8'
+
+services:
+  # Main application with GPU support
+  galion:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.gpu
+    container_name: galion-downloader-gpu
+    ports:
+      - "8000:8000"
+    environment:
+      - GALION_ENV=development
+      - GALION_DEBUG=true
+      - GALION_SECRET_KEY=${GALION_SECRET_KEY:-development-secret-key-change-me}
+      - DATABASE_URL=postgresql+asyncpg://galion:galion@postgres:5432/galion
+      - REDIS_URL=redis://redis:6379/0
+      - DOWNLOADS_DIR=/app/downloads
+      - DATA_DIR=/app/data
+      - WHISPER_MODEL=base.en
+      - WHISPER_DEVICE=cuda
+      - WHISPER_COMPUTE_TYPE=float16
+      - CUDA_VISIBLE_DEVICES=0
+    volumes:
+      - galion-downloads:/app/downloads
+      - galion-data:/app/data
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  # PostgreSQL database
+  postgres:
+    image: postgres:15-alpine
+    container_name: galion-postgres
+    environment:
+      - POSTGRES_USER=galion
+      - POSTGRES_PASSWORD=galion
+      - POSTGRES_DB=galion
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  # Redis for queue
+  redis:
+    image: redis:7-alpine
+    container_name: galion-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+volumes:
+  galion-downloads:
+    driver: local
+  galion-data:
+    driver: local
+  postgres-data:
+    driver: local
+  redis-data:
+    driver: local
+
+networks:
+  default:
+    name: galion-network
