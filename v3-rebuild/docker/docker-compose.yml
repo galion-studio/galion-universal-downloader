@@ -1,0 +1,86 @@
+# Galion Universal Downloader v3 - Docker Compose
+# Local development stack
+
+version: '3.8'
+
+services:
+  # Main application
+  galion:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: galion-downloader
+    ports:
+      - "8000:8000"
+    environment:
+      - GALION_ENV=development
+      - GALION_DEBUG=true
+      - GALION_SECRET_KEY=${GALION_SECRET_KEY:-development-secret-key-change-me}
+      - DATABASE_URL=postgresql+asyncpg://galion:galion@postgres:5432/galion
+      - REDIS_URL=redis://redis:6379/0
+      - DOWNLOADS_DIR=/app/downloads
+      - DATA_DIR=/app/data
+      - WHISPER_MODEL=tiny.en
+      - WHISPER_DEVICE=cpu
+      - WHISPER_COMPUTE_TYPE=int8
+    volumes:
+      - galion-downloads:/app/downloads
+      - galion-data:/app/data
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # PostgreSQL database
+  postgres:
+    image: postgres:15-alpine
+    container_name: galion-postgres
+    environment:
+      - POSTGRES_USER=galion
+      - POSTGRES_PASSWORD=galion
+      - POSTGRES_DB=galion
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U galion"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for queue
+  redis:
+    image: redis:7-alpine
+    container_name: galion-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  galion-downloads:
+    driver: local
+  galion-data:
+    driver: local
+  postgres-data:
+    driver: local
+  redis-data:
+    driver: local
+
+networks:
+  default:
+    name: galion-network
