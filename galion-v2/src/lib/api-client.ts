@@ -462,7 +462,36 @@ export const apiClient = {
     } catch {
       return { total: 0, completed: 0, failed: 0 };
     }
+  },
+
+  /**
+   * Download folder as ZIP to user device (browser download)
+   */
+  downloadToDevice(folderPath: string): void {
+    const folderName = folderPath.split('/').pop() || folderPath.split('\\').pop() || 'download';
+    const zipUrl = API_BASE + '/download-zip?path=' + encodeURIComponent(folderPath);
+    const a = document.createElement('a');
+    a.href = zipUrl;
+    a.download = folderName + '.zip';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  },
+
+  /**
+   * Get files list for browser download  
+   */
+  async getFilesInFolder(folderPath: string): Promise<Array<{name: string, path: string, downloadUrl: string | null, isDirectory: boolean, size: number}>> {
+    try {
+      const res = await fetch(API_BASE + '/files?folder=' + encodeURIComponent(folderPath));
+      if (!res.ok) return [];
+      const data = await res.json();
+      return data.files || [];
+    } catch {
+      return [];
+    }
   }
+
 };
 
 // WebSocket connection for real-time updates
