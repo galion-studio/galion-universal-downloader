@@ -146,6 +146,15 @@ export function HistorySection() {
     }
   }
 
+  
+  const handleDownload = (path: string) => {
+    apiClient.downloadToDevice(path);
+    toast({
+      title: "Downloading",
+      description: "ZIP file download started",
+    });
+  };
+
   const handleClearAll = async () => {
     if (!confirm('Are you sure you want to delete all downloads?')) return
     
@@ -332,9 +341,17 @@ export function HistorySection() {
 
                         <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                           <Button 
-                            variant="ghost" 
-                            size="icon"
-                            onClick={() => handleOpenFolder(item.path)}
+                          variant="ghost" 
+                          size="icon"
+                          onClick={() => handleDownload(item.path)}
+                          title="Download to device"
+                        >
+                          <Download className="h-4 w-4" />
+                        </Button>
+                        <Button 
+                          variant="ghost" 
+                          size="icon"
+                          onClick={() => handleOpenFolder(item.path)}
                             title="Open folder"
                           >
                             <FolderOpen className="h-4 w-4" />

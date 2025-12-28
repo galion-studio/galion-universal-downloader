@@ -92,17 +92,14 @@ async function initializeSystems() {
 }
 
 // Middleware
+// Middleware
 app.use(express.json({ limit: '50mb' }));
 
-// Serve static frontend files in production
-const publicDir = path.join(__dirname, 'public');
-if (fs.existsSync(publicDir)) {
-  app.use(express.static(publicDir));
-}
-
-// CORS for frontend on different port
+// CORS and Frame headers - MUST come before static files
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
+  res.header('X-Frame-Options', 'ALLOWALL');
+  res.header('Content-Security-Policy', "frame-ancestors *");
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   if (req.method === 'OPTIONS') {
@@ -110,6 +107,12 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+// Serve static frontend files in production
+const publicDir = path.join(__dirname, 'public');
+if (fs.existsSync(publicDir)) {
+  app.use(express.static(publicDir));
+}
 
 // WebSocket connection handling
 wss.on('connection', (ws) => {
@@ -494,6 +497,35 @@ app.post('/api/open-folder', (req, res) => {
 /**
  * Download as ZIP
  */
+
+/**
+ * GET /api/download-zip - Download folder as ZIP (browser download)
+ */
+app.get("/api/download-zip", async (req, res) => {
+  const folderPath = req.query.path;
+  
+  if (!folderPath || !fs.existsSync(folderPath)) {
+    return res.status(400).json({ error: "Invalid or missing path" });
+  }
+
+  const folderName = path.basename(folderPath);
+  const zipFileName = `${folderName}.zip`;
+
+  res.setHeader("Content-Type", "application/zip");
+  res.setHeader("Content-Disposition", `attachment; filename="${zipFileName}"`);
+
+  const archive = archiver("zip", { zlib: { level: 9 } });
+  archive.on("error", (err) => {
+    console.error("Archive error:", err);
+    res.status(500).end();
+  });
+
+  archive.pipe(res);
+  archive.directory(folderPath, false);
+  archive.finalize();
+});
+
+
 app.post('/api/download-zip', async (req, res) => {
   const { path: folderPath } = req.body;
   
@@ -1249,6 +1281,77 @@ app.get('/api', (req, res) => {
   });
 });
 
+
+// ==============================
+// BROWSER DOWNLOAD ENDPOINTS
+// ==============================
+
+/**
+ * Serve downloaded file to browser for download
+ * GET /api/serve/:filename
+ */
+app.get('/api/serve/*', (req, res) => {
+  const filePath = req.params[0];
+  const downloadsDir = getUserDownloadsFolder();
+  const fullPath = path.join(downloadsDir, filePath);
+  
+  // Security: prevent directory traversal
+  if (!fullPath.startsWith(downloadsDir)) {
+    return res.status(403).json({ error: 'Access denied' });
+  }
+  
+  if (!fs.existsSync(fullPath)) {
+    return res.status(404).json({ error: 'File not found' });
+  }
+  
+  const stat = fs.statSync(fullPath);
+  if (stat.isDirectory()) {
+    return res.status(400).json({ error: 'Cannot download directory directly, use /api/download-zip' });
+  }
+  
+  const filename = path.basename(fullPath);
+  res.setHeader('Content-Disposition', 'attachment; filename="' + filename + '"');
+  res.setHeader('Content-Length', stat.size);
+  res.sendFile(fullPath);
+});
+
+/**
+ * List files in downloads directory for browser download selection
+ * GET /api/files
+ */
+app.get('/api/files', async (req, res) => {
+  const downloadsDir = getUserDownloadsFolder();
+  const { folder } = req.query;
+  
+  const targetDir = folder ? path.join(downloadsDir, folder) : downloadsDir;
+  
+  if (!fs.existsSync(targetDir)) {
+    return res.json({ files: [] });
+  }
+  
+  try {
+    const items = await fs.readdir(targetDir);
+    const files = [];
+    
+    for (const item of items) {
+      const itemPath = path.join(targetDir, item);
+      const stat = await fs.stat(itemPath);
+      files.push({
+        name: item,
+        path: folder ? folder + '/' + item : item,
+        isDirectory: stat.isDirectory(),
+        size: stat.size,
+        modified: stat.mtime,
+        downloadUrl: stat.isDirectory() ? null : '/api/serve/' + (folder ? folder + '/' + item : item)
+      });
+    }
+    
+    res.json({ files });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // SPA fallback - serve index.html for all non-API routes
 app.get('*', (req, res) => {
   const indexPath = path.join(__dirname, 'public', 'index.html');
@@ -1295,3 +1398,73 @@ async function start() {
 start().catch(console.error);
 
 export default app;
+
+// ==============================
+// BROWSER DOWNLOAD ENDPOINT
+// ==============================
+
+/**
+ * Serve downloaded file to browser for download
+ * GET /api/serve/:filename
+ */
+app.get('/api/serve/*', (req, res) => {
+  const filePath = req.params[0];
+  const downloadsDir = getUserDownloadsFolder();
+  const fullPath = path.join(downloadsDir, filePath);
+  
+  // Security: prevent directory traversal
+  if (!fullPath.startsWith(downloadsDir)) {
+    return res.status(403).json({ error: 'Access denied' });
+  }
+  
+  if (!fs.existsSync(fullPath)) {
+    return res.status(404).json({ error: 'File not found' });
+  }
+  
+  const stat = fs.statSync(fullPath);
+  if (stat.isDirectory()) {
+    return res.status(400).json({ error: 'Cannot download directory directly' });
+  }
+  
+  const filename = path.basename(fullPath);
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+  res.setHeader('Content-Length', stat.size);
+  res.sendFile(fullPath);
+});
+
+/**
+ * List files in downloads directory for browser download selection
+ * GET /api/files
+ */
+app.get('/api/files', async (req, res) => {
+  const downloadsDir = getUserDownloadsFolder();
+  const { folder } = req.query;
+  
+  const targetDir = folder ? path.join(downloadsDir, folder) : downloadsDir;
+  
+  if (!fs.existsSync(targetDir)) {
+    return res.json({ files: [] });
+  }
+  
+  try {
+    const items = await fs.readdir(targetDir);
+    const files = [];
+    
+    for (const item of items) {
+      const itemPath = path.join(targetDir, item);
+      const stat = await fs.stat(itemPath);
+      files.push({
+        name: item,
+        path: folder ? `${folder}/${item}` : item,
+        isDirectory: stat.isDirectory(),
+        size: stat.size,
+        modified: stat.mtime,
+        downloadUrl: stat.isDirectory() ? null : `/api/serve/${folder ? `${folder}/${item}` : item}`
+      });
+    }
+    
+    res.json({ files });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});

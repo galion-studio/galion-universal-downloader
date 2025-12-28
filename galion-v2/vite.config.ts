@@ -2,10 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  // Use '/' for Hugging Face Spaces, '/galion-universal-downloader/' for GitHub Pages
-  base: process.env.HF_SPACE ? '/' : '/galion-universal-downloader/',
+  base: '/',
   plugins: [react()],
   resolve: {
     alias: {
@@ -16,11 +14,11 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'http://localhost:4077',
         changeOrigin: true,
       },
       '/ws': {
-        target: 'ws://localhost:3000',
+        target: 'ws://localhost:4077',
         ws: true,
       },
     },
