@@ -362,7 +362,10 @@ class AuthManager {
     } else if (platform === 'tiktok') {
       headers['Referer'] = 'https://www.tiktok.com/'
     } else if (platform === 'twitter') {
-      headers['Authorization'] = 'Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA'
+      const twitterBearer = process.env.TWITTER_BEARER_TOKEN
+      if (twitterBearer) {
+        headers['Authorization'] = `Bearer ${twitterBearer}`
+      }
     }
 
     return headers
