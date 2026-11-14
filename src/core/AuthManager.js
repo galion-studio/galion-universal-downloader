@@ -5,6 +5,7 @@
 
 const fs = require('fs').promises
 const path = require('path')
+const { twitterAuthorizationHeader } = require('./twitterBearer.cjs')
 
 class AuthManager {
   constructor(options = {}) {
@@ -362,7 +363,7 @@ class AuthManager {
     } else if (platform === 'tiktok') {
       headers['Referer'] = 'https://www.tiktok.com/'
     } else if (platform === 'twitter') {
-      headers['Authorization'] = 'Bearer REMOVED'
+      headers['Authorization'] = twitterAuthorizationHeader()
     }
 
     return headers
