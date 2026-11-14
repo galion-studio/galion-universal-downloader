@@ -1,9 +1,8 @@
 # Deploy Galion Universal Downloader to GitHub Pages
 name: Deploy to GitHub Pages
 
+# Manual only until GitHub Pages is enabled for this repo (every push run failed: Pages not configured).
 on:
-  push:
-    branches: ['main']
   workflow_dispatch:
 
 permissions:

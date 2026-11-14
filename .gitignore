@@ -75,3 +75,23 @@ vite.config.ts.timestamp-*
 
 # Debug
 debug.log
+
+# G.A.L.I.O.N. hygiene: secrets, audio, models, build output, OS junk
+.env.*
+!.env.example
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.m4a
+*.onnx
+*.safetensors
+*.pt
+*.ckpt
+*.gguf
+target/
+__pycache__/
+*.pyc
+
+# RunPod key stays local
+.runpod/
