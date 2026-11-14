@@ -363,7 +363,10 @@ class AuthManager {
     } else if (platform === 'tiktok') {
       headers['Referer'] = 'https://www.tiktok.com/'
     } else if (platform === 'twitter') {
-      headers['Authorization'] = twitterAuthorizationHeader()
+      const authorization = twitterAuthorizationHeader()
+      if (authorization) {
+        headers['Authorization'] = authorization
+      }
     }
 
     return headers

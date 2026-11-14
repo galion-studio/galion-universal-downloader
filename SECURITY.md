@@ -18,9 +18,9 @@ Do not commit API tokens, bearer tokens, private keys, or environment files that
 - SSH private keys (`id_rsa`, `id_dsa`, `id_ecdsa`, `id_ed25519` and their `.pub` files)
 - `.runpod/`, where the local API key store writes `.key` and `api-keys.json`
 
-Tokens used for authenticated requests are read from environment variables. `AuthManager.getAuthHeaders('twitter')` reads `TWITTER_BEARER_TOKEN` and throws an error that names that variable when it is missing or blank. Do not hardcode a bearer token or other credential in source.
+Tokens used for authenticated requests are read from environment variables. `AuthManager.getAuthHeaders('twitter')` reads `TWITTER_BEARER_TOKEN` and attaches `Authorization` only when that variable is set. When it is missing or blank, the header is omitted and a hint naming `TWITTER_BEARER_TOKEN` is logged. Public downloads do not need a bearer. Do not hardcode a bearer token or other credential in source.
 
-The v3 downloader already loads `TWITTER_BEARER_TOKEN` from the environment (`v3-rebuild/app/config.py`) and attaches it only when the variable is set. Public tweet downloads do not require a bearer.
+The v3 downloader loads `TWITTER_BEARER_TOKEN` from the environment (`v3-rebuild/app/config.py`) and attaches it only when the variable is set.
 
 On 2026-11-14 the git history of this repository was rewritten to remove a Twitter bearer that had been committed. Treat any copy of that token outside this rewritten history as exposed and rotate it. This document does not include the token value.
 

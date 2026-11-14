@@ -1,24 +1,32 @@
 /**
  * Twitter bearer token from the environment only.
- * getAuthHeaders('twitter') calls this. A missing or blank value throws
- * so a placeholder cannot ship in source again.
+ * Public downloads do not need it. When TWITTER_BEARER_TOKEN is missing or
+ * blank, callers omit the Authorization header and a hint is logged.
  */
+
+const MISSING_TWITTER_BEARER_HINT = 'TWITTER_BEARER_TOKEN is not set. Omitting the Twitter Authorization header. Public downloads do not need a bearer; set TWITTER_BEARER_TOKEN in the environment to send one.'
 
 function readTwitterBearerToken(env = process.env) {
   const raw = env && env.TWITTER_BEARER_TOKEN
   if (typeof raw !== 'string' || raw.trim() === '') {
-    throw new Error(
-      'TWITTER_BEARER_TOKEN is not set. Set the Twitter bearer token in the environment before requesting Twitter auth headers. Do not hardcode a bearer token in source.'
-    )
+    return null
   }
   return raw.trim()
 }
 
-function twitterAuthorizationHeader(env = process.env) {
-  return `Bearer ${readTwitterBearerToken(env)}`
+function twitterAuthorizationHeader(env = process.env, log = console) {
+  const token = readTwitterBearerToken(env)
+  if (!token) {
+    if (log && typeof log.warn === 'function') {
+      log.warn(MISSING_TWITTER_BEARER_HINT)
+    }
+    return null
+  }
+  return `Bearer ${token}`
 }
 
 module.exports = {
+  MISSING_TWITTER_BEARER_HINT,
   readTwitterBearerToken,
   twitterAuthorizationHeader
 }

@@ -76,7 +76,7 @@ id_ecdsa.pub
 id_ed25519
 id_ed25519.pub
 
-# Local RunPod key material (ApiKeyManager writes .runpod/.key and api-keys.json)
+# RunPod key stays local
 .runpod/
 
 # Cache
