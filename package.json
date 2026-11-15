@@ -13,6 +13,7 @@
     "docker": "docker build -t runpod-downloader . && docker run -p 3000:3000 runpod-downloader",
     "docker:serverless": "docker build -t runpod-downloader . && docker run -e NODE_ENV=production -e DOWNLOADS_DIR=/tmp/downloads -p 3000:3000 runpod-downloader",
     "test": "node tests/run-tests.js",
+    "test:secrets": "node tests/twitter-bearer.test.cjs",
     "test:quick": "node tests/run-tests.js --quick",
     "test:all": "node tests/run-tests.js --all",
     "test:platform": "node tests/run-tests.js --platform",
