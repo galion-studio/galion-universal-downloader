@@ -76,7 +76,7 @@ id_ecdsa.pub
 id_ed25519
 id_ed25519.pub
 
-# RunPod key stays local
+# Local API-key store. Writes .key and api-keys.json. Never commit.
 .runpod/
 
 # Cache
@@ -95,9 +95,7 @@ vite.config.ts.timestamp-*
 # Debug
 debug.log
 
-# G.A.L.I.O.N. hygiene: secrets, audio, models, build output, OS junk
-.env.*
-!.env.example
+# Audio, model weights, and local build output
 *.wav
 *.mp3
 *.flac
@@ -111,6 +109,3 @@ debug.log
 target/
 __pycache__/
 *.pyc
-
-# RunPod key stays local
-.runpod/
